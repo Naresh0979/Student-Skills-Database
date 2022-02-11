@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
     BrowserRouter as Router,
-    Switch,
+    Routes,
     Route
 } from 'react-router-dom';
 import Login from './components/login/login';
@@ -20,16 +20,16 @@ class AppRouter extends React.Component<Props> {
     render() {
         return (
             <Router>
-                <Switch>
-                <Route path="/" exact component={Home}></Route>
-                    <Route path="/signup" exact component={Login}></Route>
-                    <AuthenticatedRoute
+                <Routes>
+                <Route path="/"  element={<Home/>}></Route>
+                    <Route path="/signup"  element={<Login/>}></Route>
+                    {/* <AuthenticatedRoute
                         path="/dashboard"
                         isAuthenticated={this.props.username.trim().length > 0}
-                        component={Dashboard}
+                        element={Dashboard}
                         redirectTo={"/"}>
-                    </AuthenticatedRoute>
-                </Switch>
+                    </AuthenticatedRoute> */}
+                </Routes>
             </Router>
         );
     }

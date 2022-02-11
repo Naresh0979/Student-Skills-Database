@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect, RouteProps } from "react-router-dom";
+import { Route, Navigate, RouteProps } from "react-router-dom";
 
 interface Props extends RouteProps {
     isAuthenticated: boolean;
@@ -8,7 +8,7 @@ interface Props extends RouteProps {
 
 class AuthenticatedRoute extends React.Component<Props> {
     render() {
-        return this.props.isAuthenticated ? <Route {...this.props}></Route> : <Redirect to={this.props.redirectTo}></Redirect>
+        return this.props.isAuthenticated ? <Route {...this.props}></Route> : <Navigate to={this.props.redirectTo}></Navigate>
     }
 }
 
