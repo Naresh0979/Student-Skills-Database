@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+
 import {
     BrowserRouter as Router,
     Routes,
@@ -7,37 +7,25 @@ import {
 } from 'react-router-dom';
 import Login from './components/login/login';
 
-import {Home} from './components/home';
-import { State } from './shared/models/state.models';
-import AuthenticatedRoute from './shared/authentication/authenticated-route';
-import Dashboard from './components/dashboard/dashboard';
+import Home from './components/home';
 
-interface Props {
-    username: string;
+
+
+export default function AppRouter() {
+  return (
+    <Router>
+    <Routes>
+    <Route path="/"  element={<Home/>}></Route>
+        <Route path="/signup"  element={<Login/>}></Route>
+        {/* <AuthenticatedRoute
+            path="/dashboard"
+            isAuthenticated={this.props.username.trim().length > 0}
+            element={Dashboard}
+            redirectTo={"/"}>
+        </AuthenticatedRoute> */}
+    </Routes>
+</Router>
+
+  )
 }
 
-class AppRouter extends React.Component<Props> {
-    render() {
-        return (
-            <Router>
-                <Routes>
-                <Route path="/"  element={<Home/>}></Route>
-                    <Route path="/signup"  element={<Login/>}></Route>
-                    {/* <AuthenticatedRoute
-                        path="/dashboard"
-                        isAuthenticated={this.props.username.trim().length > 0}
-                        element={Dashboard}
-                        redirectTo={"/"}>
-                    </AuthenticatedRoute> */}
-                </Routes>
-            </Router>
-        );
-    }
-}
-
-function mapStateToProps(state: State) {
-    const { userState } = state;
-    return { username: userState.username };
-}
-
-export default connect(mapStateToProps)(AppRouter);
