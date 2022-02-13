@@ -5,6 +5,7 @@ import facebook from "../../assets/images/facebook.svg";
 import google from "../../assets/images/google.svg";
 import linkedin from "../../assets/images/linkedin.svg";
 import {useState} from 'react';
+import {Navigation} from "../navigation";
 
 
 
@@ -54,7 +55,9 @@ function Login() {
 
 
   return (
+    
     <div className="login">
+    <Navigation/>  
     <div
       className={`login__colored-container
         ${
