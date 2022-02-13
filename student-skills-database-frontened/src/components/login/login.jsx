@@ -10,15 +10,48 @@ import {useState} from 'react';
 
 function Login() {
 
-  //let login=true;
-
-  const [login,setlogin]= useState(true);
+  const [login,setlogin]= useState(false);
 
   const handleclick=() => {
             
     setlogin(!login);
 
-}
+  }
+  const [accountType, setAccountType] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // SignUp
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    const userData = { accountType,fullName,email,password };
+
+    fetch('http://localhost:2000/users/signUp', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData)
+    }).then(() => {
+      console.log('SignUp Successfull');
+    })
+  }
+
+  // Login
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const userData = {email,password };
+
+    fetch('http://localhost:2000/users/login', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData)
+    }).then(() => {
+      console.log('Login Successfull');
+    })
+  }
+
+
+
 
   return (
     <div className="login">
@@ -75,7 +108,7 @@ function Login() {
       }`}
     >
       Create Account
-      <div className="login__create-container__social-container">
+      {/* <div className="login__create-container__social-container">
         <img
           className="login__create-container__social-container--facebook-icon"
           src={facebook}
@@ -94,62 +127,43 @@ function Login() {
       </div>
       <span className="login__create-container--info-text">
         or use email for your registration
-      </span>
+      </span> */}
       <div className="login__create-container__form-container">
         <form
           className="login__create-container__form-container__form"
-          onSubmit={(e) => {
-            e.preventDefault();
-          //  this.signUp();
-          }}
+          onSubmit={handleSignUp}
         >
           <input
             className="login__create-container__form-container__form--name"
             type="text"
+            placeholder="Account Type"
+            value={accountType}
+            onChange={(e) => setAccountType(e.target.value)}
+            required
+          />
+          <input
+            className="login__create-container__form-container__form--name"
+            type="text"
             placeholder="Name"
-            // value={this.state.signUpForm.name}
-            // onChange={(value) =>
-            //   this.setState({
-            //     signUpForm: {
-            //       name: value.target.value,
-            //       email: this.state.signUpForm.email,
-            //       password: this.state.signUpForm.password,
-            //     },
-            //   })
-            // }
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
             required
           />
           <input
             className="login__create-container__form-container__form--email"
             type="email"
             placeholder="Email"
-            // value={this.state.signUpForm.email}
-            // onChange={(value) =>
-            //   this.setState({
-            //     signUpForm: {
-            //       email: value.target.value,
-            //       name: this.state.signUpForm.name,
-            //       password: this.state.signUpForm.password,
-            //     },
-            //   })
-            // }
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
             className="login__create-container__form-container__form--password"
             type="password"
             placeholder="Password"
-            // value={this.state.signUpForm.password}
-            // onChange={(value) =>
-            //   this.setState({
-            //     signUpForm: {
-            //       password: value.target.value,
-            //       name: this.state.signUpForm.name,
-            //       email: this.state.signUpForm.email,
-            //     },
-            //   })
-            // }
-             required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
           <button className="login__create-container__form-container__form--submit">
             Sign Up
@@ -184,39 +198,22 @@ function Login() {
         <div className="login__login-container__main-container__form-container">
           <form
             className="login__login-container__main-container__form-container__form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              
-            }}
+            onSubmit={handleLogin}
           >
             <input
               className="login__login-container__main-container__form-container__form--email"
               type="email"
               placeholder="Email"
-              // value={this.state.signInForm.email}
-              // onChange={(value) =>
-              //   this.setState({
-              //     signInForm: {
-              //       email: value.target.value,
-              //       password: this.state.signInForm.password,
-              //     },
-              //   })
-              // }
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
             <input
               className="login__login-container__main-container__form-container__form--password"
               type="password"
               placeholder="Password"
-              // value={this.state.signInForm.password}
-              // onChange={(value) =>
-              //   this.setState({
-              //     signInForm: {
-              //       password: value.target.value,
-              //       email: this.state.signInForm.email,
-              //     },
-              //   })
-              // }
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
             <button className="login__login-container__main-container__form-container__form--submit">
