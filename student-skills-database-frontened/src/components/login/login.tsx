@@ -272,10 +272,6 @@ class Login extends React.Component<Props> {
   }
 
   signIn() {
-    () => {
-      let navigate = useNavigate();
-      navigate("/dashboard");
-    };
     this.props.setUserType(this.state.signInForm.email);
     this.setState({
       signInForm: {
