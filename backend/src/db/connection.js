@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/StudentSkillDatabase",{
+mongoose.connect("mongodb+srv://CollegeSpace:project2021@cluster0.3gnvn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",{
     useNewUrlParser:true,
     useUnifiedTopology:true,
 }).then(() => {

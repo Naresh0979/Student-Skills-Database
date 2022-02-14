@@ -7,10 +7,13 @@ import linkedin from "../../assets/images/linkedin.svg";
 import {useState} from 'react';
 import {Navigation} from "../navigation";
 
+import {useNavigate} from'react-router-dom';
+
+import axios from 'axios';
 
 
-function Login() {
-
+function Login(props) {
+  let navigate= useNavigate();
   const [login,setlogin]= useState(false);
 
   const handleclick=() => {
@@ -28,28 +31,43 @@ function Login() {
     e.preventDefault();
     const userData = { accountType,fullName,email,password };
 
-    fetch('http://localhost:2000/users/signUp', {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userData)
-    }).then(() => {
-      console.log('SignUp Successfull');
+    axios.post('http://localhost:2000/users/signUp',userData).then((response) => {
+      console.log(response);
+      if(response.data.Status === "S"){
+         alert("successful Registerd");
+         setlogin(!login);
+      }else if(response.data.Status === "F"){
+         alert("username or Email Id Already exist");
+      }  
+    
     })
   }
-
   // Login
   const handleLogin = (e) => {
     e.preventDefault();
     const userData = {email,password };
 
-    fetch('http://localhost:2000/users/login', {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userData)
-    }).then(() => {
-      console.log('Login Successfull');
+  //   fetch('http://localhost:2000/users/login', {
+  //     method: 'POST',
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(userData)
+  //   }).then(() => {
+  //     console.log('Login Successfull');
+  //   })
+  axios.post('http://localhost:2000/users/login',userData).then((response) => {
+      
+      console.log(response);
+      if(response.data.Status === "S"){
+        const userData=response.data.user;
+       // console.log(userData);
+        navigate('/dashboard',{state:userData});
+         
+      }else if(response.data.Status === "F"){
+         alert("Invalid credentials");
+      }  
+    
     })
-  }
+   }
 
 
 
