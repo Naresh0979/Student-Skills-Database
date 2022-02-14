@@ -64,7 +64,7 @@ export const Navigation = (props) => {
             </li>
             <li>
               <Link to ='/signup' className='page-scroll'>
-                SignIn
+                LogIN
               </Link>
             </li>
             

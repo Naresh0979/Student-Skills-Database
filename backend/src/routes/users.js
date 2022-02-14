@@ -12,6 +12,7 @@ const router = express.Router();
 //Login Users
 router.post("/login", async (req, res) => {
   try {
+
     const userData = await User.findOne({ email: req.body.email });
     if (!userData) return res.status(400).send("Invalid Credentials");
 
@@ -22,13 +23,11 @@ router.post("/login", async (req, res) => {
     if (!validPassword) return res.status(400).json({Status: "F"});
 
     const token = await userData.generateAuthToken();
-    console.log(token);
+
     res.cookie("jwt", token , { 
       expires:new Date(Date.now()+3000000),
       httpOnly:true
-    }); 
-    // console.log(res.cookies.jwt);
-    return res.status(200).json({Status: "S", user: userData});
+    }).status(200).json({Status: "S", user: userData});
 
   } catch (error) {
     console.log(error);
@@ -63,6 +62,14 @@ router.post("/signUp", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+// LogOUT
+router.get("/logout", (req, res) => {
+  return res
+    .clearCookie("jwt")
+    .status(200)
+    .json({ message: "Successfully logged out 😏 🍀" });
 });
 
 module.exports = router;
