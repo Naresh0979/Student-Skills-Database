@@ -14,9 +14,10 @@ $breakpoint-mobile: 768px;
 .login {
     display: flex;
     height: 100%;
+    
 
     &__welcome-back {
-        z-index: 2;
+        z-index:1;
         transition: visibility .3s ease-in-out;
         position: absolute;
         transition: all .8s ease-in-out;
@@ -47,7 +48,7 @@ $breakpoint-mobile: 768px;
                 margin-right: 4px;
             }
 
-            @media (max-width: $breakpoint-mobile) {
+            @media only screen and(max-width: $breakpoint-mobile) {
                 font-size: 0px;
                 justify-content: center;
             }
@@ -98,7 +99,7 @@ $breakpoint-mobile: 768px;
                 justify-content: center;
                 cursor: pointer;
 
-                @media (max-width: $breakpoint-mobile) {
+                @media only screen and (max-width: $breakpoint-mobile) {
                     font-size: 3vw;
                 }
             }
@@ -106,7 +107,7 @@ $breakpoint-mobile: 768px;
     }
     
     &__create-container {
-        position: absolute;
+        position: fixed;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -180,7 +181,7 @@ $breakpoint-mobile: 768px;
                     margin-bottom: 10px;
                     color: #242424;
 
-                    @media (max-width: $breakpoint-mobile) {
+                    @media only screen and (max-width: $breakpoint-mobile) {
                         width: 50vw;
                     }
                 }
@@ -228,7 +229,7 @@ $breakpoint-mobile: 768px;
     }
 
     &__login-container {
-        position: absolute;
+        position: fixed;
         transition: all .7s ease-in-out;
         display: flex;
         flex-direction: column;
@@ -375,7 +376,7 @@ $breakpoint-mobile: 768px;
     &__hello-container {
         width: 30%;
         left: 70.5%;
-        position: absolute;
+        position: fixed;
         z-index: 2;
         transition: all .8s ease-in-out;
         display: flex;
@@ -397,7 +398,7 @@ $breakpoint-mobile: 768px;
     }
 
     &__colored-container {
-        position: absolute;
+        position: fixed;
         background-color: $base-color;
         width: 30%;
         height: 100vh;

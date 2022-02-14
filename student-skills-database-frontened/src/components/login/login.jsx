@@ -47,13 +47,6 @@ function Login(props) {
     e.preventDefault();
     const userData = {email,password };
 
-  //   fetch('http://localhost:2000/users/login', {
-  //     method: 'POST',
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(userData)
-  //   }).then(() => {
-  //     console.log('Login Successfull');
-  //   })
   axios.post('http://localhost:2000/users/login',userData).then((response) => {
       
       console.log(response);
@@ -75,12 +68,11 @@ function Login(props) {
   return (
     
     <div className="login">
-    <Navigation/>  
+     <Navigation/>   
     <div
-      className={`login__colored-container
-        ${
-         login
-         ? "login__colored-container--left"
+      className={`login__colored-container ${
+           login
+          ? "login__colored-container--left"
           : "login__colored-container--right"
        }`}
     >
@@ -129,7 +121,7 @@ function Login(props) {
       }`}
     >
       Create Account
-      {/* <div className="login__create-container__social-container">
+       {/* <div className="login__create-container__social-container">
         <img
           className="login__create-container__social-container--facebook-icon"
           src={facebook}
@@ -148,7 +140,7 @@ function Login(props) {
       </div>
       <span className="login__create-container--info-text">
         or use email for your registration
-      </span> */}
+      </span>  */}
       <div className="login__create-container__form-container">
         <form
           className="login__create-container__form-container__form"
@@ -209,13 +201,13 @@ function Login(props) {
         Level Up
       </div>
       <div className="login__login-container__main-container">
-        {/* <div className="login__login-container__main-container__social-container">
+         {/* <div className="login__login-container__main-container__social-container">
                         <img className="login__login-container__main-container__social-container--facebook-icon" src={facebook} alt="" />
                         <img className="login__login-container__main-container__social-container--google-icon" src={google} alt="" />
                         <img className="login__login-container__main-container__social-container--linkedin-icon" src={linkedin} alt="" />
                     </div>
                     <span className="login__login-container__main-container--info-text">or use email for your login</span>
-                   */}
+                    */}
         <div className="login__login-container__main-container__form-container">
           <form
             className="login__login-container__main-container__form-container__form"
