@@ -17,9 +17,9 @@ router.post("/login", async (req, res) => {
       req.body.password,
       userData.password
     );
-    if (!validPassword) return res.json({Status: "F"});
+    if (!validPassword) return res.status(400).json({Status: "F"});
 
-    return res.json({Status: "S", user: userData});
+    return res.status(200).json({Status: "S", user: userData});
 
   } catch (error) {
     console.log(error);
@@ -31,7 +31,7 @@ router.post("/login", async (req, res) => {
 router.post("/signUp", async (req, res) => {
   try {
     const checkData = await User.findOne({ email: req.body.email });    
-    if (checkData) return res.json({Status: "F"});
+    if (checkData) return res.status(400).json({Status: "F"});
 
     const userData = new User({
       accountType: req.body.accountType,
@@ -43,7 +43,7 @@ router.post("/signUp", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     userData.password = await bcrypt.hash(userData.password, salt);
     await userData.save();
-    return res.json({Status: "S", user: userData});
+    return res.status(200).json({Status: "S", user: userData});
 
   } catch (error) {
     console.log(error);
