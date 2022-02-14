@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 
-
 //Methods
 
 //Login Users
@@ -24,7 +23,7 @@ router.post("/login", async (req, res) => {
 
     const token = await userData.generateAuthToken();
 
-    res.cookie("jwt", token , { 
+    return res.cookie("jwt", token , { 
       expires:new Date(Date.now()+3000000),
       httpOnly:true
     }).status(200).json({Status: "S", user: userData});
@@ -51,11 +50,6 @@ router.post("/signUp", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     userData.password = await bcrypt.hash(userData.password, salt);
 
-    // const token = await userData.generateAuthToken();
-    // res.cookie("jwt",token,{
-    //   expires:new Date(Date.now()+3000000),
-    //   httpOnly:true
-    // });
     await userData.save();
     return res.status(200).json({Status: "S", user: userData});
 
