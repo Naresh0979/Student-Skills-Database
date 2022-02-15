@@ -37,16 +37,20 @@ router.post("/login", async (req, res) => {
 
 router.post("/signUp", async (req, res) => {
   try {
+   //console.log(req.body);
     const checkData = await User.findOne({ email: req.body.email });    
-    if (checkData) return res.status(400).json({Status: "F"});
-
+    
+    if (checkData) 
+    {//console.log("inside");
+    return res.json({Status: "F"});}
+           
     const userData = new User({
       accountType: req.body.accountType,
       fullName: req.body.fullName,
       email: req.body.email,
       password: req.body.password,
     });
-
+ 
     const salt = await bcrypt.genSalt(10);
     userData.password = await bcrypt.hash(userData.password, salt);
 

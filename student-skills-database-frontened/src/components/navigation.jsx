@@ -1,6 +1,8 @@
 import {Link} from 'react-router-dom';
 
 export const Navigation = (props) => {
+
+  //const[home,setHome]=u
   return (
     <nav id='menu' className='navbar navbar-default navbar-fixed-top'>
       <div className='container'>

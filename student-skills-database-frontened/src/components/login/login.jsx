@@ -22,22 +22,23 @@ function Login(props) {
     setlogin(!login);
 
   }
-  const [accountType, setAccountType] = useState('');
+  const [accountType, setAccountType] = useState('student');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  
   // SignUp
   const handleSignUp = (e) => {
     e.preventDefault();
     const userData = { accountType,fullName,email,password };
 
     axios.post('http://localhost:2000/users/signUp',userData).then((response) => {
-      console.log(response);
+   //   console.log(response);
       if(response.data.Status === "S"){
          alert("successful Registerd");
          setlogin(!login);
       }else if(response.data.Status === "F"){
+        //  console.log("jcknc");
          alert("username or Email Id Already exist");
       }  
     
@@ -147,14 +148,7 @@ function Login(props) {
           className="login__create-container__form-container__form"
           onSubmit={handleSignUp}
         >
-          <input
-            className="login__create-container__form-container__form--name"
-            type="text"
-            placeholder="Account Type"
-            value={accountType}
-            onChange={(e) => setAccountType(e.target.value)}
-            required
-          />
+         
           <input
             className="login__create-container__form-container__form--name"
             type="text"
@@ -179,6 +173,17 @@ function Login(props) {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+            
+            <select id="ac" name="Account Type" onChange={(e) => setAccountType(e.target.value)}>
+          
+              <option value='student' 
+              >Student</option>
+              <option value='Recuriter'
+              >Recuriter</option>
+              <option value='Admin'>Admin</option>
+
+            </select> 
+          
           <button className="login__create-container__form-container__form--submit">
             Sign Up
           </button>
