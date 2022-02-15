@@ -45,6 +45,27 @@ function Login(props) {
   // Login
   const handleLogin = (e) => {
     e.preventDefault();
+<<<<<<< HEAD
+    const userData = {email,password };
+
+  axios.post('http://localhost:2000/users/login',userData).then((response) => {
+      
+      console.log(response);
+      if(response.data.Status === "S"){
+        const userData=response.data.user;
+       // console.log(userData);
+        navigate('/dashboard',{state:userData});
+         
+      }else if(response.data.Status === "F"){
+         alert("Invalid credentials");
+      }  
+    
+    })
+   }
+
+
+   var islogin=true;
+=======
     const userData = { email, password };
 
     axios
@@ -60,9 +81,24 @@ function Login(props) {
         }
       });
   };
+>>>>>>> 25bafe7a8e69c77466e46791df6a496498a69369
 
   return (
     <div className="login">
+<<<<<<< HEAD
+     <Navigation loginpg= {islogin} />   
+    <div
+      className={`login__colored-container ${
+           login
+          ? "login__colored-container--left"
+          : "login__colored-container--right"
+       }`}
+    >
+
+    </div>
+    <div
+      className={`login__welcome-back
+=======
       <Navigation />
       <div
         className={`login__colored-container ${
@@ -73,6 +109,7 @@ function Login(props) {
       ></div>
       <div
         className={`login__welcome-back
+>>>>>>> 25bafe7a8e69c77466e46791df6a496498a69369
       ${
         login ? "login__welcome-back--active" : "login__welcome-back--inactive"
       }`}
