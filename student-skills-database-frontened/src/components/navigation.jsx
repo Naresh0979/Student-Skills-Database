@@ -29,8 +29,8 @@ export const Navigation = (props) => {
           id='bs-example-navbar-collapse-1'
         
         >
-         <span> { props.islogin}</span>
-        { !props.islogin ?    <ul className='nav navbar-nav navbar-right'>
+         
+        { !props.loginpg ?    <ul className='nav navbar-nav navbar-right'>
             {/* <li>
               <a href='#features' className='page-scroll'>
                 Features
