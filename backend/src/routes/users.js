@@ -64,6 +64,7 @@ router.post("/signUp", async (req, res) => {
 
 // LogOUT
 router.get("/logout", (req, res) => {
+  console.log("logging out");
   return res
     .clearCookie("jwt")
     .status(200)
