@@ -20,20 +20,23 @@ export const Navigation = (props) => {
             <span className='icon-bar'></span>{' '}
           </button>
           <a className='navbar-brand page-scroll' href='#page-top'>
-            Level Up
+            Level Up 
           </a>{' '}
         </div>
 
         <div
           className='collapse navbar-collapse'
           id='bs-example-navbar-collapse-1'
+        
         >
-          <ul className='nav navbar-nav navbar-right'>
+         <span> { props.islogin}</span>
+        { !props.islogin ?    <ul className='nav navbar-nav navbar-right'>
             {/* <li>
               <a href='#features' className='page-scroll'>
                 Features
               </a>
             </li>*/}
+            
             <li> 
               <a href='#about' className='page-scroll'>
                 About
@@ -65,12 +68,18 @@ export const Navigation = (props) => {
               </a>
             </li>
             <li>
-              <Link to ='/signup' className='page-scroll'>
-                LogIN
-              </Link>
+               { props.username ? 
+             <Link to ='/signup' className='page-scroll'>
+             Logout
+           </Link>
+ : <Link to ='/signup' className='page-scroll'>
+             LogIN 
+           </Link>
+
+               }
             </li>
             
-          </ul>
+          </ul> : <span></span> }
         </div>
       </div>
     </nav>

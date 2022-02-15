@@ -65,12 +65,12 @@ function Login(props) {
    }
 
 
-
+   var islogin=true;
 
   return (
     
     <div className="login">
-     <Navigation/>   
+     <Navigation loginpg= {islogin} />   
     <div
       className={`login__colored-container ${
            login
