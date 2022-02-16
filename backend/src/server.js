@@ -25,7 +25,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-//datebase connection
+//datebase connection 
 require("./db/connection");
 
 //routes

@@ -8,7 +8,7 @@ const user = new mongoose.Schema({
     },
     fullName: {
         type:String,
-        required:true            
+        required:true             
     },
     email: {
         type:String,
@@ -18,6 +18,10 @@ const user = new mongoose.Schema({
     password: {
         type:String,
         required:true      
+    },
+    isVerified:{
+        type:Boolean,
+        required:true
     }    
 })
 user.methods.generateAuthToken = async function(){
