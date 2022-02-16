@@ -59,6 +59,7 @@ router.post("/signUp", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     userData.password = await bcrypt.hash(userData.password, salt);
     await userData.save();
+    
     return res.status(200).json({ Status: "S", user: userData });
   } catch (error) {
     console.log(error);
@@ -67,7 +68,6 @@ router.post("/signUp", async (req, res) => {
 
 // LogOUT
 router.get("/logout", (req, res) => {
-  console.log("logging out");
   return res
     .clearCookie("jwt")
     .status(200)
