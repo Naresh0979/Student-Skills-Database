@@ -1,9 +1,7 @@
 //imports
-
-
 const cors = require('cors');
 require('dotenv').config()
-const users = require('./routes/users');
+const userRouter = require('./routes/users');
 const express = require("express");
 const cookieParser = require("cookie-parser");
 
@@ -29,7 +27,7 @@ app.use(cors(corsOptions));
 require("./db/connection");
 
 //routes
-app.use('/users',users);
+app.use('/users',userRouter);
 
 
 //Server Status

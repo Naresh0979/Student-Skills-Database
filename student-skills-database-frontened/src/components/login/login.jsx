@@ -28,7 +28,6 @@ function Login(props) {
   const handleSignUp = (e) => {
     e.preventDefault();
     const userData = { accountType, fullName, email, password };
-
     axios
       .post("http://localhost:2000/users/signUp", userData)
       .then((response) => {
@@ -36,6 +35,7 @@ function Login(props) {
         if (response.data.Status === "S") {
           alert("successful Registerd");
           setlogin(!login);
+          // navigate('/otp',state=userData);
         } else if (response.data.Status === "F") {
           //  console.log("jcknc");
           alert("username or Email Id Already exist");

@@ -17,7 +17,7 @@ export default function AppRouter() {
   return (
     <Router>
     <Routes>
-    <Route path="/"  element={<Home  />}></Route>
+        <Route path="/"  element={<Home/>}></Route>
         <Route path="/signup"  element={<Login/>}></Route>
         <Route path="/dashboard"  element={<Dashboard/>}></Route>
         {/* <AuthenticatedRoute
