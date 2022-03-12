@@ -15,6 +15,7 @@ function Login(props) {
   axios.defaults.withCredentials = true;
   let navigate = useNavigate();
   const [login, setlogin] = useState(false);
+  const [otpStatus, setotpStatus] = useState(false);
 
   const handleclick = () => {
     setlogin(!login);
@@ -23,6 +24,7 @@ function Login(props) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [otp, setotp] = useState("");
 
   // SignUp
   const handleSignUp = (e) => {
@@ -34,8 +36,8 @@ function Login(props) {
         //   console.log(response);
         if (response.data.Status === "S") {
           alert("successful Registerd");
-          setlogin(!login);
-          // navigate('/otp',state=userData);
+
+          setlogin(!otp);
         } else if (response.data.Status === "F") {
           //  console.log("jcknc");
           alert("username or Email Id Already exist");
@@ -108,6 +110,7 @@ function Login(props) {
           </div>
         </div>
       </div>
+      { !otpStatus ? 
       <div
         className={`login__create-container 
       ${
@@ -116,7 +119,8 @@ function Login(props) {
           : "login__create-container--inactive"
       }`}
       >
-        Create Account
+        
+        Create Account 
         {/* <div className="login__create-container__social-container">
         <img
           className="login__create-container__social-container--facebook-icon"
@@ -183,6 +187,56 @@ function Login(props) {
           </form>
         </div>
       </div>
+    :<div
+    className={`login__create-container 
+  ${
+    login
+      ? "login__create-container--active"
+      : "login__create-container--inactive"
+  }`}
+  >
+    
+    Email Verification 
+    {/* <div className="login__create-container__social-container">
+    <img
+      className="login__create-container__social-container--facebook-icon"
+      src={facebook}
+      alt=""
+    />
+    <img
+      className="login__create-container__social-container--google-icon"
+      src={google}
+      alt=""
+    />
+    <img
+      className="login__create-container__social-container--linkedin-icon"
+      src={linkedin}
+      alt=""
+    />
+  </div>
+  <span className="login__create-container--info-text">
+    or use email for your registration
+  </span>  */}
+    <div className="login__create-container__form-container">
+      <form
+        className="login__create-container__form-container__form"
+        onSubmit={handleSignUp}
+      >
+        <input
+          className="login__create-container__form-container__form--name"
+          type="text"
+          placeholder="Otp"
+          value={otp}
+          onChange={(e) => setFullName(e.target.value)}
+          required
+        />
+        
+        <button className="login__create-container__form-container__form--submit">
+          Verify
+        </button>
+      </form>
+    </div>
+  </div>}
       <div
         className={`login__login-container
       ${
