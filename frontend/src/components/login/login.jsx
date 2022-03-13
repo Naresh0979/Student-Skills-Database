@@ -15,7 +15,7 @@ function Login(props) {
   axios.defaults.withCredentials = true;
   let navigate = useNavigate();
   const [login, setlogin] = useState(false);
-  const [otpStatus, setotpStatus] = useState(false);
+  const [otpStatus, setOtpStatus] = useState(false);
 
   const handleclick = () => {
     setlogin(!login);
@@ -37,7 +37,7 @@ function Login(props) {
         if (response.data.Status === "S") {
           alert("successful Registerd");
 
-          setlogin(!otp);
+             setOtpStatus(!otpStatus);
         } else if (response.data.Status === "F") {
           //  console.log("jcknc");
           alert("username or Email Id Already exist");

@@ -38,7 +38,6 @@ userRouter.post("/login", async (req, res) => {
 });
 
 //send OTP
-
 const sendOtp = async (email) => {
   try {
     const otp = `${Math.floor(Math.random() * 999990 + 1)}`;
@@ -118,40 +117,34 @@ userRouter.get("/logout", (req, res) => {
     .json({ message: "Successfully logged out 😏 🍀" });
 });
 
-// userRouter.post("/sendOTP", cors(), async (req, res) => {
-//   try {
-//     const transport = nodemailer.createTransport({
-//       host: process.env.MAIL_HOST,
-//       port: process.env.MAIL_PORT,
-//       auth: {
-//         user: process.env.MAIL_USERNAME,
-//         pass: process.env.MAIL_PWD,
-//       },
-//     });
-//     await transport.sendMail({
-//       from: process.env.MAIL_FROM,
-//       to: "guptaamitop@gmail.com",
-//       subject: "OTP for Account Verfication",
-//       html: `
-//           <div className="email"
-//           style="border: 1px solid black;
-//           padding: 20px;
-//           font-family: sans-serif;
-//           line-height: 2;
-//           font-size: 20px;
-//           ">
-//           <h2>HERE IS YOUR OTP for Verfication</h2>
-//           <p>OTP is : ${req.body.otp}</p>
-//           </div>`
-//     });
+// Verify Otp
+userRouter.post("/verifyOTP",async(req,res) => {
+  try {
+    const otpData = await Otp.findOne({email:req.body.email});
+    if(!otpData) {return res.status(400).json({ Status: "F" ,message:"Invalid details" });}
+    
+    if(otpData.expireTime < Date.now()){
+      await Otp.deleteMany({email:req.body.email});
+      return res.status(400).json({ Status: "F" , message:"Expired" });
+    }
+    const validOtp = await bcrypt.compare(
+      req.body.otp,
+      otpData.otp
+    );      
+    if (!validOtp)        
+      return res.status(400).json({ Status: "F" });
+    await Otp.deleteMany({email:req.body.email});
+    await User.updateOne({email:req.body.email},{
+      $set:{
+        isVerified:true
+      }
+    });
+    return res.status(200).json({ Status: "S" }); 
 
-//     return res.status(200).send("OTP SENT SUCCESSFULLY !!");
+  } catch (error) {
+    console.log(error);
+  } 
+});
 
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(400).send("ERROR OCCURED");
-//   }
-
-// });
 
 module.exports = userRouter;
