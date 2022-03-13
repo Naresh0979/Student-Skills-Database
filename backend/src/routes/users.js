@@ -41,17 +41,22 @@ userRouter.post("/login", async (req, res) => {
 const sendOtp = async (email) => {
   try {
     const otp = `${Math.floor(Math.random() * 999990 + 1)}`;
-    const transport = nodemailer.createTransport({
-      host: process.env.MAIL_HOST,
-      port: process.env.MAIL_PORT,
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      port: 465,
+      secure: true,
       auth: {
-        user: process.env.MAIL_USERNAME,
-        pass: process.env.MAIL_PWD,
+        user: `${process.env.GEMAIL}` || "abc@gmail.com", // TODO: your gmail account
+        pass: `${process.env.GPASSWORD}` || "1234", // TODO: your gmail password
       },
     });
-    await transport.sendMail({
-      from: process.env.MAIL_FROM,
-      to: email,
+    // console.log(email);
+    // console.log(process.env.GEMAIL);
+    // console.log(process.env.GPASSWORD);
+    // Step 2
+    let mailOptions = {
+      from: `${process.env.GEMAIL}`, // TODO: email sender
+      to: email, // TODO: email receiver
       subject: "OTP for Account Verfication",
       html: `
           <div className="email" 
@@ -65,7 +70,32 @@ const sendOtp = async (email) => {
           <p>OTP is : ${otp}</p>
           <p> OTP will expire in 1 hour <p>
           </div>`,
+    };
+
+    // Step 3
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        return console.log("Error occurs",err);
+      }
+      return console.log("Email sent!!!");
     });
+    // await transport.sendMail({
+    //   from: process.env.MAIL_FROM,
+    //   to: email,
+    //   subject: "OTP for Account Verfication",
+    //   html: `
+    //       <div className="email" 
+    //       style="border: 1px solid black;
+    //       padding: 20px;
+    //       font-family: sans-serif;
+    //       line-height: 2;
+    //       font-size: 20px; 
+    //       ">
+    //       <h2>HERE IS YOUR OTP for Verfication</h2>
+    //       <p>OTP is : ${otp}</p>
+    //       <p> OTP will expire in 1 hour <p>
+    //       </div>`,
+    // });
     return otp;
   } catch (error) {
     console.log(error);
@@ -94,15 +124,15 @@ userRouter.post("/signUp", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     userData.password = await bcrypt.hash(userData.password, salt);
     await userData.save();
-    const otpNumber = await sendOtp(userData.email);    
+    const otpNumber = await sendOtp(userData.email);
     const otpData = new Otp({
-      email:req.body.email,
-      otp:otpNumber,
-      expireTime:Date.now()+3600000
+      email: req.body.email,
+      otp: otpNumber,
+      expireTime: Date.now() + 3600000,
     });
     const otpSalt = await bcrypt.genSalt(5);
     otpData.otp = await bcrypt.hash(otpData.otp, otpSalt);
-    otpData.save();    
+    otpData.save();
     return res.status(200).json({ Status: "S", user: userData });
   } catch (error) {
     console.log(error);
@@ -118,33 +148,32 @@ userRouter.get("/logout", (req, res) => {
 });
 
 // Verify Otp
-userRouter.post("/verifyOTP",async(req,res) => {
+userRouter.post("/verifyOTP", async (req, res) => {
   try {
-    const otpData = await Otp.findOne({email:req.body.email});
-    if(!otpData) {return res.status(400).json({ Status: "F" ,message:"Invalid details" });}
-    
-    if(otpData.expireTime < Date.now()){
-      await Otp.deleteMany({email:req.body.email});
-      return res.status(400).json({ Status: "F" , message:"Expired" });
+    const otpData = await Otp.findOne({ email: req.body.email });
+    if (!otpData) {
+      return res.status(400).json({ Status: "F", message: "Invalid details" });
     }
-    const validOtp = await bcrypt.compare(
-      req.body.otp,
-      otpData.otp
-    );      
-    if (!validOtp)        
-      return res.status(400).json({ Status: "F" });
-    await Otp.deleteMany({email:req.body.email});
-    await User.updateOne({email:req.body.email},{
-      $set:{
-        isVerified:true
-      }
-    });
-    return res.status(200).json({ Status: "S" }); 
 
+    if (otpData.expireTime < Date.now()) {
+      await Otp.deleteMany({ email: req.body.email });
+      return res.status(400).json({ Status: "F", message: "Expired" });
+    }
+    const validOtp = await bcrypt.compare(req.body.otp, otpData.otp);
+    if (!validOtp) return res.status(400).json({ Status: "F" });
+    await Otp.deleteMany({ email: req.body.email });
+    await User.updateOne(
+      { email: req.body.email },
+      {
+        $set: {
+          isVerified: true,
+        },
+      }
+    );
+    return res.status(200).json({ Status: "S" });
   } catch (error) {
     console.log(error);
-  } 
+  }
 });
-
 
 module.exports = userRouter;
