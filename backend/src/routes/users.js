@@ -15,7 +15,7 @@ const userRouter = express.Router();
 userRouter.post("/login", async (req, res) => {
   try {
     const userData = await User.findOne({ email: req.body.email });
-    if (!userData || userData.isVerified)
+    if (!userData || !userData.isVerified)
       return res.status(400).send("Invalid Credentials");
 
     const validPassword = await bcrypt.compare(

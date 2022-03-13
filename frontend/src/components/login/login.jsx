@@ -24,7 +24,7 @@ function Login(props) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [otp, setotp] = useState("");
+  const [otp, setOtp] = useState("");
 
   // SignUp
   const handleSignUp = (e) => {
@@ -44,6 +44,21 @@ function Login(props) {
         }
       });
   };
+  // Account Verification
+
+  const handleOtp = e => {
+    e.preventDefault();
+    const userData = {email,otp};
+    axios.post('http://localhost:2000/users/verifyOTP',userData).then((response) => {      
+      console.log(response);
+      if(response.data.Status === "S"){
+        alert('Verified');
+        setlogin(!login);         
+      }else if(response.data.Status === "F"){
+         alert("Invalid credentials");
+      }      
+    })
+  }
   // Login
   const handleLogin = (e) => {
     e.preventDefault();
@@ -220,14 +235,14 @@ function Login(props) {
     <div className="login__create-container__form-container">
       <form
         className="login__create-container__form-container__form"
-        onSubmit={handleSignUp}
+        onSubmit={handleOtp}
       >
         <input
           className="login__create-container__form-container__form--name"
           type="text"
           placeholder="Otp"
           value={otp}
-          onChange={(e) => setFullName(e.target.value)}
+          onChange={(e) => setOtp(e.target.value)}
           required
         />
         
