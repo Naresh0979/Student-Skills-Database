@@ -43,19 +43,13 @@ const sendOtp = async (email) => {
     const otp = `${Math.floor(Math.random() * 999990 + 1)}`;
     let transporter = nodemailer.createTransport({
       service: "gmail",
-      port: 465,
-      secure: true,
       auth: {
-        user: `${process.env.GEMAIL}` || "abc@gmail.com", // TODO: your gmail account
-        pass: `${process.env.GPASSWORD}` || "1234", // TODO: your gmail password
+        user: process.env.GEMAIL || "abc@gmail.com",
+        pass: process.env.GPASSWORD || "1234",
       },
     });
-    // console.log(email);
-    // console.log(process.env.GEMAIL);
-    // console.log(process.env.GPASSWORD);
-    // Step 2
     let mailOptions = {
-      from: `${process.env.GEMAIL}`, // TODO: email sender
+      from: process.env.GEMAIL, // TODO: email sender
       to: email, // TODO: email receiver
       subject: "OTP for Account Verfication",
       html: `
