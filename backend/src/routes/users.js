@@ -42,7 +42,9 @@ const sendOtp = async (email) => {
   try {
     const otp = `${Math.floor(Math.random() * 999990 + 1)}`;
     let transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: 'smtp.gmail.com',
+      port: 465,
+	secure: true,
       auth: {
         user: process.env.GEMAIL || "abc@gmail.com",
         pass: process.env.GPASSWORD || "1234",
