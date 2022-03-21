@@ -8,7 +8,7 @@ import { Navigation } from "./navigation";
 //import { Features } from "./components/features";
 import { About } from "./about";
 import { Services } from "./services";
-import Profile  from "./Profile";
+import Profile  from "./dashboard/Profile";
 // import { Gallery } from "./components/gallery";
 // import { Testimonials } from "./components/testimonials";
 import { Team } from "../components/Team";

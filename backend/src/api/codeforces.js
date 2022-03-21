@@ -1,9 +1,13 @@
 const axios = require("axios");
-async function run(){
+async function getUserContest(userHandle){
     console.log("entered");
-    const url = "https://codeforces.com/api/user.rating?handle=amitgupta20";
+    const url = `https://codeforces.com/api/user.rating?handle=${userHandle}`;
     const responce = await axios.get(url);
-    console.log("entered");
-    console.log(responce.data);
 }
-module.exports = {run};
+async function getUserRating(userHandle){
+    const url = `https://codeforces.com/api/user.info?handles=${userHandle}`;
+    const responce = await axios.get(url);
+    const { maxRating } = responce.data.result[0]; 
+    return maxRating;
+}
+module.exports = {getUserRating , getUserContest};

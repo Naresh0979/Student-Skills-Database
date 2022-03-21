@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const express = require("express");
-const nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer"); 
 const cors = require("cors");
 const userRouter = express.Router();
 
@@ -42,9 +42,9 @@ const sendOtp = async (email) => {
   try {
     const otp = `${Math.floor(Math.random() * 999990 + 1)}`;
     let transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
+      host: "smtp.gmail.com",
       port: 465,
-	secure: true,
+      secure: true,
       auth: {
         user: process.env.GEMAIL || "abc@gmail.com",
         pass: process.env.GPASSWORD || "1234",
@@ -71,7 +71,7 @@ const sendOtp = async (email) => {
     // Step 3
     transporter.sendMail(mailOptions, (err, data) => {
       if (err) {
-        return console.log("Error occurs",err);
+        return console.log("Error occurs", err);
       }
       return console.log("Email sent!!!");
     });
@@ -80,12 +80,12 @@ const sendOtp = async (email) => {
     //   to: email,
     //   subject: "OTP for Account Verfication",
     //   html: `
-    //       <div className="email" 
+    //       <div className="email"
     //       style="border: 1px solid black;
     //       padding: 20px;
     //       font-family: sans-serif;
     //       line-height: 2;
-    //       font-size: 20px; 
+    //       font-size: 20px;
     //       ">
     //       <h2>HERE IS YOUR OTP for Verfication</h2>
     //       <p>OTP is : ${otp}</p>
