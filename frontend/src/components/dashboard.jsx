@@ -31,9 +31,10 @@ export default function Dashboard(props) {
   const location = useLocation();
 
   return (
-    // <div>Welcome {location.state.fullName}</div>
+
     <div>
-      <Profile />
+   {/* <div>Welcome {location.state.fullName}</div> */}
+      <Profile user = {location.state} />
       {/* <Features data={landingPageData.Features} />  */}
       <About data={landingPageData.About} />
       <Services data={landingPageData.Services} />
