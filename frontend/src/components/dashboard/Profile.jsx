@@ -57,12 +57,14 @@ const Profile = () => {
                 </div>
               </div>
               <div className="col-md-2">
+                <form action="/EditProfile">
                 <input
                   type="submit"
                   className="profile-edit-btn"
                   name="btnAddMore"
-                  value="Edit Profile"
-                />
+                  value='EditProfile'
+                /></form>
+              
               </div>
             </div>
             <div className="row">
