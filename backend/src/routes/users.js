@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const express = require("express");
 const nodemailer = require("nodemailer"); 
-const cors = require("cors");
 const userRouter = express.Router();
 
 //Methods
