@@ -9,6 +9,8 @@ import Login from './components/login/login';
 
 import Dashboard from './components/dashboard';
 import EditProfile from './components/dashboard/EditProfile';
+import DSAPractice from './components/dashboard/DSAPractice';
+
 import Home from './components/home';
 
 
@@ -21,7 +23,7 @@ export default function AppRouter() {
         <Route path="/signup"  element={<Login/>}></Route>
         <Route path="/dashboard"  element={<Dashboard/>}></Route>
         <Route path="/EditProfile"  element={<EditProfile/>}></Route>
- 
+        <Route path="/DSAPractice"  element={<DSAPractice/>}></Route>
         {/* <AuthenticatedRoute
             path="/dashboard"
             isAuthenticated={this.props.username.trim().length > 0}

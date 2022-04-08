@@ -25,14 +25,14 @@ require("./db/connection");
 
 //routes
 app.use('/users',userRouter);
-
+ 
 
 //Server Status
 app.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`);
 });
 
-const { getUserRating } = require('./api/codeforces');
-getUserRating('amitgupta20');
+//const { getUserRating } = require('./api/codeforces');
+//getUserRating('amitgupta20');
 
  

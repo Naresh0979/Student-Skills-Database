@@ -8,6 +8,6 @@ async function getUserRating(userHandle){
     const url = `https://codeforces.com/api/user.info?handles=${userHandle}`;
     const responce = await axios.get(url);
     const { maxRating } = responce.data.result[0]; 
-    return maxRating;
+    return  maxRating;
 }
 module.exports = {getUserRating , getUserContest};

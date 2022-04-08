@@ -64,7 +64,16 @@ const Profile = () => {
                   name="btnAddMore"
                   value='EditProfile'
                 /></form>
-              
+                <form action="/DSAPractice">
+
+                <input
+                  type="submit"
+                  className="profile-edit-btn"
+                //  name="btnAddMore"
+                  value='DSAPractice'
+                />
+                </form>
+            
               </div>
             </div>
             <div className="row">
