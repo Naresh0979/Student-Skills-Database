@@ -14,6 +14,7 @@ import Profile  from "./dashboard/Profile";
 import { Team } from "../components/Team";
 import { Contact } from "./contact";
 import JsonData from "../data/data.json";
+import RatingMeter from "./animations/RatingMeter";
 import SmoothScroll from "smooth-scroll";
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
@@ -34,9 +35,11 @@ export default function Dashboard(props) {
 
     <div>
    {/* <div>Welcome {location.state.fullName}</div> */}
+      <RatingMeter/>
       <Profile user = {location.state} />
       {/* <Features data={landingPageData.Features} />  */}
       <About data={landingPageData.About} />
+      
       <Services data={landingPageData.Services} />
       {/* <Gallery data={landingPageData.Gallery}/>
     <Testimonials data={landingPageData.Testimonials} /> */}

@@ -32,7 +32,8 @@ app.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`);
 });
 
-const { getUserRating } = require('./api/codeforces');
-getUserRating('amitgupta20');
+const { getUserContest } = require('./api/codeforces');
+// getUserContest();
+// getUserRating('amitgupta20');
 
  
