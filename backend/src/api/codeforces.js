@@ -1,13 +1,21 @@
 const axios = require("axios");
-async function getUserContest(userHandle){
-    console.log("entered");
-    const url = `https://codeforces.com/api/user.rating?handle=${userHandle}`;
-    const responce = await axios.get(url);
-}
-async function getUserRating(userHandle){
-    const url = `https://codeforces.com/api/user.info?handles=${userHandle}`;
-    const responce = await axios.get(url);
-    const { maxRating } = responce.data.result[0]; 
-    return  maxRating;
-}
-module.exports = {getUserRating , getUserContest};
+exports.getUserContest = async function (userHandle) {
+  console.log("entered");
+  const url = `https://codeforces.com/api/user.rating?handle=${userHandle}`;
+  const responce = await axios.get(url);
+};
+exports.getUserRating = async function (userHandle) {
+  const url = `https://codeforces.com/api/user.info?handles=${userHandle}`;
+  const responce = await axios.get(url);
+  const { maxRating } = responce.data.result[0];
+  return maxRating;
+};
+exports.getUpcomingContest = async function (req, res) {
+  //console.log("reached");
+  const url = `https://codeforces.com/api/contest.list?gym=false`;
+  const { data } = await axios.get(url);
+  const result = data.result.filter((contest) => contest.phase === "BEFORE");
+  //return result;
+  //console.log(result);
+  res.send(result);
+};

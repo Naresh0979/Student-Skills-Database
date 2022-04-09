@@ -73,7 +73,15 @@ const Profile = () => {
                   value='DSAPractice'
                 />
                 </form>
-            
+                <form action="/ContestCalender">
+
+                <input
+                  type="submit"
+                  className="profile-edit-btn"
+                //  name="btnAddMore"
+                  value='Calender'
+                />
+                </form>
               </div>
             </div>
             <div className="row">

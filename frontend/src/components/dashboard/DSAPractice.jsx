@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Collapsible from 'react-collapsible';
 import QuestionBank from "../../data/questionBank.json";
+import {Navbar} from "../../Navbar"
 //import Question from './Question';
 // import {QuestionBank} from './questionBank.json'
 import '../styles/dsa.scss'; 
@@ -23,9 +24,13 @@ const DSAPractice = () => {
 // ];
 // console.log(QuestionBank);
     return ( 
+      
       <div id="profileContainer">
+        <Navbar/>
       <div className="container">
+      <h1 className='head'>Practice Problems</h1>
         <div className="emp-profile">
+          
      {
        QuestionBank.map((tags,index ) => (
          <div className='tagsGroup'>

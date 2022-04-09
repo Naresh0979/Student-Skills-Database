@@ -6,7 +6,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express(); 
 const PORT = process.env.PORT || 2000;
-
+const { getUpcomingContest } = require('./api/codeforces');
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({
@@ -26,6 +26,8 @@ require("./db/connection");
 //routes
 app.use('/users',userRouter);
  
+app.get('/getCFContests',getUpcomingContest);
+//console.log(getUpcomingContest());
 
 //Server Status
 app.listen(PORT, () => {
