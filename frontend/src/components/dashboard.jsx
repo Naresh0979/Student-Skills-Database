@@ -35,7 +35,7 @@ export default function Dashboard(props) {
 
     <div>
    {/* <div>Welcome {location.state.fullName}</div> */}
-      <RatingMeter/>
+      {/* <RatingMeter/> */}
       <Profile user = {location.state} />
       {/* <Features data={landingPageData.Features} />  */}
       <About data={landingPageData.About} />

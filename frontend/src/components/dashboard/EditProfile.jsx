@@ -9,7 +9,7 @@ import Experience from "../UserDetails/Experience";
 // import { faFacebookF } from '@fortawesome/free-brands-svg-icons' 
 
 // library.add(faFacebookF); 
-import "./editProfile.css";
+import "./editProfile.css"; 
 const EditProfile = () => {
     const [info, setInfo] = useState({
       fname:"",

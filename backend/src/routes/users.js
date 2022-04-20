@@ -124,23 +124,6 @@ const sendOtp = async (email) => {
       }
       return console.log("Email sent!!!");
     });
-    // await transport.sendMail({
-    //   from: process.env.MAIL_FROM,
-    //   to: email,
-    //   subject: "OTP for Account Verfication",
-    //   html: `
-    //       <div className="email"
-    //       style="border: 1px solid black;
-    //       padding: 20px;
-    //       font-family: sans-serif;
-    //       line-height: 2;
-    //       font-size: 20px;
-    //       ">
-    //       <h2>HERE IS YOUR OTP for Verfication</h2>
-    //       <p>OTP is : ${otp}</p>
-    //       <p> OTP will expire in 1 hour <p>
-    //       </div>`,
-    // });
     return otp;
   } catch (error) {
     console.log(error);

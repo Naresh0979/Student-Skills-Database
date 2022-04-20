@@ -6,7 +6,7 @@ import {
     Route
 } from 'react-router-dom';
 import Login from './components/login/login';
-import EditProfile from './components/dashboard/EditProfile';
+// import EditProfile from './components/dashboard/EditProfile';
 import Dashboard from './components/dashboard';
 import EditProfile from './components/dashboard/EditProfile';
 import DSAPractice from './components/dashboard/DSAPractice';
@@ -24,7 +24,7 @@ export default function AppRouter() {
         <Route path="/signup"  element={<Login/>}></Route>
         <Route path="/dashboard"  element={<Dashboard/>}></Route>
         <Route path='/editProfile' element={<EditProfile/>}/>
-        <Route path="/EditProfile"  element={<EditProfile/>}></Route>
+        {/* <Route path="/EditProfile"  element={<EditProfile/>}></Route> */}
         <Route path="/DSAPractice"  element={<DSAPractice/>}></Route>
         <Route path="/ContestCalender"  element={<ContestCalender/>}></Route>
         <Route path="/CodingPlatformProfile"  element={<CodingPlatformProfile/>}></Route>
