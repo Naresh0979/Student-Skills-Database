@@ -59,6 +59,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className="col-md-2">
+                <form action="/EditProfile">
                 <input
                   onClick={
                     () => {
@@ -68,8 +69,34 @@ const Profile = () => {
                   type="submit"
                   className="profile-edit-btn"
                   name="btnAddMore"
-                  value="Edit Profile"
+                  value='EditProfile'
+                /></form>
+                <form action="/DSAPractice">
+
+                <input
+                  type="submit"
+                  className="profile-edit-btn"
+                //  name="btnAddMore"
+                  value='DSAPractice'
                 />
+                </form>
+                <form action="/ContestCalender">
+
+                <input
+                  type="submit"
+                  className="profile-edit-btn"
+                //  name="btnAddMore"
+                  value='Calender'
+                />
+                </form>
+                <form action="/CodingPlatformProfile">
+                <input
+                  type="submit"
+                  className="profile-edit-btn"
+                  name="btnAddMore"
+                  value='CodingProfiles'
+                /></form>
+                
               </div>
             </div>
             <div className="row">
