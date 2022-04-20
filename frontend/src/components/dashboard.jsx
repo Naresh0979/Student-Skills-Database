@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 import { useState, useEffect } from "react";
-import { Navigation } from "./navigation";
+import { DashboardNavigation } from "./DashboardNavigation";
 // import { Header } from "./header";
 //import { Features } from "./components/features";
 import { About } from "./about";
@@ -11,7 +11,7 @@ import { Services } from "./services";
 import Profile  from "./dashboard/Profile";
 // import { Gallery } from "./components/gallery";
 // import { Testimonials } from "./components/testimonials";
-import { Team } from "../components/Team";
+import  CodingPlatformProfile  from "./dashboard/CodingPlatformProfile";
 import { Contact } from "./contact";
 import JsonData from "../data/data.json";
 import RatingMeter from "./animations/RatingMeter";
@@ -43,9 +43,10 @@ export default function Dashboard(props) {
       <Services data={landingPageData.Services} />
       {/* <Gallery data={landingPageData.Gallery}/>
     <Testimonials data={landingPageData.Testimonials} /> */}
-      <Team data={landingPageData.Team} />
-      <Contact data={landingPageData.Contact} />
-      <Navigation username={location.state.fullName} />
+      {/* <Team data={landingPageData.Team} /> */}
+      <CodingPlatformProfile/>
+      {/* <Contact data={landingPageData.Contact} /> */}
+      <DashboardNavigation username={location.state.fullName} />
     </div>
   );
 }

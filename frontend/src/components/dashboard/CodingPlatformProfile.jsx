@@ -7,9 +7,9 @@ import React from "react";
 
 const CodingPlatformProfile = () => {
   return (
-    <div id="profileContainer">
+    <div id='team' className='text-center'>
       <div className="container">
-        <Navbar />
+        {/* <Navbar /> */}
         <h1 className="heading">Coding Profiles</h1>
         <div className="row">
           <div className="col-sm-4">
