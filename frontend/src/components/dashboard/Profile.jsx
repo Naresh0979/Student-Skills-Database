@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/profile.css";
 const Profile = () => {
+  let navigate = useNavigate();
   return (
     <div id="profileContainer">
       <div classNameName="container">
@@ -58,6 +60,11 @@ const Profile = () => {
               </div>
               <div className="col-md-2">
                 <input
+                  onClick={
+                    () => {
+                      navigate('/editProfile');
+                    }
+                  }
                   type="submit"
                   className="profile-edit-btn"
                   name="btnAddMore"
