@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const express = require("express");
-const nodemailer = require("nodemailer"); 
+const nodemailer = require("nodemailer");
 const cors = require("cors");
 const userRouter = express.Router();
 
@@ -37,6 +37,55 @@ userRouter.post("/login", async (req, res) => {
   }
 });
 
+userRouter.post("/sendEnquiry", async (req, res) => {
+  try {
+    let transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.GEMAIL || "abc@gmail.com",
+        pass: process.env.GPASSWORD || "1234",
+      },
+    });
+    let mailOptions = {
+      from:
+        // process.env.GEMAIL
+        {
+          name: `${req.body.name}`,
+          address: `${req.body.email}`,
+        } // TODO: email sender
+      ,
+      to: process.env.GEMAIL, // TODO: email receiver
+      subject: "Contact Us",
+      html: `
+          <div className="email" 
+          style="border: 1px solid black;
+          font-family: sans-serif;
+          text-align: center;
+          font-size: 20px; 
+          ">
+          <h2>Enquiry</h2>
+          <p>${req.body.message}</p>
+          <p>Regards, ${req.body.name}</p>
+          <p>${req.body.email}</p>
+          </div>`,
+    };
+
+    // Step 3
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        console.log("Error occurs", err);
+        return res.status(400).send(err);
+      }
+      console.log("Email sent!!!");
+      return res.status(200).send("Success");
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
 //send OTP
 const sendOtp = async (email) => {
   try {
