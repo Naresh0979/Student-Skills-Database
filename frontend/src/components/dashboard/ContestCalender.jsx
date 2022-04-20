@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Collapsible from "react-collapsible";
-//import QuestionBank from "../../data/questionBank.json";
 import { Navbar } from "../../Navbar";
 import axios from "axios";
-//import Question from './Question';
-// import {QuestionBank} from './questionBank.json'
 import "../styles/dsa.scss";
 
 const ContestCalender = () => {
-  const [codeforcesContest, setCodeforcesContest] = useState();
- 
-  
-  useEffect(() => {    
-    axios.get('http://localhost:2000/getCFContests').then((contest)=>{
+  const [codeforcesContest, setCodeforcesContest] = useState("Loading");
+
+  useEffect(() => {
+    axios.get("http://localhost:2000/getCFContests").then((contest) => {
       //  console.log(contest.data);
-        setCodeforcesContest(contest.data);
-    })
+      setCodeforcesContest(contest.data);
+     // setCodeforcesContest(codeforcesContest.sort())    ;
+     // setCodeforcesContest(codeforcesContest.reverse());
+            
+    });
   }, []);
 
   return (
@@ -25,19 +24,22 @@ const ContestCalender = () => {
         <h1 className="head">Contest Calender</h1>
 
         <div className="emp-profile">
-          {
-            
-            codeforcesContest ? codeforcesContest.map((problem,index) => (
-                  <Collapsible key={index} trigger={problem.name} >
-                  {/* <p key={index}>
-              {problem.paragraph}
-                 </p>
-                       */}
-                 <a key={index} href={`https://codeforces.com/contests/${problem.id}`}><button className='form-control btn-primary '>Proceed to Contest</button></a>
-                 </Collapsible>
-                 )) : <h1>No contest available</h1>
-
-          }
+          {codeforcesContest === "Loading" ? (<p>Loading...</p>) : codeforcesContest.length !== 0 ? (
+            codeforcesContest.map((problem, index) => (
+              <Collapsible key={index} trigger={problem.name}>
+                <a
+                  key={index}
+                  href={`https://codeforces.com/contests/${problem.id}`}
+                >
+                  <button className="form-control btn-primary ">
+                    Proceed to Contest
+                  </button>
+                </a>
+              </Collapsible>
+            ))
+          ) : (
+            <p>No contest available</p>
+          )}
         </div>
       </div>
     </div>

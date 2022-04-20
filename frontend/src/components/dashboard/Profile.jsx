@@ -82,6 +82,14 @@ const Profile = () => {
                   value='Calender'
                 />
                 </form>
+                <form action="/CodingPlatformProfile">
+                <input
+                  type="submit"
+                  className="profile-edit-btn"
+                  name="btnAddMore"
+                  value='CodingProfiles'
+                /></form>
+                
               </div>
             </div>
             <div className="row">

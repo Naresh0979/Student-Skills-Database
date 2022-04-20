@@ -37,7 +37,7 @@ function Login(props) {
         if (response.data.Status === "S") {
           alert("successful Registerd");
 
-             setOtpStatus(!otpStatus);
+          setOtpStatus(!otpStatus);
         } else if (response.data.Status === "F") {
           //  console.log("jcknc");
           alert("username or Email Id Already exist");
@@ -46,56 +46,54 @@ function Login(props) {
   };
   // Account Verification
 
-  const handleOtp = e => {
+  const handleOtp = (e) => {
     e.preventDefault();
-    const userData = {email,otp};
-    axios.post('http://localhost:2000/users/verifyOTP',userData).then((response) => {      
-      console.log(response);
-      if(response.data.Status === "S"){
-        alert('Verified');
-        setlogin(!login);         
-      }else if(response.data.Status === "F"){
-         alert("Invalid credentials");
-      }      
-    })
-  }
+    const userData = { email, otp };
+    axios
+      .post("http://localhost:2000/users/verifyOTP", userData)
+      .then((response) => {
+        console.log(response);
+        if (response.data.Status === "S") {
+          alert("Verified");
+          setlogin(!login);
+        } else if (response.data.Status === "F") {
+          alert("Invalid credentials");
+        }
+      });
+  };
   // Login
   const handleLogin = (e) => {
     e.preventDefault();
-    const userData = {email,password };
+    const userData = { email, password };
 
-  axios.post('http://localhost:2000/users/login',userData).then((response) => {
-      
-      console.log(response);
-      if(response.data.Status === "S"){
-        const userData=response.data.user;
-       // console.log(userData);
-        navigate('/dashboard',{state:userData});
-         
-      }else if(response.data.Status === "F"){
-         alert("Invalid credentials");
-      }  
-    
-    })
-   }
-   
+    axios
+      .post("http://localhost:2000/users/login", userData)
+      .then((response) => {
+        console.log(response);
+        if (response.data.Status === "S") {
+          const userData = response.data.user;
+          // console.log(userData);
+          navigate("/dashboard", { state: userData });
+        } else if (response.data.Status === "F") {
+          alert("Invalid credentials");
+        }
+      });
+  };
 
-   var islogin=true;
+  var islogin = true;
 
   return (
     <div className="login">
-     <Navigation loginpg= {islogin} />   
-    <div
-      className={`login__colored-container ${
-           login
-          ? "login__colored-container--left"
-          : "login__colored-container--right"
-       }`}
-    >
-
-    </div>
-    <div
-      className={`login__welcome-back
+      <Navigation loginpg={islogin} />
+      <div
+        className={`login__colored-container ${
+          login
+            ? "login__colored-container--left"
+            : "login__colored-container--right"
+        }`}
+      ></div>
+      <div
+        className={`login__welcome-back
       ${
         login ? "login__welcome-back--active" : "login__welcome-back--inactive"
       }`}
@@ -125,18 +123,17 @@ function Login(props) {
           </div>
         </div>
       </div>
-      { !otpStatus ? 
-      <div
-        className={`login__create-container 
+      {!otpStatus ? (
+        <div
+          className={`login__create-container 
       ${
         login
           ? "login__create-container--active"
           : "login__create-container--inactive"
       }`}
-      >
-        
-        Create Account 
-        {/* <div className="login__create-container__social-container">
+        >
+          Create Account
+          {/* <div className="login__create-container__social-container">
         <img
           className="login__create-container__social-container--facebook-icon"
           src={facebook}
@@ -156,63 +153,63 @@ function Login(props) {
       <span className="login__create-container--info-text">
         or use email for your registration
       </span>  */}
-        <div className="login__create-container__form-container">
-          <form
-            className="login__create-container__form-container__form"
-            onSubmit={handleSignUp}
-          >
-            <input
-              className="login__create-container__form-container__form--name"
-              type="text"
-              placeholder="Name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              required
-            />
-            <input
-              className="login__create-container__form-container__form--email"
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              className="login__create-container__form-container__form--password"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-
-            <select
-              id="ac"
-              name="Account Type"
-              onChange={(e) => setAccountType(e.target.value)}
+          <div className="login__create-container__form-container">
+            <form
+              className="login__create-container__form-container__form"
+              onSubmit={handleSignUp}
             >
-              <option value="student">Student</option>
-              <option value="Recuriter">Recuriter</option>
-              <option value="Admin">Admin</option>
-            </select>
+              <input
+                className="login__create-container__form-container__form--name"
+                type="text"
+                placeholder="Name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+              />
+              <input
+                className="login__create-container__form-container__form--email"
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <input
+                className="login__create-container__form-container__form--password"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
 
-            <button className="login__create-container__form-container__form--submit">
-              SIGN UP
-            </button>
-          </form>
+              <select
+                id="ac"
+                name="Account Type"
+                onChange={(e) => setAccountType(e.target.value)}
+              >
+                <option value="student">Student</option>
+                <option value="Recuriter">Recuriter</option>
+                <option value="Admin">Admin</option>
+              </select>
+
+              <button className="login__create-container__form-container__form--submit">
+                SIGN UP
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-    :<div
-    className={`login__create-container 
+      ) : (
+        <div
+          className={`login__create-container 
   ${
     login
       ? "login__create-container--active"
       : "login__create-container--inactive"
   }`}
-  >
-    
-    Email Verification 
-    {/* <div className="login__create-container__social-container">
+        >
+          Email Verification
+          {/* <div className="login__create-container__social-container">
     <img
       className="login__create-container__social-container--facebook-icon"
       src={facebook}
@@ -232,27 +229,27 @@ function Login(props) {
   <span className="login__create-container--info-text">
     or use email for your registration
   </span>  */}
-  
-    <div className="login__create-container__form-container">
-      <form
-        className="login__create-container__form-container__form"
-        onSubmit={handleOtp}
-      >
-        <input
-          className="login__create-container__form-container__form--name"
-          type="text"
-          placeholder="Otp"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-          required
-        />
-        
-        <button className="login__create-container__form-container__form--submit">
-          Verify
-        </button>
-      </form>
-    </div>
-  </div>}
+          <div className="login__create-container__form-container">
+            <form
+              className="login__create-container__form-container__form"
+              onSubmit={handleOtp}
+            >
+              <input
+                className="login__create-container__form-container__form--name"
+                type="text"
+                placeholder="Otp"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                required
+              />
+
+              <button className="login__create-container__form-container__form--submit">
+                Verify
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
       <div
         className={`login__login-container
       ${

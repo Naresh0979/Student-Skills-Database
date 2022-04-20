@@ -11,8 +11,8 @@ import Dashboard from './components/dashboard';
 import EditProfile from './components/dashboard/EditProfile';
 import DSAPractice from './components/dashboard/DSAPractice';
 import ContestCalender from './components/dashboard/ContestCalender';
-
 import Home from './components/home';
+import CodingPlatformProfile from './components/dashboard/CodingPlatformProfile';
 
 
 
@@ -26,6 +26,8 @@ export default function AppRouter() {
         <Route path="/EditProfile"  element={<EditProfile/>}></Route>
         <Route path="/DSAPractice"  element={<DSAPractice/>}></Route>
         <Route path="/ContestCalender"  element={<ContestCalender/>}></Route>
+        <Route path="/CodingPlatformProfile"  element={<CodingPlatformProfile/>}></Route>
+        
         {/* <AuthenticatedRoute
             path="/dashboard"
             isAuthenticated={this.props.username.trim().length > 0}
