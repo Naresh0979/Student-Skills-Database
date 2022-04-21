@@ -229,7 +229,7 @@ function Login(props) {
   <span className="login__create-container--info-text">
     or use email for your registration
   </span>  */}
-          <p>Email Sent to : ${email}</p>
+          <p>Email Sent to : {email}</p>
           <div className="login__create-container__form-container">
             <form
               className="login__create-container__form-container__form"

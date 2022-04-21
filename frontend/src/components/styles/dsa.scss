@@ -3,6 +3,7 @@
 //   box-sizing: border-box;
 //   padding: 10px;
 //   }
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 $yellow:  rgb(248, 159, 0);
 $cyan:    #337ab7;
 $grey:    rgb(51, 51, 51);
@@ -19,9 +20,22 @@ $breakpointMed: 767px;
 .Collapsible {
   background-color: $base;
 }
+.line-practice-head{
+  // margin-top: -2px;
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%);
+}
+
+
+// .collapsible{
+//   background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%);
+// }
 .head{
   text-align: center;
-  color:rgba(8, 16, 19, 0.384);
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+  color: black;
 }
 .tagsGroup {
   margin-top: 15px;
@@ -55,7 +69,7 @@ $breakpointMed: 767px;
   position: relative;
   border: 1px solid white;
   padding: 10px;
-  background: $cyan;
+  background: linear-gradient(to right, #818df7 0%, #71aded 100%);
   color: white;
 
 
@@ -97,4 +111,19 @@ $breakpointMed: 767px;
   font-size: 12px;
   background-color: #CBB700;
   color: black;
+}
+.questionsHead{
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+}
+.Collapsible__trigger{
+  font-size: 1.6rem;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+}
+.innerHeading{
+  font-weight: 900;
+  font-family: 'Montserrat', sans-serif;
 }

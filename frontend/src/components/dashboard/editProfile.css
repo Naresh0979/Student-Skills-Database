@@ -1,8 +1,15 @@
+.background-body-for-editProfile {
+	background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%);
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
 .edu-personal-info{
+	background-color: white;
+	border-radius: 2%;
     width: 75%;
     margin: 120px auto;
     justify-content: center;
-    padding: 10px;
+    padding: 0px;
 }
 
 .details-container {
@@ -149,191 +156,32 @@
 	/* border: #FF7F7F; */
 }
 
-.vid-upload-container {
-	width: 40%;
-	border-radius: 5px;
-	height: fit-content;
-	border: 1px solid #687987;
-	padding: 30px 0;
-	margin: 30px 0 10px;
-	display: flex;
-	justify-content: space-evenly;
-}
-
-.resume-container .MuiSvgIcon-root {
-	color: #687987;
-	height: 65px;
-	width: 55px;
-	margin-bottom: 30px;
-}
-
-.vid-upload-container-left {
-	display: flex;
-	flex-direction: column;
-	width: 80%;
-	align-items: center;
-	border-right: 1px solid #687987;
-}
-.vid-upload-container-right {
-	display: flex;
-	flex-direction: column;
-
-	width: 20%;
-	align-items: center;
-}
-
-.details-container-video p {
-	font-size: 14px;
-	margin: 0;
-	color: #687987;
-}
-/* input{
-      background-color: #0a58ca; */
-
-/* } */
-/* 
-.details-container-video .custom-file-input {
-	color: transparent;
-}
-.details-container-video .custom-file-input::-webkit-file-upload-button {
-	visibility: hidden;
-}
-.details-container-video .custom-file-input::before {
-	content: "  Upload video";
-	background-color: #0d6efd;
-	color: white;
-    margin: 0;
-
-width: 110px;
-	outline: none;
-	
-	cursor: pointer;
-}
-
-
-.details-container-video .custom-file-input:hover::before {
-	border-color: black;
-}
-.details-container-video.custom-file-input:active {
-	outline: 0;
-} */
-
-.custom-file-input {
-	color: transparent;
-}
-.custom-file-input::-webkit-file-upload-button {
-	visibility: hidden;
-}
-.custom-file-input::before {
-	content: "Select File";
-	color: white;
-	background: #0d6efd;
-	display: flex;
-	justify-content: center;
-	width: 100%;
-
-	border-radius: 3px;
-	padding: 3px 20px;
-	outline: none;
-	white-space: nowrap;
-	
-	cursor: pointer;
-	font-weight: 400;
-	border: none;
-	margin: 0;
-
-	font-size: 16px;
-}
-.custom-file-input:hover::before {
-	border-color: black;
-}
-.custom-file-input:active {
-	outline: 0;
-}
-.details-container-video input {
-	border: none;
-	/* margin-top: 0;
-	height: 100%; */
-	/* margin: 0;
-	font-size: initial; */
-	/* width: inherit; */
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0;
-	padding: 0;
-}
-
-/* .details-container-video button {
-	padding: 0;
-	height: 44px;
-	width: 113px;
-} */
-
-.resume-container {
-	border: 2px dashed #687987;
-	width: 50%;
-	padding: 0px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-    margin: 30px 0;
-}
-.resume-container p {
-	margin: 0;
-	color: #687987;
-}
-
-.resume-container .small-p {
-	font-size: 12px;
-	margin-top: 5px;
-}
-
-.resume-container img {
-	height: 75px;
-	width: 75px;
-	color: #687987;
-}
-.resume-container input {
-	border: none;
-	height: 38px;
-	width: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0;
-	padding: 0;
-}
-
-.resume-container .custom-file-input{
-	margin-top: 30px;
-}
-
-.resume-container .custom-file-input::before {
-	content: "Select File";
-	color: white;
-	background: #0d6efd;
-	display: flex;
-	justify-content: center;
-	width: 100%;
-
-	border-radius: 3px;
-	padding: 3px 20px;
-	outline: none;
-	white-space: nowrap;
-	
-	cursor: pointer;
-	font-weight: 400;
-	border: none;
-	margin: 0;
-
-	font-size: 16px;
-}
-
 .description {
-	width: 80%;
+	margin-top: -10px;
+	width: 88%;
 }
-.minus-btn {
-	/* display: flex;
-	justify-items: flex-end; */
+.btn-minus {
+	margin-left: 15px;
+	border-radius: 50%;
+	border-width: 0px;
+	margin-top: 35px;
+	height: 35%;
+	width: 5%;
+}
+.btn-adder {
+	border-radius: 50%;
+	border-width: 0px;
+	padding: 10px;
+}
+.grade-input {
+	/* text-align: center; */
+	width: 20%;
+}
+.endDate-input{
+	width: 25%;	
+	margin-right: 10px;
+}
+.link-input{
+	margin-top: -20px;
+	width: 88%;
 }

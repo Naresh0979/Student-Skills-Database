@@ -21,9 +21,10 @@ const ContestCalender = () => {
     <div id="profileContainer">
       <Navbar />
       <div className="container">
-        <h1 className="head">Contest Calender</h1>
 
         <div className="emp-profile">
+        <h1 className="head">Upcoming Contest</h1>
+          <hr className="line-practice-head"></hr>
           {codeforcesContest === "Loading" ? (<p>Loading...</p>) : codeforcesContest.length !== 0 ? (
             codeforcesContest.map((problem, index) => (
               <Collapsible key={index} trigger={problem.name}>

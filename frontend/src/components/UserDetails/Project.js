@@ -1,7 +1,7 @@
 import React from "react";
 import "../dashboard/editProfile.css";
 
-const Experience = (props) => {
+const Project = (props) => {
   return props.experienceList.map((val, idx) => {
     let experienceName = `inst-${idx}`,
       start = `st-${idx}`,
@@ -13,7 +13,7 @@ const Experience = (props) => {
           <div id={experienceName} className="flex-div-left-med-container">
             <input
               className="e-p-input"
-              placeholder="Organization Name"
+              placeholder="Project Name"
               id={experienceName}
               disabled={!props.status}
               value={val.organizationName}
@@ -38,14 +38,6 @@ const Experience = (props) => {
                 type="month"
               />
 
-              <input
-                className="e-p-input grade-input"
-                type="text"
-                placeholder="Location"
-                disabled={!props.status}
-                name="instituteName"
-                onChange={(event) => props.update(idx, event)}
-              />
               {props.status && idx > 0 && (
                 <button
                   id={experienceName}
@@ -72,9 +64,17 @@ const Experience = (props) => {
           name="organizationName"
           onChange={(event) => props.update(idx, event)}
         />
+        <input
+          className="e-p-input link-input"
+          type="text"
+          placeholder="Link"
+          disabled={!props.status}
+          name="instituteName"
+          onChange={(event) => props.update(idx, event)}
+        />
       </div>
     );
   });
 };
 
-export default Experience;
+export default Project;
