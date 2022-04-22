@@ -11,31 +11,47 @@ const Experience = (props) => {
       <div>
         <div id={experienceName} className="flex-div-left-right-med-container">
           <div id={experienceName} className="flex-div-left-med-container">
-            <input
-              className="e-p-input"
-              placeholder="Organization Name"
-              id={experienceName}
-              disabled={!props.status}
-              value={val.organizationName}
-              name="organizationName"
-              onChange={(event) => props.update(idx, event)}
-            />
+            <div className="flex-div-right-med-container-line">
+              <input
+                className="e-p-input"
+                placeholder="Organization Name"
+                id={experienceName}
+                disabled={!props.status}
+                value={val.organizationName}
+                name="organizationName"
+                onChange={(event) => props.update(idx, event)}
+              />
+              <input
+                className="e-p-input degree-input"
+                placeholder="Role"
+                id={experienceName}
+                disabled={!props.status}
+                value={val.role}
+                name="role"
+                onChange={(event) => props.update(idx, event)}
+              />
+            </div>
           </div>
-          <div id={experienceName} className="flex-div-right-med-container">
-            <div
-              id={experienceName}
-              className="flex-div-right-med-container-line"
-            >
+          <div className="flex-div-right-med-container">
+            <div className="flex-div-right-med-container-line">
               <input
                 className="e-p-input endDate-input"
-                value="2020-04"
+                value={val.startDate}
+                id={experienceName}
                 type="month"
+                disabled={!props.status}
+                name="startDate"
+                onChange={(event) => props.update(idx, event)}
               />
 
               <input
                 className="e-p-input endDate-input"
-                value="2021-06"
+                value={val.endDate}
+                id={experienceName}
                 type="month"
+                disabled={!props.status}
+                name="endDate"
+                onChange={(event) => props.update(idx, event)}
               />
 
               <input
@@ -43,6 +59,7 @@ const Experience = (props) => {
                 type="text"
                 placeholder="Location"
                 disabled={!props.status}
+                value={val.location}
                 name="instituteName"
                 onChange={(event) => props.update(idx, event)}
               />
@@ -69,6 +86,7 @@ const Experience = (props) => {
           className="e-p-input description"
           placeholder="Description"
           disabled={!props.status}
+          value={val.description}
           name="organizationName"
           onChange={(event) => props.update(idx, event)}
         />

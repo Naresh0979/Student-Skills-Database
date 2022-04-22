@@ -11,6 +11,7 @@ const ContestCalender = () => {
     axios.get("http://localhost:2000/getCFContests").then((contest) => {
       //  console.log(contest.data);
       setCodeforcesContest(contest.data);
+      console.log(contest.data);
      // setCodeforcesContest(codeforcesContest.sort())    ;
      // setCodeforcesContest(codeforcesContest.reverse());
             
@@ -25,14 +26,17 @@ const ContestCalender = () => {
         <div className="emp-profile">
         <h1 className="head">Upcoming Contest</h1>
           <hr className="line-practice-head"></hr>
-          {codeforcesContest === "Loading" ? (<p>Loading...</p>) : codeforcesContest.length !== 0 ? (
+          {codeforcesContest === "Loading" ? (<p className="text-center">Loading...</p>) : codeforcesContest.length !== 0 ? (
             codeforcesContest.map((problem, index) => (
               <Collapsible key={index} trigger={problem.name}>
                 <a
                   key={index}
                   href={`https://codeforces.com/contests/${problem.id}`}
                 >
-                  <button className="form-control btn-primary ">
+                  <p key={index} className="questionsHead">
+                        Date : 
+                  </p>
+                  <button className="form-control btn-success ">
                     Proceed to Contest
                   </button>
                 </a>

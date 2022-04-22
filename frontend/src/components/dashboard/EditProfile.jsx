@@ -1,21 +1,15 @@
 import Sidebar from "../sidebars/Sidebar";
 import React, { useEffect, useState } from "react";
-// import { ToastContainer, toast } from "react-toastify";
-// import AddIcon from "@material-ui/icons/Add";
 import Education from "../UserDetails/Education";
 import Experience from "../UserDetails/Experience";
 import { Navbar } from "../../Navbar";
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faFacebookF } from '@fortawesome/free-brands-svg-icons'
-
-// library.add(faFacebookF);
 import "./editProfile.css";
 import Project from "../UserDetails/Project";
+import Links from "../UserDetails/Links";
 const EditProfile = () => {
   const [info, setInfo] = useState({
     fname: "",
-    lname: "",
+    rollNumber: "",
     email: "",
     mobile: "",
     country: "",
@@ -24,12 +18,56 @@ const EditProfile = () => {
     pincode: "",
     bio: "",
     currentAdd: "",
-    permanentAdd: "",
     linkedin: "",
     youtube: "",
     twitter: "",
     website: "",
   });
+
+  //Skills
+
+  const [skills, setSkills] = useState([]);
+  function handleKeyDown(e) {
+    // e.preventDefault();
+    if (e.key !== "Enter") return;
+    const value = e.target.value;
+    if (!value.trim()) return;
+    setSkills([...skills, value]);
+    e.target.value = "";
+  }
+  function removeSkills(index) {
+    setSkills(skills.filter((skills, idx) => idx !== index));
+  }
+  // Links
+  const [linkCount, setLinkCount] = useState(0);
+  const [linkList, setLinkList] = useState([
+    {
+      index: linkCount,
+      linkName: "",
+      link: "",
+    },
+  ]);
+
+  const addNewLink = () => {
+    const newLink = {
+      index: linkCount + 1,
+      linkName: "",
+      link: "",
+    };
+    setLinkCount(linkCount + 1);
+    setLinkList([...linkList, newLink]);
+  };
+
+  const handleLinkChange = (index, event) => {
+    const linkTemporay = [...linkList];
+    linkTemporay[index][event.target.name] = event.target.value;
+    setLinkList(linkTemporay);
+  };
+
+  const deleteLink = (index) => {
+    const newLinkList = linkList.filter((s) => index !== s.index);
+    setLinkList(newLinkList);
+  };
 
   // For Education List
   const [educationCount, setEducationCount] = useState(0);
@@ -37,19 +75,10 @@ const EditProfile = () => {
     {
       index: educationCount,
       instituteName: "",
-      startDate: "",
-      endDate: "",
-    },
-  ]);
-
-  //For Experience List
-  const [experienceCount, setExperienceCount] = useState(0);
-  const [experienceList, setExperienceList] = useState([
-    {
-      index: experienceCount,
-      organizationName: "",
-      startDate: "",
-      endDate: "",
+      degreeName: "",
+      startDate: "2021-04",
+      endDate: "2022-06",
+      grade: "",
     },
   ]);
 
@@ -57,8 +86,10 @@ const EditProfile = () => {
     const newEducation = {
       index: educationCount + 1,
       instituteName: "",
-      startDate: "",
-      endDate: "",
+      degreeName: "",
+      startDate: "2021-04",
+      endDate: "2022-06",
+      grade: "",
     };
     setEducationCount(educationCount + 1);
     setEducationList([...educationList, newEducation]);
@@ -75,12 +106,29 @@ const EditProfile = () => {
     setEducationList(newEducationList);
   };
 
+  //For Experience List
+  const [experienceCount, setExperienceCount] = useState(0);
+  const [experienceList, setExperienceList] = useState([
+    {
+      index: experienceCount,
+      organizationName: "",
+      startDate: "2021-04",
+      endDate: "2022-06",
+      role: "",
+      location: "",
+      description: "",
+    },
+  ]);
+
   const addNewExperience = () => {
     const newExperience = {
       index: experienceCount + 1,
       organizationName: "",
-      startDate: "",
-      endDate: "",
+      startDate: "2021-04",
+      endDate: "2022-06",
+      role: "",
+      location: "",
+      description: "",
     };
     setExperienceCount(experienceCount + 1);
     setExperienceList([...experienceList, newExperience]);
@@ -97,41 +145,78 @@ const EditProfile = () => {
     setExperienceList(newExperienceList);
   };
 
+  // For Project List
+
+  const [projectCount, setProjectCount] = useState(0);
+  const [projectList, setProjectList] = useState([
+    {
+      index: projectCount,
+      projectName: "",
+      startDate: "2021-04",
+      endDate: "2022-06",
+      link: "",
+      description: "",
+    },
+  ]);
+
+  const addNewProject = () => {
+    const newProject = {
+      index: projectCount + 1,
+      projectName: "",
+      startDate: "2021-04",
+      endDate: "2022-06",
+      link: "",
+      description: "",
+    };
+    setProjectCount(projectCount + 1);
+    setProjectList([...projectList, newProject]);
+  };
+
+  const handleProjectChange = (index, event) => {
+    const ProjectTemporary = [...projectList];
+    ProjectTemporary[index][event.target.name] = event.target.value;
+    setProjectList(ProjectTemporary);
+  };
+
+  const deleteProject = (index) => {
+    const newProjectList = projectList.filter((s) => index !== s.index);
+    setProjectList(newProjectList);
+  };
+
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
+
+  const saveDetails = (e) => {
+    e.preventDefault();
+  };
   return (
     <div className="background-body-for-editProfile">
-      <Navbar/>
-    <div className="edu-personal-info">
-      {/* <ToastContainer /> */}
-      <div className="details-container">
-        <form>
-          <div className="details-container-personal-info">
-            <h3>Personal Info</h3>
-            <div className="flex-div-left-right">
-              <div className="flex-div-left">
-                <input
-                  className="e-p-input"
-                  placeholder="First Name*"
-                  name="fname"
-                  value={info?.fname}
-                  onChange={handleChange}
-                />
-                <input
-                  className="e-p-input"
-                  placeholder="Email id*"
-                  name="email"
-                  disabled
-                  value={info?.email}
-                />
-                <div className="small-left-right">
-                  <div className="small-left">
-                    {/* <select
-                          class="selectpicker countrypicker"
-                          data-flag="true"
-                        ></select> */}
-
+      <Navbar />
+      <div className="edu-personal-info">
+        {/* <ToastContainer /> */}
+        <div className="details-container">
+          <form onSubmit={saveDetails}>
+            <div className="details-container-personal-info">
+              <h3 className="text-center">Personal Information</h3>
+              <hr className="line-practice-head"></hr>
+              <div className="flex-div-left-right">
+                <div className="flex-div-left">
+                  <input
+                    className="e-p-input"
+                    placeholder="Full Name*"
+                    name="fname"
+                    value={info?.fname}
+                    onChange={handleChange}
+                  />
+                  <input
+                    className="e-p-input"
+                    placeholder="Email id*"
+                    name="email"
+                    disabled
+                    value={info?.email}
+                  />
+                  <div className="small-left-right">
                     <input
                       className="e-p-input"
                       placeholder="Country*"
@@ -148,7 +233,26 @@ const EditProfile = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="small-right">
+                </div>
+
+                <div className="flex-div-right">
+                  <input
+                    className="e-p-input"
+                    placeholder="Roll Number*"
+                    name="rollNumber"
+                    value={info?.rollNumber}
+                    onChange={handleChange}
+                  />
+                  <input
+                    className="e-p-input"
+                    placeholder="Mobile no.*"
+                    type="tel"
+                    name="mobile"
+                    value={info?.mobile}
+                    onChange={handleChange}
+                  />
+
+                  <div className="small-left-right">
                     <input
                       className="e-p-input"
                       name="state"
@@ -167,173 +271,150 @@ const EditProfile = () => {
                 </div>
               </div>
 
-              <div className="flex-div-right">
+              <input
+                className="e-p-input"
+                placeholder="Your Address"
+                name="currentAdd"
+                value={info?.currentAdd}
+                onChange={handleChange}
+              />
+              <input
+                className="e-p-input"
+                name="bio"
+                placeholder="Bio*"
+                value={info?.bio}
+                onChange={handleChange}
+              />
+              {/* <input
+                className="e-p-input"
+                placeholder="Your permanent address*"
+                name="permanentAdd"
+                value={info?.permanentAdd}
+                onChange={handleChange}
+              /> */}
+            </div>
+            <div>
+              <h3>Skills</h3>
+              <div className="tags-input-container">
+                {skills.map((skills, index) => (
+                  <div className="tag-item" key={index} id={index}>
+                    <span className="tags-text">{skills}</span>
+                    <span
+                      className="tags-close"
+                      onClick={() => removeSkills(index)}
+                    >
+                      &times;
+                    </span>
+                  </div>
+                ))}
+
                 <input
-                  className="e-p-input"
-                  placeholder="Last Name*"
-                  name="lname"
-                  value={info?.lname}
-                  onChange={handleChange}
-                />
-                <input
-                  className="e-p-input"
-                  placeholder="Mobile no.*"
-                  type="tel"
-                  name="mobile"
-                  value={info?.mobile}
-                  onChange={handleChange}
+                  type="text"
+                  onKeyDown={handleKeyDown}
+                  className="tags-input"
+                  placeholder="Enter Skill"
                 />
               </div>
             </div>
-            <input
-              className="e-p-input"
-              name="bio"
-              placeholder="Bio*"
-              value={info?.bio}
-              onChange={handleChange}
-            />
-            <input
-              className="e-p-input"
-              placeholder="Your current address*"
-              name="currentAdd"
-              value={info?.currentAdd}
-              onChange={handleChange}
-            />
-            <input
-              className="e-p-input"
-              placeholder="Your permanent address*"
-              name="permanentAdd"
-              value={info?.permanentAdd}
-              onChange={handleChange}
-            />
 
-            <div className="flex-div-left-right">
-              <div className="flex-div-left">
-                <div className="social-container">
-                  {/* <img
-                      className="social-icon"
-                      alt=""
-                      src="/images/linkedIn.png"
-                    /> */}
-                  <input
-                    className="e-p-input"
-                    placeholder="Your LinkedIn profile"
-                    name="linkedin"
-                    value={info?.linkedin}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="social-container">
-                  {/* <FontAwesomeIcon icon="fa-brands fa-twitter" /> */}
-                  {/* <img
-                      className="social-icon"
-                      alt=""
-                      src="/images/twitter.png"
-                    /> */}
-                  <input
-                    className="e-p-input"
-                    placeholder="Your Twitter profile"
-                    name="twitter"
-                    value={info?.twitter}
-                    onChange={handleChange}
-                  />
-                </div>
+            <div className="details-container-education mt-6">
+              <div className="ed-container">
+                <h3>Website Links</h3>
+                <button
+                  type="button"
+                  onClick={addNewLink}
+                  className=" btn-success btn-adder"
+                >
+                  <i className="fa fa-plus" />
+                </button>
               </div>
-              <div className="flex-div-right">
-                <div className="social-container">
-                  {/* <img
-                      className="social-icon"
-                      alt=""
-                      src="/images/youtube.png"
-                    /> */}
-                  <input
-                    className="e-p-input"
-                    placeholder="Your youtube channel"
-                    name="youtube"
-                    value={info?.youtube}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="social-container">
-                  {/* <img className="social-icon" alt="" src="/images/web.png" /> */}
-                  <input
-                    className="e-p-input"
-                    placeholder="Your website"
-                    name="website"
-                    value={info?.website}
-                    onChange={handleChange}
+              <div className="ed-container">
+                <div className="table">
+                  <Links
+                    status={true}
+                    update={handleLinkChange}
+                    delete={deleteLink}
+                    linkList={linkList}
                   />
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="details-container-education mt-4">
-            <div className="ed-container">
-              <h3>Education</h3>
-              <button type="button" onClick={addNewEducation} className=" btn-success btn-adder">
-                <i className="fa fa-plus" />
-                {/* <AddIcon /> */}
+            <div className="details-container-education mt-4">
+              <div className="ed-container">
+                <h3>Education</h3>
+                <button
+                  type="button"
+                  onClick={addNewEducation}
+                  className=" btn-success btn-adder"
+                >
+                  <i className="fa fa-plus" />
+                </button>
+              </div>
+              <div className="ed-container">
+                <div className="table">
+                  <Education
+                    status={true}
+                    update={handleEducationChange}
+                    delete={deleteEducation}
+                    educationList={educationList}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="details-container-education mt-4">
+              <div className="ed-container">
+                <h3>Experience</h3>
+                <button
+                  type="button"
+                  onClick={addNewExperience}
+                  className=" btn-success btn-adder"
+                >
+                  <i className="fa fa-plus" />
+                </button>
+              </div>
+              <div className="ed-container">
+                <div className="table">
+                  <Experience
+                    status={true}
+                    update={handleExperienceChange}
+                    delete={deleteExperience}
+                    experienceList={experienceList}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="details-container-education mt-4">
+              <div className="ed-container">
+                <h3>Projects</h3>
+                <button
+                  type="button"
+                  onClick={addNewProject}
+                  className=" btn-success btn-adder"
+                >
+                  <i className="fa fa-plus" />
+                </button>
+              </div>
+              <div className="ed-container">
+                <div className="table">
+                  <Project
+                    status={true}
+                    update={handleProjectChange}
+                    delete={deleteProject}
+                    projectList={projectList}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="details-container-button">
+              <button type="submit" className="btn ed-btn btn-primary">
+                Save
               </button>
             </div>
-            <div className="ed-container">
-              <div className="table">
-                <Education
-                  status={true}
-                  update={handleEducationChange}
-                  delete={deleteEducation}
-                  educationList={educationList}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="details-container-education mt-4">
-            <div className="ed-container">
-              <h3>Experience</h3>
-              <button type="button" onClick={addNewExperience} className=" btn-success btn-adder">
-                <i className="fa fa-plus" />
-                {/* <AddIcon /> */}
-              </button>
-            </div>
-            <div className="ed-container">
-              <div className="table">
-                <Experience
-                  status={true}
-                  update={handleExperienceChange}
-                  delete={deleteExperience}
-                  experienceList={experienceList}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="details-container-education mt-4">
-            <div className="ed-container">
-              <h3>Projects</h3>
-              <button type="button" onClick={addNewExperience} className=" btn-success btn-adder">
-                <i className="fa fa-plus" />
-                {/* <AddIcon /> */}
-              </button>
-            </div>
-            <div className="ed-container">
-              <div className="table">
-                <Project
-                  status={true}
-                  update={handleExperienceChange}
-                  delete={deleteExperience}
-                  experienceList={experienceList}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="details-container-button">
-            <button type="submit" className="btn ed-btn btn-primary">
-              Submit
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 };

@@ -42,7 +42,7 @@ const DSAPractice = () => {
                   </p>
 
                   <a key={index} className="questionsHead" href={problem.link}>
-                    <button className="form-control btn-primary ">
+                    <button className="form-control btn-success ">
                       Proceed to problem
                     </button>
                   </a>

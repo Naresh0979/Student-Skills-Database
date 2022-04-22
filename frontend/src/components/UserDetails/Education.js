@@ -11,34 +11,63 @@ const Education = (props) => {
       <div>
         <div id={instituteName} className="flex-div-left-right-med-container">
           <div id={instituteName} className="flex-div-left-med-container">
-            <input
-              className="e-p-input"
-              placeholder="Institute Name"
+            <div
               id={instituteName}
-              value={val.instituteName}
-              disabled={!props.status}
-              name="instituteName"
-              onChange={(event) => props.update(idx, event)}
-            />
+              className="flex-div-right-med-container-line"
+            >
+              <input
+                className="e-p-input"
+                placeholder="Institute Name"
+                id={instituteName}
+                value={val.instituteName}
+                disabled={!props.status}
+                name="instituteName"
+                onChange={(event) => props.update(idx, event)}
+              />
+              <input
+                className="e-p-input degree-input"
+                placeholder="Degree Name"
+                id={instituteName}
+                value={val.degreeName}
+                disabled={!props.status}
+                name="degreeName"
+                onChange={(event) => props.update(idx, event)}
+              />
+            </div>
           </div>
           <div id={instituteName} className="flex-div-right-med-container">
             <div
               id={instituteName}
               className="flex-div-right-med-container-line"
             >
-              <input className="e-p-input endDate-input" defaultValue="2020-04" type="month"/>
-              
-              <input className="e-p-input endDate-input" defaultValue="2021-06" type="month"/>
-              
               <input
-              className="e-p-input grade-input"
-              placeholder="Grade"
-              id={instituteName}
-              value={val.instituteName}
-              disabled={!props.status}
-              name="instituteName"
-              onChange={(event) => props.update(idx, event)}
-            />
+                className="e-p-input endDate-input"
+                value={val.startDate}
+                id={instituteName}
+                type="month"
+                disabled={!props.status}
+                name="startDate"
+                onChange={(event) => props.update(idx, event)}
+              />
+
+              <input
+                className="e-p-input endDate-input"
+                value={val.endDate}
+                id={instituteName}
+                type="month"
+                disabled={!props.status}
+                name="endDate"
+                onChange={(event) => props.update(idx, event)}
+              />
+              <input
+                className="e-p-input grade-input"
+                placeholder="Grade"
+                id={instituteName}
+                value={val.grade}
+                disabled={!props.status}
+                name="grade"
+                onChange={(event) => props.update(idx, event)}
+              />
               {props.status && idx > 0 && (
                 <button
                   className="btn-danger btn-minus"

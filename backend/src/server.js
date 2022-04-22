@@ -29,12 +29,9 @@ require("./db/connection");
 app.use("/users", userRouter);
 
 app.get("/getCFContests", getUpcomingContest);
-//console.log(getUpcomingContest());
-
+ 
 //Server Status
 app.listen(PORT, () => {
   console.log(`Server started at http://localhost:${PORT}`);
 });
-
-//const { getUserRating } = require('./api/codeforces');
-//getUserRating('amitgupta20');
+ 

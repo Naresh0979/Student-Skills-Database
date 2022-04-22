@@ -2,45 +2,51 @@ import React from "react";
 import "../dashboard/editProfile.css";
 
 const Project = (props) => {
-  return props.experienceList.map((val, idx) => {
-    let experienceName = `inst-${idx}`,
+  return props.projectList.map((val, idx) => {
+    let projectName = `inst-${idx}`,
       start = `st-${idx}`,
       end = `end-${idx}`,
       index = val.index;
     return (
       <div>
-        <div id={experienceName} className="flex-div-left-right-med-container">
-          <div id={experienceName} className="flex-div-left-med-container">
+        <div id={projectName} className="flex-div-left-right-med-container">
+          <div className="flex-div-left-med-container">
+            
             <input
               className="e-p-input"
               placeholder="Project Name"
-              id={experienceName}
+              id={projectName}
               disabled={!props.status}
-              value={val.organizationName}
-              name="organizationName"
+              value={val.projectName}
+              name="projectName"
               onChange={(event) => props.update(idx, event)}
             />
           </div>
-          <div id={experienceName} className="flex-div-right-med-container">
-            <div
-              id={experienceName}
-              className="flex-div-right-med-container-line"
-            >
+          <div className="flex-div-right-med-container">
+            <div className="flex-div-right-med-container-line">
               <input
                 className="e-p-input endDate-input"
-                value="2020-04"
+                value={val.startDate}
+                id={projectName}
                 type="month"
+                disabled={!props.status}
+                name="startDate"
+                onChange={(event) => props.update(idx, event)}
               />
 
               <input
                 className="e-p-input endDate-input"
-                value="2021-06"
+                value={val.endDate}
+                id={projectName}
                 type="month"
+                disabled={!props.status}
+                name="endDate"
+                onChange={(event) => props.update(idx, event)}
               />
 
               {props.status && idx > 0 && (
                 <button
-                  id={experienceName}
+                  id={projectName}
                   className="btn-danger btn-minus"
                   type="button"
                   onClick={() => {
@@ -48,7 +54,7 @@ const Project = (props) => {
                   }}
                 >
                   <i
-                    id={experienceName}
+                    id={projectName}
                     className="fa fa-minus"
                     aria-hidden="true"
                   ></i>
@@ -59,17 +65,19 @@ const Project = (props) => {
         </div>
         <textarea
           className="e-p-input description"
+          value={val.description}
           placeholder="Description"
           disabled={!props.status}
-          name="organizationName"
+          name="description"
           onChange={(event) => props.update(idx, event)}
         />
         <input
           className="e-p-input link-input"
           type="text"
+          value={val.link}
           placeholder="Link"
           disabled={!props.status}
-          name="instituteName"
+          name="link"
           onChange={(event) => props.update(idx, event)}
         />
       </div>

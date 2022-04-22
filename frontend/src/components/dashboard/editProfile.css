@@ -62,7 +62,9 @@
 .details-container-personal-info .small-left-right {
 	display: flex;
 }
-
+.small-left-right input{
+	margin-right: 18px;
+}
 .social-icon {
 	width: 32px;
 	height: 32px;
@@ -139,7 +141,21 @@
 }
 
 .ed-btn {
-	padding: 6px 5%;
+	font-family: "Raleway", sans-serif;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #5ca9fb;
+    background-image: linear-gradient(to right, #5ca9fb 0%, #6372ff 100%);
+    padding: 8px 15px;
+    letter-spacing: 1px;
+    margin:0 auto;
+    display:block;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 25px;
+    transition: all 0.5s linear;
+	width: 40%;
+    border: 0;
 }
 
 .details-container-button {
@@ -178,10 +194,75 @@
 	width: 20%;
 }
 .endDate-input{
-	width: 25%;	
+	width: 30%;	
 	margin-right: 10px;
 }
-.link-input{
+.websiteName{
+	width: 20%;
+	margin-right: 10px;
+}
+.websiteLink{
+	width: 60%;
+}
+.link-div{
 	margin-top: -20px;
+}
+.btn-delete{
+	border-radius: 50%;
+	border-width: 0px;
+	margin-top: 30px;
+	height: 30px;
+	width: 30px;
+	margin-bottom: 10px;
+	margin-left: 20px;
+}
+
+.tags-input-container{
+	border: 1px solid #687987;;
+	padding: 0.5em;
+	border-radius: 3px;
+	margin-top: 1em;
+	margin-bottom: 15px;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.5em;
+}
+.tag-item{
+	background-color: rgb(237, 233, 233);
+	color: rgb(24, 24, 24);
+	display: inline-block;
+	padding: .5em .75em;
+	border-radius: 20px;
+}
+
+.tag-item .tags-close{
+	height: 20px;
+	width: 20px;
+	background-color: rgb(43, 41, 41);
+	color: rgb(247, 242, 242);
+	border-radius: 50%;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 0.5em;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.tags-input{
+	flex-grow: 1;
+	padding: .5em 0;
+	font-size: medium;
+	border: none;
+	outline: none;
+}
+
+.link-input{
+	margin-top: -10px;
 	width: 88%;
+}
+.degree-input{
+	width: 32%;
+	margin-left: 10px;
 }
