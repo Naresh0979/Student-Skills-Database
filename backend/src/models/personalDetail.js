@@ -18,6 +18,15 @@ const personalDetail = new mongoose.Schema({
   country: {
     type: String,
   },
+  // codeforcesUsername:{
+  //   type: String,
+  // },
+  // codechefUsername:{
+  //   type: String,
+  // },
+  // leedcodeUsername:{
+  //   type: String,
+  // },
   state: {
     type: String,
   },
@@ -115,13 +124,7 @@ const personalDetail = new mongoose.Schema({
       }
     }
   ],
-  skills: [
-    {
-      name:{
-        type: String,
-      },
-    },
-  ],
+  skills: [],
 });
 const PersonalDetail = new mongoose.model("PersonalDetail", personalDetail);
 module.exports = PersonalDetail;

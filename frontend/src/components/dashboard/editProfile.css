@@ -266,3 +266,10 @@
 	width: 32%;
 	margin-left: 10px;
 }
+
+::placeholder{
+	color: rgb(91, 91, 91);
+}
+input{
+	color: black;
+}

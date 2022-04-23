@@ -60,7 +60,7 @@ const Experience = (props) => {
                 placeholder="Location"
                 disabled={!props.status}
                 value={val.location}
-                name="instituteName"
+                name="location"
                 onChange={(event) => props.update(idx, event)}
               />
               {props.status && idx > 0 && (
@@ -87,7 +87,7 @@ const Experience = (props) => {
           placeholder="Description"
           disabled={!props.status}
           value={val.description}
-          name="organizationName"
+          name="description"
           onChange={(event) => props.update(idx, event)}
         />
       </div>

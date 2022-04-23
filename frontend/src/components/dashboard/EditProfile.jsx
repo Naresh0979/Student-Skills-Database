@@ -6,22 +6,22 @@ import { Navbar } from "../../Navbar";
 import "./editProfile.css";
 import Project from "../UserDetails/Project";
 import Links from "../UserDetails/Links";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
 const EditProfile = () => {
+  const location = useLocation();
+  console.log(location);
   const [info, setInfo] = useState({
-    fname: "",
+    name: "",
     rollNumber: "",
-    email: "",
-    mobile: "",
+    email: location.state || "",
+    mobileNumber: "",
     country: "",
     state: "",
     district: "",
     pincode: "",
     bio: "",
-    currentAdd: "",
-    linkedin: "",
-    youtube: "",
-    twitter: "",
-    website: "",
+    address: ""
   });
 
   //Skills
@@ -187,8 +187,15 @@ const EditProfile = () => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
 
-  const saveDetails = (e) => {
+  const saveDetails = async(e) => {
     e.preventDefault();
+    let fullDetails = {...info};
+    fullDetails['skills'] = JSON.stringify(skills);
+    fullDetails['linkList'] = JSON.stringify(linkList);
+    fullDetails['educationList'] = JSON.stringify(educationList);
+    fullDetails['experienceList'] = JSON.stringify(experienceList);
+    fullDetails['projectList'] = JSON.stringify(projectList);
+    await axios.post("http://localhost:2000/student/editProfile", fullDetails);
   };
   return (
     <div className="background-body-for-editProfile">
@@ -205,8 +212,8 @@ const EditProfile = () => {
                   <input
                     className="e-p-input"
                     placeholder="Full Name*"
-                    name="fname"
-                    value={info?.fname}
+                    name="name"
+                    value={info?.name}
                     onChange={handleChange}
                   />
                   <input
@@ -226,10 +233,9 @@ const EditProfile = () => {
                     />
                     <input
                       className="e-p-input"
-                      id="city"
-                      placeholder="City*"
-                      name="district"
-                      value={info?.district}
+                      name="state"
+                      placeholder="State*"
+                      value={info?.state}
                       onChange={handleChange}
                     />
                   </div>
@@ -247,19 +253,21 @@ const EditProfile = () => {
                     className="e-p-input"
                     placeholder="Mobile no.*"
                     type="tel"
-                    name="mobile"
-                    value={info?.mobile}
+                    name="mobileNumber"
+                    value={info?.mobileNumber}
                     onChange={handleChange}
                   />
 
                   <div className="small-left-right">
-                    <input
+                  <input
                       className="e-p-input"
-                      name="state"
-                      placeholder="State*"
-                      value={info?.state}
+                      id="city"
+                      placeholder="City*"
+                      name="district"
+                      value={info?.district}
                       onChange={handleChange}
                     />
+                    
                     <input
                       className="e-p-input"
                       name="pincode"
@@ -274,8 +282,8 @@ const EditProfile = () => {
               <input
                 className="e-p-input"
                 placeholder="Your Address"
-                name="currentAdd"
-                value={info?.currentAdd}
+                name="address"
+                value={info?.address}
                 onChange={handleChange}
               />
               <input
