@@ -1,8 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/profile.css";
 const Profile = () => {
   let navigate = useNavigate();
+  let location = useLocation();
+  console.log(location);
   return (
     <div id="profileContainer">
       <div classNameName="container">
@@ -63,7 +65,7 @@ const Profile = () => {
                 <input
                   onClick={
                     () => {
-                      navigate('/editProfile');
+                      navigate('/editProfile',{state:location.state.email});
                     }
                   }
                   type="submit"
