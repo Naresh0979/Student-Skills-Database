@@ -1,10 +1,34 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/profile.css";
+import {useState,useEffect} from 'react'
+import axios from 'axios';
 const Profile = () => {
   let navigate = useNavigate();
   let location = useLocation();
-  console.log(location);
+  //console.log(location.state.);
+  const[name,setName]=useState();
+  const[bio,setBio]=useState();
+  const[skills,setSkills]=useState();
+  const[worklink,setWorklink]=useState();
+  const[rollno,setRollno]=useState();
+  const[mobno,setMobno]=useState();
+  axios.defaults.withCredentials = true;
+  
+   useEffect(() => {
+    axios.post("http://localhost:2000/student/getStudentData",{ email:location.state.email}).then((response) => {
+    //   console.log(response);
+    console.log(response.data);
+    setName(response.data.name);
+    setBio(response.data.bio);
+    setSkills(response.data.skills);
+    setWorklink(response.data.linkList);
+    setRollno(response.data.rollNumber);
+    setMobno(response.data.mobileNumber);
+  });
+    
+   }, [location.state.email])
+  
   return (
     <div id="profileContainer">
       <div classNameName="container">
@@ -25,8 +49,8 @@ const Profile = () => {
               </div>
               <div className="col-md-6">
                 <div className="profile-head">
-                  <h5>Kshiti Ghelani</h5>
-                  <h6>Web Developer and Designer</h6>
+                  <h5>{name}</h5>
+                  <h6>{bio}</h6>
                   <p className="proile-rating">
                     RANKINGS : <span>8/10</span>
                   </p>
@@ -105,13 +129,13 @@ const Profile = () => {
               <div className="col-md-4">
                 <div className="profile-work">
                   <p>WORK LINK</p>
-                  <a href="">Website Link</a>
-                  <br />
-                  <a href="">Bootsnipp Profile</a>
-                  <br />
-                  <a href="">Bootply Profile</a>
+                  {
+                    worklink? worklink.map((worklink, index) => (
+                      <><a href={worklink.link} key={index}>{worklink.linkName}</a><br/></>
+                     )):<>Not Mentioned</>
+                }
                   <p>SKILLS</p>
-                  <a href="">Web Designer</a>
+                  {/* <a href="">Web Designer</a>
                   <br />
                   <a href="">Web Developer</a>
                   <br />
@@ -119,8 +143,13 @@ const Profile = () => {
                   <br />
                   <a href="">WooCommerce</a>
                   <br />
-                  <a href="">PHP, .Net</a>
-                  <br />
+                  <a href="">PHP, .Net</a> */}
+                  {
+                    skills? skills.map((skill, index) => (
+                      <><a href=""key={index}>{skill}</a><br/></>
+                     )):<></>
+                }
+                  
                 </div>
               </div>
               <div className="col-md-8">
@@ -133,26 +162,19 @@ const Profile = () => {
                   >
                     <div className="row">
                       <div className="col-md-6">
-                        <label>User Id</label>
+                        <label>Roll Number</label>
                       </div>
                       <div className="col-md-6">
-                        <p>Kshiti123</p>
+                        <p>{rollno}</p>
                       </div>
                     </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>Name</label>
-                      </div>
-                      <div className="col-md-6">
-                        <p>Kshiti Ghelani</p>
-                      </div>
-                    </div>
+                    
                     <div className="row">
                       <div className="col-md-6">
                         <label>Email</label>
                       </div>
                       <div className="col-md-6">
-                        <p>kshitighelani@gmail.com</p>
+                        <p>{location.state.email}</p>
                       </div>
                     </div>
                     <div className="row">
@@ -160,7 +182,7 @@ const Profile = () => {
                         <label>Phone</label>
                       </div>
                       <div className="col-md-6">
-                        <p>123 456 7890</p>
+                        <p>{mobno}</p>
                       </div>
                     </div>
                     <div className="row">
@@ -168,7 +190,7 @@ const Profile = () => {
                         <label>Profession</label>
                       </div>
                       <div className="col-md-6">
-                        <p>Web Developer and Designer</p>
+                        <p>{bio}</p>
                       </div>
                     </div>
                   </div>

@@ -196,6 +196,7 @@ const EditProfile = () => {
     fullDetails['experienceList'] = JSON.stringify(experienceList);
     fullDetails['projectList'] = JSON.stringify(projectList);
     await axios.post("http://localhost:2000/student/editProfile", fullDetails);
+    
   };
   return (
     <div className="background-body-for-editProfile">
