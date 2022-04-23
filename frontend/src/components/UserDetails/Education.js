@@ -26,7 +26,7 @@ const Education = (props) => {
               />
               <input
                 className="e-p-input degree-input"
-                placeholder="Degree Name"
+                placeholder="Degree"
                 id={instituteName}
                 value={val.degreeName}
                 disabled={!props.status}
