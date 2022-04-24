@@ -3,7 +3,7 @@ import "../dashboard/editProfile.css";
 
 const Links = (props) => {
   return props.linkList.map((val, idx) => {
-    console.log(val);
+    // console.log(val);
     let projectName = `inst-${idx}`,
       start = `st-${idx}`,
       end = `end-${idx}`,
@@ -30,7 +30,7 @@ const Links = (props) => {
               name="link"
               onChange={(event) => props.update(idx, event)}
             />
-          {props.status && idx > 0 && (
+          {props.status && (
               <button
                 id={projectName}
                 className="btn-danger btn-delete"

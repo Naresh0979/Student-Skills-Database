@@ -3,6 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 const userRouter = require("./routes/users");
 const studentRouter = require("./routes/students");
+const contestRouter = require("./routes/contest");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express();
@@ -28,6 +29,7 @@ require("./db/connection");
 //routes
 app.use("/users", userRouter);
 app.use("/student",studentRouter);
+app.use('/contest',contestRouter);
 
  
 //Server Status

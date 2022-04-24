@@ -44,7 +44,7 @@ const Project = (props) => {
                 onChange={(event) => props.update(idx, event)}
               />
 
-              {props.status && idx > 0 && (
+              {props.status  && (
                 <button
                   id={projectName}
                   className="btn-danger btn-minus"

@@ -10,7 +10,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 const EditProfile = () => {
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
   const [info, setInfo] = useState({
     name: "",
     rollNumber: "",
@@ -21,19 +21,26 @@ const EditProfile = () => {
     district: "",
     pincode: "",
     bio: "",
-    address: ""
+    address: "",
   });
 
   //Skills
-
+  // document
+  //   .getElementById("skills-add")
+  //   .addEventListener("keypress", function (event) {
+  //     if (event.key == "Enter") {
+  //       event.preventDefault();
+  //     }
+  //   });
   const [skills, setSkills] = useState([]);
   function handleKeyDown(e) {
     // e.preventDefault();
-    if (e.key !== "Enter") return;
+    if (e.key !== "Enter") return false;
     const value = e.target.value;
-    if (!value.trim()) return;
+    if (!value.trim()) return false;
     setSkills([...skills, value]);
     e.target.value = "";
+    return false;
   }
   function removeSkills(index) {
     setSkills(skills.filter((skills, idx) => idx !== index));
@@ -186,17 +193,58 @@ const EditProfile = () => {
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
+  useEffect(() => {
+    axios
+      .post("http://localhost:2000/student/getStudentData", {
+        email: location.state,
+      })
+      .then(({ data }) => {
+        // console.log("Inside DATA ",data);
+        let temporaryInfo = {
+          name: data.name,
+          rollNumber: data.rollNumber,
+          email: location.state,
+          mobileNumber: data.mobileNumber,
+          country: data.country,
+          state: data.state,
+          district: data.district,
+          pincode: data.pincode,
+          bio: data.bio,
+          address: data.address,
+        };
+        setInfo(temporaryInfo);
+        setEducationList(data.educationList);
+        setEducationCount(data.educationList.length - 1);
+        setExperienceList(data.experienceList);
+        setExperienceCount(data.experienceList.length - 1);
+        setProjectList(data.projectList);
+        setProjectCount(data.projectList.length - 1);
+        setLinkList(data.linkList);
+        setLinkCount(data.linkList.length - 1);
+        setSkills(data.skills);
+      });
+  }, []);
 
-  const saveDetails = async(e) => {
+  const saveDetails = async (e) => {
     e.preventDefault();
-    let fullDetails = {...info};
-    fullDetails['skills'] = JSON.stringify(skills);
-    fullDetails['linkList'] = JSON.stringify(linkList);
-    fullDetails['educationList'] = JSON.stringify(educationList);
-    fullDetails['experienceList'] = JSON.stringify(experienceList);
-    fullDetails['projectList'] = JSON.stringify(projectList);
-    await axios.post("http://localhost:2000/student/editProfile", fullDetails);
-    
+    console.log("KEY" , e.key);
+    if (e.key === "Enter") return;
+    try {
+      console.log("INFO", info);
+      let fullDetails = { ...info };
+      fullDetails["skills"] = JSON.stringify(skills);
+      fullDetails["linkList"] = JSON.stringify(linkList);
+      fullDetails["educationList"] = JSON.stringify(educationList);
+      fullDetails["experienceList"] = JSON.stringify(experienceList);
+      fullDetails["projectList"] = JSON.stringify(projectList);
+      const responce = await axios.post(
+        "http://localhost:2000/student/editProfile",
+        fullDetails
+      );
+      if (responce) alert("done");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="background-body-for-editProfile">
@@ -260,15 +308,15 @@ const EditProfile = () => {
                   />
 
                   <div className="small-left-right">
-                  <input
+                    <input
                       className="e-p-input"
-                      id="city"
+                      id="district"
                       placeholder="City*"
                       name="district"
                       value={info?.district}
                       onChange={handleChange}
                     />
-                    
+
                     <input
                       className="e-p-input"
                       name="pincode"
@@ -302,7 +350,7 @@ const EditProfile = () => {
                 onChange={handleChange}
               /> */}
             </div>
-            <div>
+            <div className="skills-adder">
               <h3>Skills</h3>
               <div className="tags-input-container">
                 {skills.map((skills, index) => (
@@ -320,13 +368,14 @@ const EditProfile = () => {
                 <input
                   type="text"
                   onKeyDown={handleKeyDown}
+                  id="skills-add"
                   className="tags-input"
                   placeholder="Enter Skill"
                 />
               </div>
             </div>
 
-            <div className="details-container-education mt-6">
+            <div className="details-container-education">
               <div className="ed-container">
                 <h3>Website Links</h3>
                 <button

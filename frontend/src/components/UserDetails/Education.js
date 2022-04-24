@@ -68,7 +68,7 @@ const Education = (props) => {
                 name="grade"
                 onChange={(event) => props.update(idx, event)}
               />
-              {props.status && idx > 0 && (
+              {props.status  && (
                 <button
                   className="btn-danger btn-minus"
                   type="button"

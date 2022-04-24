@@ -36,6 +36,9 @@ const personalDetail = new mongoose.Schema({
   pincode: {
     type: String,
   },
+  district:{
+    type:String,
+  },
   address: {
     type: String,
   },

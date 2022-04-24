@@ -8,7 +8,7 @@ const ContestCalender = () => {
   const [codeforcesContest, setCodeforcesContest] = useState("Loading");
 
   useEffect(() => {
-    axios.get("http://localhost:2000/getCFContests").then((contest) => {
+    axios.get("http://localhost:2000/contest/CodeForces").then((contest) => {
       //  console.log(contest.data);
       setCodeforcesContest(contest.data);
       console.log(contest.data);

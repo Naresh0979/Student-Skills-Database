@@ -63,7 +63,7 @@ const Experience = (props) => {
                 name="location"
                 onChange={(event) => props.update(idx, event)}
               />
-              {props.status && idx > 0 && (
+              {props.status  && (
                 <button
                   id={experienceName}
                   className="btn-danger btn-minus"

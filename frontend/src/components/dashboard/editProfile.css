@@ -257,7 +257,7 @@
 	border: none;
 	outline: none;
 }
-
+.link-div
 .link-input{
 	margin-top: -10px;
 	width: 88%;
@@ -272,4 +272,7 @@
 }
 input{
 	color: black;
+}
+.skills-adder{
+	margin-top: 15px;
 }
