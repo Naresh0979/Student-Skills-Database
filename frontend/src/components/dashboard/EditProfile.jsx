@@ -34,7 +34,8 @@ const EditProfile = () => {
   //   });
   const [skills, setSkills] = useState([]);
   function handleKeyDown(e) {
-    // e.preventDefault();
+    if(e.key === "Enter")
+      e.preventDefault();
     if (e.key !== "Enter") return false;
     const value = e.target.value;
     if (!value.trim()) return false;
