@@ -31,7 +31,7 @@ const Profile = () => {
   
   return (
     <div id="profileContainer">
-      <div classNameName="container">
+      <div className="container">
         <div className="emp-profile">
           <form method="post">
             <div className="row">
@@ -121,6 +121,13 @@ const Profile = () => {
                   className="profile-edit-btn"
                   name="btnAddMore"
                   value='CodingProfiles'
+                /></form>
+                <form action="/DoubtBlogs">
+                <input
+                  type="submit"
+                  className="profile-edit-btn"
+                  name="btnAddMore"
+                  value='Doubt Blogs'
                 /></form>
                 
               </div>

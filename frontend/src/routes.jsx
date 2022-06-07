@@ -9,6 +9,7 @@ import DSAPractice from "./components/dashboard/DSAPractice";
 import ContestCalender from "./components/dashboard/ContestCalender";
 import Home from "./components/home";
 import CodingPlatformProfile from "./components/dashboard/CodingPlatformProfile";
+import DoubtBlogs from "./components/dashboard/DoubtBlogs";
 
 export default function AppRouter() {
   return (
@@ -25,6 +26,11 @@ export default function AppRouter() {
           path="/CodingPlatformProfile"
           element={<CodingPlatformProfile />}
         ></Route>
+        <Route
+          path="/DoubtBlogs"
+          element={<DoubtBlogs />}
+        ></Route>
+
 
         {/* <AuthenticatedRoute
             path="/dashboard"
