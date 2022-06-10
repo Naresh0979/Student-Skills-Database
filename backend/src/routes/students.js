@@ -21,7 +21,7 @@ studentRouter.post("/createpost", async (req, res) => {
       
     });
     await post.save();
-    res.send(true);
+    res.send(post);
     console("post created");
   } catch (e) {
     console.log(e);
@@ -45,7 +45,7 @@ studentRouter.post("/getallPost", async (req, res) => {
    }
  
    
- });
+ }); 
  
 studentRouter.post("/editProfile", async (req, res) => {
   try {

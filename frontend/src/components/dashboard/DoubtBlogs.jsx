@@ -2,10 +2,50 @@ import React from "react";
 import "./DoubtBlog.css";
 import { Navbar } from "../../Navbar";
 import {useState} from 'react'
-
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 const DoubtBlogs = () => {
 
+  let location=useLocation();
+  console.log(location);
   const [replybox,setReplybox]=useState(false);
+  const [contentPost,setContentPost]=useState("");
+  const [posts,setPosts]=useState();
+
+ const  handlePost =(e)=>{
+    setContentPost(e.target.value);
+
+  }
+
+  const handleSubmit =()=>{
+
+    
+    let post = {
+      email:location.state.email,
+      author:location.state.username,
+      content:contentPost,
+      
+    };
+
+    console.log(post);
+    axios
+    .post("http://localhost:2000/student/createpost", {
+      post,
+    })
+    .then(({ data }) => {
+      // console.log("Inside DATA ",data);
+      let temporaryInfo = {
+        name: data.name,
+        content: data.content,
+        comments:data.comments
+      };
+      setPosts(temporaryInfo);
+      
+    });
+
+
+
+  }
  
   return (
     <div id="profileContainer">
@@ -155,22 +195,24 @@ const DoubtBlogs = () => {
 
         <div className="comment-post">
         <h3 className="head">Post </h3>
-        <form
+        {/* <form
                 method="POST"
-                action=""
-                 className="reply-form "
+                action="http://localhost:2000/student/createpost" */}
+              <div   className="reply-form "
                 id="comment-1-reply-form"
               >
-                <textarea placeholder="Post questions here" rows="4"></textarea>
-                <button type="submit">Submit</button>
+                <textarea placeholder="Post questions here" rows="4" 
+                      onChange={handlePost}></textarea>
+                <button type="submit"                   onClick={handleSubmit} >Submit</button>
                 <button
                   type="button"
                   data-toggle="reply-form"
                   data-target="comment-1-reply-form"
+
                 >
                   Cancel
                 </button>
-            </form>
+            </div>
         </div>
       </div>
     </div>
