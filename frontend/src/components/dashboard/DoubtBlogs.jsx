@@ -1,132 +1,178 @@
 import React from "react";
-// import './DoubtBlog.css'
-const DoubtBlogs = () => {
-  return (
-    <div className="container">
+import "./DoubtBlog.css";
+import { Navbar } from "../../Navbar";
+import {useState} from 'react'
 
-    
-    <div className="container mt-5 mb-5">
-      <div className="d-flex justify-content-center row">
-        <div className="d-flex flex-column col-md-8">
-          <div className="d-flex flex-row align-items-center text-left comment-top p-2 bg-white border-bottom px-4">
-            <div className="profile-image">
-              <img
-                className="rounded-circle"
-                src="https://i.imgur.com/t9toMAQ.jpg"
-                width="70"
-              />
-            </div>
-            <div className="d-flex flex-column-reverse flex-grow-0 align-items-center votings ml-1">
-              <i className="fa fa-sort-up fa-2x hit-voting"></i>
-              <span>127</span>
-              <i className="fa fa-sort-down fa-2x hit-voting"></i>
-            </div>
-            <div className="d-flex flex-column ml-3">
-              <div className="d-flex flex-row post-title">
-                <h5>Is sketch 3.9.1 stable?</h5>
-                <span className="ml-2">(Jesshead)</span>
+const DoubtBlogs = () => {
+
+  const [replybox,setReplybox]=useState(false);
+ 
+  return (
+    <div id="profileContainer">
+      <Navbar />
+      <h1 className="head">Discussions</h1>
+      <div className="container container-doubtBlog">
+        
+      <div className="comment-sidebar">
+        <div className="sidebar-features">
+        
+        <button>my posts</button>
+        <button>my comments</button>
+        
+        </div>
+        
+
+      </div>
+       
+        <div className="comment-thread">
+          <details open className="comment" id="comment-1">
+            <a href="#comment-1" className="comment-border-link">
+              <span className="sr-only">Jump to comment-1</span>
+            </a>
+            <summary>
+              <div className="comment-heading">
+                <div className="comment-voting">
+                  <button type="button">
+                    <span aria-hidden="true">&#9650;</span>
+                    <span className="sr-only">Vote up</span>
+                  </button>
+                  <button type="button">
+                    <span aria-hidden="true">&#9660;</span>
+                    <span className="sr-only">Vote down</span>
+                  </button>
+                </div>
+                <div className="comment-info">
+                  <a href="#" className="comment-author">
+                    someguy14
+                  </a>
+                  <p className="m-0">22 points &bull; 4 days ago</p>
+                </div>
               </div>
-              <div className="d-flex flex-row align-items-center align-content-center post-title">
-                <span className="bdge mr-1">video</span>
-                <span className="mr-2 comments">13 comments&nbsp;</span>
-                <span className="mr-2 dot"></span>
-                <span>6 hours ago</span>
-              </div>
-            </div>
-          </div>
-          <div className="coment-bottom bg-white p-2 px-4">
-            <div className="d-flex flex-row add-comment-section mt-4 mb-4">
-              <img
-                className="img-fluid img-responsive rounded-circle mr-2"
-                src="https://i.imgur.com/qdiP4DB.jpg"
-                width="38"
-              />
-              <input
-                type="text"
-                className="form-control mr-3"
-                placeholder="Add comment"
-              />
-              <button className="btn btn-primary" type="button">
-                Comment
+            </summary>
+
+            <div className="comment-body">
+              <p>
+                This is really great! I fully agree with what you wrote, and
+                this is sure to help me out in the future. Thank you for posting
+                this.
+              </p>
+              <button 
+                type="button"
+                data-toggle="reply-form"
+                data-target="comment-1-reply-form"
+                 onClick={()=>setReplybox(!replybox)}
+              >
+                
+                Reply
               </button>
+             
+    { replybox?
+              <form
+                method="POST"
+                 className="reply-form "
+                id="comment-1-reply-form"
+              >
+                <textarea placeholder="Reply to comment" rows="4"></textarea>
+                <button type="submit">Submit</button>
+                <button
+                  type="button"
+                  data-toggle="reply-form"
+                  data-target="comment-1-reply-form"
+                >
+                  Cancel
+                </button>
+              </form>
+  : <></>}
             </div>
-            <div className="commented-section mt-2">
-              <div className="d-flex flex-row align-items-center commented-user">
-                <h5 className="mr-2">Corey oates</h5>
-                <span className="dot mb-1"></span>
-                <span className="mb-1 ml-2">4 hours ago</span>
-              </div>
-              <div className="comment-text-sm">
-                <span>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                </span>
-              </div>
-              <div className="reply-section">
-                <div className="d-flex flex-row align-items-center voting-icons">
-                  <i className="fa fa-sort-up fa-2x mt-3 hit-voting"></i>
-                  <i className="fa fa-sort-down fa-2x mb-3 hit-voting"></i>
-                  <span className="ml-2">10</span>
-                  <span className="dot ml-2"></span>
-                  <h6 className="ml-2 mt-1">Reply</h6>
+
+
+            <h3 className="head">comments</h3>
+             
+            <div className="replies">
+                      
+              <details open className="comment" id="comment-2">
+                
+                <a href="#comment-2" className="comment-border-link">
+                  <span className="sr-only">Jump to comment-2</span>
+                </a>
+                
+                <summary>
+                  <div className="comment-heading">
+                    <div className="comment-voting">
+                      <button type="button">
+                        <span aria-hidden="true">&#9650;</span>
+                        <span className="sr-only">Vote up</span>
+                      </button>
+                      <button type="button">
+                        <span aria-hidden="true">&#9660;</span>
+                        <span className="sr-only">Vote down</span>
+                      </button>
+                    </div>
+                    <div className="comment-info">
+                      <a href="#" className="comment-author">
+                        randomperson81
+                      </a>
+                      <p className="m-0">4 points &bull; 3 days ago</p>
+                    </div>
+                  </div>
+                </summary>
+
+                <div className="comment-body">
+                  <p>Took the words right out of my mouth!</p>
+                  <button
+                    type="button"
+                    data-toggle="reply-form"
+                    data-target="comment-2-reply-form"
+                  >
+                    Reply
+                  </button>
+                  <button type="button">Flag</button>
+
+                  <form
+                    method="POST"
+                    className="reply-form d-none"
+                    id="comment-2-reply-form"
+                  >
+                    <textarea
+                      placeholder="Reply to comment"
+                      rows="4"
+                    ></textarea>
+                    <button type="submit">Submit</button>
+                    <button
+                      type="button"
+                      data-toggle="reply-form"
+                      data-target="comment-2-reply-form"
+                    >
+                      Cancel
+                    </button>
+                  </form>
                 </div>
-              </div>
+              </details>
             </div>
-            <div className="commented-section mt-2">
-              <div className="d-flex flex-row align-items-center commented-user">
-                <h5 className="mr-2">Samoya Johns</h5>
-                <span className="dot mb-1"></span>
-                <span className="mb-1 ml-2">5 hours ago</span>
-              </div>
-              <div className="comment-text-sm">
-                <span>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua..
-                </span>
-              </div>
-              <div className="reply-section">
-                <div className="d-flex flex-row align-items-center voting-icons">
-                  <i className="fa fa-sort-up fa-2x mt-3 hit-voting"></i>
-                  <i className="fa fa-sort-down fa-2x mb-3 hit-voting"></i>
-                  <span className="ml-2">15</span>
-                  <span className="dot ml-2"></span>
-                  <h6 className="ml-2 mt-1">Reply</h6>
-                </div>
-              </div>
-            </div>
-            <div className="commented-section mt-2">
-              <div className="d-flex flex-row align-items-center commented-user">
-                <h5 className="mr-2">Makhaya andrew</h5>
-                <span className="dot mb-1"></span>
-                <span className="mb-1 ml-2">10 hours ago</span>
-              </div>
-              <div className="comment-text-sm">
-                <span>
-                  Nunc sed id semper risus in hendrerit gravida rutrum. Non odio
-                  euismod lacinia at quis risus sed. Commodo ullamcorper a lacus
-                  vestibulum sed arcu non odio euismod. Enim facilisis gravida
-                  neque convallis a. In mollis nunc sed id. Adipiscing elit
-                  pellentesque habitant morbi tristique senectus et netus.
-                  Ultrices mi tempus imperdiet nulla malesuada pellentesque.
-                </span>
-              </div>
-              <div className="reply-section">
-                <div className="d-flex flex-row align-items-center voting-icons">
-                  <i className="fa fa-sort-up fa-2x mt-3 hit-voting"></i>
-                  <i className="fa fa-sort-down fa-2x mb-3 hit-voting"></i>
-                  <span className="ml-2">25</span>
-                  <span className="dot ml-2"></span>
-                  <h6 className="ml-2 mt-1">Reply</h6>
-                </div>
-              </div>
-            </div>
-          </div>
+          </details>
+        </div>
+
+
+        <div className="comment-post">
+        <h3 className="head">Post </h3>
+        <form
+                method="POST"
+                action=""
+                 className="reply-form "
+                id="comment-1-reply-form"
+              >
+                <textarea placeholder="Post questions here" rows="4"></textarea>
+                <button type="submit">Submit</button>
+                <button
+                  type="button"
+                  data-toggle="reply-form"
+                  data-target="comment-1-reply-form"
+                >
+                  Cancel
+                </button>
+            </form>
         </div>
       </div>
-    </div>
     </div>
   );
 };
