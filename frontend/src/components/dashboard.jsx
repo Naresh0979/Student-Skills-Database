@@ -9,12 +9,12 @@ import { DashboardNavigation } from "./DashboardNavigation";
 import { About } from "./about";
 import { Services } from "./services";
 import Profile  from "./dashboard/Profile";
-// import { Gallery } from "./components/gallery";
-// import { Testimonials } from "./components/testimonials";
+import EduExpPresenter from "./EduExpPresenter";
 import  CodingPlatformProfile  from "./dashboard/CodingPlatformProfile";
 import { Contact } from "./contact";
 import JsonData from "../data/data.json";
 import RatingMeter from "./animations/RatingMeter";
+
 import ProjectPresenter from "./ProjectPresenter";
 import SmoothScroll from "smooth-scroll";
 export const scroll = new SmoothScroll('a[href*="#"]', {
@@ -39,8 +39,8 @@ export default function Dashboard(props) {
       {/* <RatingMeter/> */}
       <Profile user = {location.state} />
       {/* <Features data={landingPageData.Features} />  */}
-      <About data={landingPageData.About} />
-      
+      {/* <About data={landingPageData.About} /> */}
+      <EduExpPresenter data={location.state} />
       <ProjectPresenter data={location.state} />
       {/* <Gallery data={landingPageData.Gallery}/>
     <Testimonials data={landingPageData.Testimonials} /> */}
