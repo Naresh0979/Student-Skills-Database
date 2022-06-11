@@ -123,7 +123,13 @@ const Profile = () => {
                   value='CodingProfiles'
                 /></form>
                 <form action="/DoubtBlogs">
+                  
                 <input
+                onClick={
+                  () => {
+                    navigate('/DoubtBlogs',{state:location.state});
+                  }
+                }
                   type="submit"
                   className="profile-edit-btn"
                   name="btnAddMore"

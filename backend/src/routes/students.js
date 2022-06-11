@@ -3,7 +3,50 @@ const mongoose = require("mongoose");
 const express = require("express");
 const studentRouter = express.Router();
 const PersonalDetail = require("../models/personalDetail");
+const Post = require("../models/post");
 
+const {v4 : uuidv4} = require('uuid');
+
+
+studentRouter.post("/createpost", async (req, res) => {
+  try {
+    console.log(req.body.post);
+    //await PersonalDetail.deleteMany({ email: req.body.email });
+    const post = new Post({
+      email: req.body.post.email,
+      author: req.body.post.author,
+      content:req.body.post.content,
+      pid : uuidv4(),
+      commentID: []
+      
+    });
+    await post.save();
+    res.send(post);
+    console.log("post created");
+  } catch (e) {
+    console.log(e);
+    res.send(false);
+  }
+});
+
+studentRouter.post("/getallPost", async (req, res) => {
+  try {
+    
+     await Post.find({},function(err,details){
+       if(err) throw err;
+      res.json(details)
+       
+     }).clone();
+     
+       
+   } catch (e) {
+     console.log(e);
+     res.json({message: e.message})
+   }
+ 
+   
+ }); 
+ 
 studentRouter.post("/editProfile", async (req, res) => {
   try {
     // console.log(req.body);

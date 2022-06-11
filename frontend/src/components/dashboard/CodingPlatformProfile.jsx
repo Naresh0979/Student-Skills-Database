@@ -3,10 +3,15 @@ import { Navbar } from "../../Navbar";
 import "./codingplatform.css";
 import RatingMeter from "../animations/RatingMeter";
 import React from "react";
+
+
 //import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBRow, MDBCol, MDBBtn } from 'mdb-react-ui-kit';
 import useState from 'react';
+import { useLocation } from "react-router-dom";
 const CodingPlatformProfile = () => {
   // let [username,setuserName]=useState();
+  let location=useLocation();
+  console.log(location);
   return (
     <div id="team" className="text-center">
       <div className="container">

@@ -23,9 +23,9 @@ export const Home = (props) => {
   }, []);
 
   return (
-    <div>
+    <div >
        
-      
+       <Navigation />
       <Header data={landingPageData.Header} />
       {/* <Features data={landingPageData.Features} />  */}
       <About data={landingPageData.About} />
@@ -34,7 +34,7 @@ export const Home = (props) => {
       <Testimonials data={landingPageData.Testimonials} /> */}
       <Team data={landingPageData.Team} />
       <Contact data={landingPageData.Contact} />
-      <Navigation />
+      
      </div>
   );
 };
