@@ -10,19 +10,19 @@ const {v4 : uuidv4} = require('uuid');
 
 studentRouter.post("/createpost", async (req, res) => {
   try {
-    // console.log(req.body);
+    console.log(req.body.post);
     //await PersonalDetail.deleteMany({ email: req.body.email });
     const post = new Post({
-      email: req.body.email,
-      author: req.body.name,
-      content:req.body.content,
+      email: req.body.post.email,
+      author: req.body.post.author,
+      content:req.body.post.content,
       pid : uuidv4(),
       commentID: []
       
     });
     await post.save();
     res.send(post);
-    console("post created");
+    console.log("post created");
   } catch (e) {
     console.log(e);
     res.send(false);

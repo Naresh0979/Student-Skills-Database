@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const post = new mongoose.Schema({
     email: {
         type:String,
-        unique:true,
+        
         required:true     
     },
     author: {
@@ -11,9 +11,10 @@ const post = new mongoose.Schema({
     },
    
     pid: {
-        type: Number,
+        
+        type: String,
     },
-    content: {
+    content: { 
         type: String,
     },
     commentId: {
@@ -22,4 +23,4 @@ const post = new mongoose.Schema({
 
 })
 const Post = new mongoose.model("Post",post);
-module.exports = Post;
+module.exports = Post; 
