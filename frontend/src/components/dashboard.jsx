@@ -15,6 +15,7 @@ import  CodingPlatformProfile  from "./dashboard/CodingPlatformProfile";
 import { Contact } from "./contact";
 import JsonData from "../data/data.json";
 import RatingMeter from "./animations/RatingMeter";
+import ProjectPresenter from "./ProjectPresenter";
 import SmoothScroll from "smooth-scroll";
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
@@ -30,7 +31,7 @@ export default function Dashboard(props) {
 
   axios.defaults.withCredentials = true;
   const location = useLocation();
-
+  console.log(location.state);
   return (
 
     <div>
@@ -40,7 +41,7 @@ export default function Dashboard(props) {
       {/* <Features data={landingPageData.Features} />  */}
       <About data={landingPageData.About} />
       
-      <Services data={landingPageData.Services} />
+      <ProjectPresenter data={location.state} />
       {/* <Gallery data={landingPageData.Gallery}/>
     <Testimonials data={landingPageData.Testimonials} /> */}
       {/* <Team data={landingPageData.Team} /> */}
