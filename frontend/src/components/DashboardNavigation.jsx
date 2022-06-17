@@ -53,7 +53,7 @@ export const DashboardNavigation = (props) => {
               </li>
               <li>
                 <a href="#services" className="page-scroll">
-                  Services
+                  Project
                 </a>
               </li>
               {/* <li>

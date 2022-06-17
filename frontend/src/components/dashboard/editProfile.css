@@ -276,3 +276,58 @@ input{
 .skills-adder{
 	margin-top: 15px;
 }
+.whiteBackground{
+	background-color: white;
+	border-radius: 6px;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+.name-dates{
+	align-items: center;
+	display: flex;
+	margin: auto;
+}
+.names{
+	width: 55%;
+	margin: 10px;
+}
+.startDate {
+	width: 15%;
+	margin: 10px;
+}
+.endDate {
+	width: 15%;
+	margin: 10px;
+}
+.link-btn{
+	width: auto;
+}
+.card-description{
+	margin: 10px;
+	width: 98%;
+}
+.degrees{
+	width: 15%;
+}
+.grades{
+	width: 10%
+}
+.projectHead{
+	margin-bottom: 50px !important;
+}
+.exp-head-margin{
+	margin-top: 40px !important;
+}
+.nothing-found{
+	font-size: large;
+	font-family: "Raleway", sans-serif;
+}
+.coloredBackground{
+	background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%);
+	border-radius: 6px;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+.changes2{
+	margin-bottom: 20px;
+}
