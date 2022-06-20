@@ -58,7 +58,31 @@ studentRouter.post(`/getCommentById`, async (req, res) => {
   }
 });
 
+studentRouter.post(`/getMyComments`, async (req, res) => {
+  // console.log(req.body.pId);
+  try {
+    await Comment.find({email : req.body.email}, function (err, details) {
+      if (err) throw err;
+      res.json(details);
+    }).clone();
+  } catch (e) {
+    console.log(e);
+    res.json({ message: e.message });
+  }
+});
 
+studentRouter.post(`/getMyPosts`, async (req, res) => {
+  // console.log(req.body.pId);
+  try {
+    await Post.find({email : req.body.email}, function (err, details) {
+      if (err) throw err;
+      res.json(details);
+    }).clone();
+  } catch (e) {
+    console.log(e);
+    res.json({ message: e.message });
+  }
+});
 
 studentRouter.post("/getallPost", async (req, res) => {
   try {
