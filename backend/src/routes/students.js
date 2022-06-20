@@ -45,7 +45,7 @@ studentRouter.post("/createComment", async (req, res) => {
   }
 });
 
-studentRouter.post(`/getAllComment`, async (req, res) => {
+studentRouter.post(`/getCommentById`, async (req, res) => {
   try {
     await Comment.find({pId : req.body.pId}, function (err, details) {
       if (err) throw err;
