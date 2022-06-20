@@ -17,7 +17,7 @@ const Profile = () => {
   
    useEffect(() => {
     axios.post("http://localhost:2000/student/getStudentData",{ email:location.state.email}).then((response) => {
-    //   console.log(response);
+      // console.log(response);
     console.log(response.data);
     setName(response.data.name);
     setBio(response.data.bio);
