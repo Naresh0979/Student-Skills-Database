@@ -4,6 +4,11 @@ import { Navbar } from "../../Navbar";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+
+const formatDate = (dateString) => {
+  const options = { year: "numeric", month: "long", day: "numeric", hour: '2-digit', minute: '2-digit', second: '2-digit' }
+  return new Date(dateString).toLocaleDateString(undefined, options)
+}
 const DoubtBlogs = () => {
   let location = useLocation();
   //console.log(location);
@@ -30,6 +35,9 @@ const DoubtBlogs = () => {
       })
       .then((response) => {
         setComments(response.data);
+        comments.sort(function(x, y){
+          return x.timestamp - y.timestamp;
+      })
       });
   };
   const handleSubmit = (e) => {
@@ -50,6 +58,9 @@ const DoubtBlogs = () => {
         posts.push(data);
         console.log(posts);
         setPosts(posts);
+        posts.sort(function(x, y){
+          return x.timestamp - y.timestamp;
+      })
       });
   };
   const handleCommentSubmit = (id, e) => {
@@ -71,6 +82,9 @@ const DoubtBlogs = () => {
         comments.push(data);
         //  console.log(data);
         setComments(comments);
+        comments.sort(function(x, y){
+          return x.timestamp - y.timestamp;
+      })
         setReplybox(!replybox);
       });
   };
@@ -85,6 +99,9 @@ const DoubtBlogs = () => {
         //console.log(response.data);
 
         setPosts(response.data);
+        posts.sort(function(x, y){
+          return x.timestamp - y.timestamp;
+      })
       });
   }, [posts]);
 
@@ -126,7 +143,7 @@ const DoubtBlogs = () => {
                           {" "}
                           {seenPostIndex === -1 ? "Show Post" : "Hide Post"}
                         </button>
-                        <p className="m-0">{post.time}</p>
+                        <p className="m-0">{formatDate(post.time)}</p>
                       </div>
                     </div>
                   </summary>
@@ -213,12 +230,12 @@ const DoubtBlogs = () => {
                                       </button>
                                     </div>
                                     <div className="comment-info">
-                                      <a href="#" className="comment-author">
+                                      <span className="comment-author">
                                         {comment.email}
-                                      </a>
+                                      </span>
                                       <p className="m-0">
                                         {comment.upVotes} points &bull;{" "}
-                                        {comment.time}
+                                        {formatDate(comment.time)}
                                       </p>
                                     </div>
                                   </div>
