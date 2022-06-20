@@ -35,15 +35,16 @@ button:active {
 }
 .comment-thread {
   width: 700px;
-  
+  /* height: 300px; */
   max-width: 100%;
-  
+  /* position: relative; */
   margin: 10px 10px 10px 10px;
   padding: 0 30px;
   background-color: #fff;
   border: 1px solid transparent; /* Removes margin collapse */
 }
 .comment-sidebar {
+  
   width: 300px;
   height: 300px;
   max-width: 100%;
@@ -87,6 +88,7 @@ button:active {
 .comment {
   position: relative;
   margin: 20px auto;
+  
 }
 .comment-heading {
   display: flex;
@@ -154,12 +156,12 @@ button:active {
 details.comment summary {
   position: relative;
   list-style: none;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 details.comment summary::-webkit-details-marker {
   display: none;
 }
-details.comment:not([open]) .comment-heading {
+/* details.comment:not([open]) .comment-heading {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 .comment-heading::after {
@@ -169,25 +171,25 @@ details.comment:not([open]) .comment-heading {
   align-self: center;
   font-size: 12px;
   color: rgba(0, 0, 0, 0.55);
-}
-details.comment[open] .comment-heading::after {
+} */
+/* details.comment[open] .comment-heading::after {
   content: "Click to hide";
 }
 details.comment:not([open]) .comment-heading::after {
   content: "Click to show";
-}
+} */
 
 /* Adjustment for Internet Explorer */
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   /* Resets cursor, and removes prompt text on Internet Explorer */
-  .comment-heading {
+  /* .comment-heading {
       cursor: default;
-  }
-  details.comment[open] .comment-heading::after,
+  } */
+  /* details.comment[open] .comment-heading::after,
   details.comment:not([open]) .comment-heading::after {
       content: " ";
-  }
+  } */
 }
 
 /* Styling the reply to comment form */

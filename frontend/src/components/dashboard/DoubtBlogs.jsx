@@ -9,7 +9,7 @@ const DoubtBlogs = () => {
   //console.log(location);
   const [replybox, setReplybox] = useState(false);
   const [replyPostIndex, setReplyPostIndex] = useState();
-  const [pId, setPId] = useState(null);
+  // const [pId, setPId] = useState(null);
   const [replyMsg, setReplyMsg] = useState("");
   const [contentPost, setContentPost] = useState("");
   const [posts, setPosts] = useState();
@@ -19,8 +19,21 @@ const DoubtBlogs = () => {
   const handlePost = (e) => {
     setContentPost(e.target.value);
   };
+  const handleComment = (e) => {
+    setReplyMsg(e.target.value);
+  };
 
-  const handleSubmit = () => {
+  const getCommentById = (id) => {
+    axios
+      .post("http://localhost:2000/student/getCommentById", {
+        pId: id,
+      })
+      .then((response) => {
+        setComments(response.data);
+      });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
     let post = {
       email: location.state.email,
       content: contentPost,
@@ -32,52 +45,33 @@ const DoubtBlogs = () => {
         post,
       })
       .then(({ data }) => {
-        console.log("Inside DATA ", data);
-        // let temporaryInfo = {
-        //   name: data.name,
-        //   content: data.content,
-        //   comments: data.comments,
-        // };
+        // console.log("Inside DATA ", data);
 
         posts.push(data);
         console.log(posts);
         setPosts(posts);
       });
   };
-
-  const getCommentById = (id) => {
-    axios
-      .post("http://localhost:2000/student/getCommentById", {
-        pId: id,
-      })
-      .then((response) => {
-        setComments(response.data);
-      });
-  }
-
-  const handleCommentSubmit = () => {
+  const handleCommentSubmit = (id, e) => {
+    e.preventDefault();
     let comment = {
       email: location.state.email,
       content: replyMsg,
-      pId: pId,
+      pId: id,
     };
 
-    //console.log(post);
+    // console.log(comment);
     axios
       .post("http://localhost:2000/student/createComment", {
         comment,
       })
       .then(({ data }) => {
-        console.log("Inside DATA ", data);
-        // let temporaryInfo = {
-        //   name: data.name,
-        //   content: data.content,
-        //   comments: data.comments,
-        // };
+        // console.log("Inside DATA ", data);
 
-        posts.push(data);
-        console.log(posts);
-        setPosts(posts);
+        comments.push(data);
+        //  console.log(data);
+        setComments(comments);
+        setReplybox(!replybox);
       });
   };
 
@@ -90,11 +84,6 @@ const DoubtBlogs = () => {
         //   console.log(response);
         //console.log(response.data);
 
-        // let temporaryInfo = {
-        //   name: response.data.name,
-        //   content: response.data.content,
-        //   comments:response.data.comments,
-        // };
         setPosts(response.data);
       });
   }, [posts]);
@@ -115,46 +104,29 @@ const DoubtBlogs = () => {
           {posts ? (
             posts.map((post, index) => (
               <>
-                {/* <a href={worklink.link} key={index}>
-                  {worklink.linkName}
-                </a>
-                <br /> */}
                 <details open className="comment" id="comment-1" key={index}>
                   <a href="#comment-1" className="comment-border-link">
                     <span className="sr-only">Jump to comment-1</span>
                   </a>
                   <summary>
                     <div className="comment-heading">
-                      {/* <div className="comment-voting">
-                        <button type="button">
-                          <span aria-hidden="true">&#9650;</span>
-                          <span className="sr-only">Vote up</span>
-                        </button>
-                        <button type="button">
-                          <span aria-hidden="true">&#9660;</span>
-                          <span className="sr-only">Vote down</span>
-                        </button>
-                      </div> */}
-
                       <div className="comment-info">
-                        <a href="#" className="comment-author">
+                        <span className="comment-author">
                           {post.email}
-                        </a>
+                        </span>
                         <button
                           type="button"
                           onClick={() => {
                             if (seenPostIndex === -1) {
                               setSeenPostIdx(index);
-
-                            }
-                            else setSeenPostIdx(-1);
-
+                              getCommentById(post.pId);
+                            } else setSeenPostIdx(-1);
                           }}
                         >
                           {" "}
                           {seenPostIndex === -1 ? "Show Post" : "Hide Post"}
                         </button>
-                        <p className="m-0">22 points &bull; 4 days ago</p>
+                        <p className="m-0">{post.time}</p>
                       </div>
                     </div>
                   </summary>
@@ -165,29 +137,32 @@ const DoubtBlogs = () => {
                         <p>{post.content}</p>
                         <button
                           type="button"
-                          data-toggle="reply-form"
-                          data-target="comment-1-reply-form"
                           onClick={() => {
                             setReplybox(!replybox);
                             setReplyPostIndex(index);
-                            setPId(post.pId);
                           }}
                         >
                           Reply
                         </button>
                         <div>
                           {replybox && index === replyPostIndex ? (
-                            <form
-                              method="POST"
+                            <div
                               className="reply-form "
                               id="comment-1-reply-form"
                             >
                               <textarea
                                 placeholder="Reply to comment"
                                 rows="4"
-                                onChange={setReplyMsg}
+                                onChange={handleComment}
                               ></textarea>
-                              <button type="submit">Submit</button>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  handleCommentSubmit(post.pId, e);
+                                }}
+                              >
+                                Submit
+                              </button>
                               <button
                                 type="button"
                                 data-toggle="reply-form"
@@ -195,7 +170,7 @@ const DoubtBlogs = () => {
                               >
                                 Cancel
                               </button>
-                            </form>
+                            </div>
                           ) : (
                             <></>
                           )}
@@ -203,39 +178,55 @@ const DoubtBlogs = () => {
                       </div>
 
                       <h3 className="head">comments</h3>
-                      
+
                       <div className="replies">
-                        <details open className="comment" id="comment-2">
-                          <a href="#comment-2" className="comment-border-link">
-                            <span className="sr-only">Jump to comment-2</span>
-                          </a>
-
-                          <summary>
-                            <div className="comment-heading">
-                              <div className="comment-voting">
-                                <button type="button">
-                                  <span aria-hidden="true">&#9650;</span>
-                                  <span className="sr-only">Vote up</span>
-                                </button>
-                                <button type="button">
-                                  <span aria-hidden="true">&#9660;</span>
-                                  <span className="sr-only">Vote down</span>
-                                </button>
-                              </div>
-                              <div className="comment-info">
-                                <a href="#" className="comment-author">
-                                  randomperson81
+                        {comments ? (
+                          comments.map((comment, index) => (
+                            <>
+                              <details
+                                open
+                                className="comment"
+                                id="comment-2"
+                                key={index}
+                              >
+                                <a
+                                  href="#comment-2"
+                                  className="comment-border-link"
+                                >
+                                  <span className="sr-only">
+                                    Jump to comment-2
+                                  </span>
                                 </a>
-                                <p className="m-0">
-                                  4 points &bull; 3 days ago
-                                </p>
-                              </div>
-                            </div>
-                          </summary>
 
-                          <div className="comment-body">
-                            <p>Took the words right out of my mouth!</p>
-                            <button
+                                <summary>
+                                  <div className="comment-heading">
+                                    <div className="comment-voting">
+                                      <button type="button">
+                                        <span aria-hidden="true">&#9650;</span>
+                                        <span className="sr-only">Vote up</span>
+                                      </button>
+                                      <button type="button">
+                                        <span aria-hidden="true">&#9660;</span>
+                                        <span className="sr-only">
+                                          Vote down
+                                        </span>
+                                      </button>
+                                    </div>
+                                    <div className="comment-info">
+                                      <a href="#" className="comment-author">
+                                        {comment.email}
+                                      </a>
+                                      <p className="m-0">
+                                        {comment.upVotes} points &bull;{" "}
+                                        {comment.time}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </summary>
+
+                                <div className="comment-body">
+                                  <p>{comment.content}</p>
+                                  {/* <button
                               type="button"
                               data-toggle="reply-form"
                               data-target="comment-2-reply-form"
@@ -261,9 +252,14 @@ const DoubtBlogs = () => {
                               >
                                 Cancel
                               </button>
-                            </form>
-                          </div>
-                        </details>
+                            </form> */}
+                                </div>
+                              </details>
+                            </>
+                          ))
+                        ) : (
+                          <>Not Mentioned</>
+                        )}
                       </div>
                     </div>
                   )}
@@ -276,9 +272,7 @@ const DoubtBlogs = () => {
         </div>
         <div className="comment-post">
           <h3 className="head">Post </h3>
-          {/* <form
-                method="POST"
-                action="http://localhost:2000/student/createpost" */}
+
           <div className="reply-form " id="comment-1-reply-form">
             <textarea
               placeholder="Post questions here"
