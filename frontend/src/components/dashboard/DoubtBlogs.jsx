@@ -69,6 +69,7 @@ const DoubtBlogs = () => {
         posts.sort(function (x, y) {
           return x.timestamp - y.timestamp;
         });
+        setContentPost("");
       });
   };
   const handleCommentSubmit = (id, e) => {
@@ -136,165 +137,193 @@ const DoubtBlogs = () => {
   return (
     <div id="profileContainer">
       <Navbar />
-      <h1 className="head">Discussions</h1>
-      <div className="container container-doubtBlog">
-        <div className="comment-sidebar">
-          <div className="sidebar-features">
-            <button
-              onClick={() => {
-                setMyPosts(!myPosts);
-              }}
-            >
-              my posts
-            </button>
-            {/* <button>my comments</button> */}
-            {/* <h3 className="head">Post </h3> */}
-
-            <div className="reply-form " id="comment-1-reply-form">
-              <textarea
-                placeholder="Post questions here"
-                rows="4"
-                onChange={handlePost}
-              ></textarea>
-              <button type="submit" onClick={handleSubmit}>
-                Submit
-              </button>
+      {/* <h1 className="head">Discussions</h1> */}
+      <div className="container">
+        <div className="section-title">
+          <h2 className="head">Discussions</h2>
+        </div>
+        <div className="container container-doubtBlog">
+          <div className="comment-sidebar">
+            <div className="sidebar-features">
               <button
-                type="button"
-                data-toggle="reply-form"
-                data-target="comment-1-reply-form"
+                onClick={() => {
+                  setMyPosts(!myPosts);
+                }}
+                className="btn-custom post-btn-margin"
               >
-                Cancel
+                {myPosts ? "All Posts" : "My Posts"}
               </button>
+              {/* <button>my comments</button> */}
+              {/* <h3 className="head">Post </h3> */}
+
+              <div className="reply-form" id="comment-1-reply-form">
+                <textarea
+                  placeholder="Post Doubts here"
+                  rows="4"
+                  value={contentPost}
+                  className="posting-doubt"
+                  onChange={handlePost}
+                ></textarea>
+                <div className="">
+                  <button
+                    className="btn-custom align-btn"
+                    type="submit"
+                    onClick={handleSubmit}
+                  >
+                    Post
+                  </button>
+                </div>
+                {/* <button
+                  type="button"
+                  className="btn-custom"
+                  data-toggle="reply-form"
+                  data-target="comment-1-reply-form"
+                >
+                  Cancel
+                </button> */}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="comment-thread">
-          {posts ? (
-            posts.map((post, index) => (
-              <>
-                <details open className="comment" id="comment-1" key={index}>
-                  <a href="#comment-1" className="comment-border-link">
-                    <span className="sr-only">Jump to comment-1</span>
-                  </a>
-                  <summary>
-                    <div className="comment-heading">
-                      <div className="comment-info">
-                        <span className="comment-author">{post.email}</span>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            if (seenPostIndex === -1) {
-                              setSeenPostIdx(index);
-                              getCommentById(post.pId);
-                            } else setSeenPostIdx(-1);
-                          }}
-                        >
-                          {" "}
-                          {seenPostIndex === -1 ? "Show Post" : "Hide Post"}
-                        </button>
-                        <p className="m-0">{formatDate(post.time)}</p>
-                      </div>
-                    </div>
-                  </summary>
-
-                  {seenPostIndex === index && (
-                    <div>
-                      <div className="comment-body">
-                        <p>{post.content}</p>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setReplybox(!replybox);
-                            setReplyPostIndex(index);
-                          }}
-                        >
-                          Reply
-                        </button>
-                        <div>
-                          {replybox && index === replyPostIndex ? (
-                            <div
-                              className="reply-form "
-                              id="comment-1-reply-form"
+          <div className="comment-thread">
+            <h3 className="posts-container-head">{ !myPosts ? "All Posts" : "My Posts"}</h3>
+            {posts ? (
+              posts.map((post, index) => (
+                <>
+                  <hr className="line-doubt"></hr>
+                  <details open className="comment" id="comment-1" key={index}>
+                    <a href="#comment-1" className="comment-border-link">
+                      <span className="sr-only">Jump to comment-1</span>
+                    </a>
+                    <summary>
+                      <div className="comment-heading">
+                        <div className="comment-info">
+                          <div className="heading-show-btn">
+                            <p className="comment-author">{post.email}</p>
+                            <button
+                              type="button"
+                              className="open-close-post"
+                              onClick={() => {
+                                if (seenPostIndex === -1) {
+                                  setSeenPostIdx(index);
+                                  getCommentById(post.pId);
+                                } else setSeenPostIdx(-1);
+                              }}
                             >
-                              <textarea
-                                placeholder="Reply to comment"
-                                rows="4"
-                                onChange={handleComment}
-                              ></textarea>
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  handleCommentSubmit(post.pId, e);
-                                }}
-                              >
-                                Submit
-                              </button>
-                              <button
-                                type="button"
-                                data-toggle="reply-form"
-                                data-target="comment-1-reply-form"
-                              >
-                                Cancel
-                              </button>
-                            </div>
-                          ) : (
-                            <></>
-                          )}
+                              {" "}
+                              {seenPostIndex === index
+                                ? "Hide Post"
+                                : "Show Post"}
+                            </button>
+                          </div>
+                          <p className="m-0">{formatDate(post.time)}</p>
                         </div>
                       </div>
+                    </summary>
 
-                      <h3 className="head">comments</h3>
-
-                      <div className="replies">
-                        {comments ? (
-                          comments.map((comment, index) => (
-                            <>
-                              <details
-                                open
-                                className="comment"
-                                id="comment-2"
-                                key={index}
+                    {seenPostIndex === index && (
+                      <div>
+                        <div className="comment-body">
+                          <p>{post.content}</p>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setReplybox(!replybox);
+                              setReplyPostIndex(index);
+                            }}
+                          >
+                            Reply
+                          </button>
+                          <div>
+                            {replybox && index === replyPostIndex ? (
+                              <div
+                                className="reply-form "
+                                id="comment-1-reply-form"
                               >
-                                <a
-                                  href="#comment-2"
-                                  className="comment-border-link"
+                                <textarea
+                                  placeholder="Reply to comment"
+                                  className="posting-comment"
+                                  rows="4"
+                                  onChange={handleComment}
+                                ></textarea>
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    handleCommentSubmit(post.pId, e);
+                                  }}
                                 >
-                                  <span className="sr-only">
-                                    Jump to comment-2
-                                  </span>
-                                </a>
+                                  Submit
+                                </button>
+                                {/* <button
+                                  type="button"
+                                  data-toggle="reply-form"
+                                  data-target="comment-1-reply-form"
+                                >
+                                  Cancel
+                                </button> */}
+                              </div>
+                            ) : (
+                              <></>
+                            )}
+                          </div>
+                        </div>
 
-                                <summary>
-                                  <div className="comment-heading">
-                                    <div className="comment-voting">
-                                      <button type="button">
-                                        <span aria-hidden="true">&#9650;</span>
-                                        <span className="sr-only">Vote up</span>
-                                      </button>
-                                      <button type="button">
-                                        <span aria-hidden="true">&#9660;</span>
-                                        <span className="sr-only">
-                                          Vote down
+                        <h3 className="head">{ comments.length > 0 ? "Comments" : ""}</h3>
+
+                        <div className="replies">
+                          {comments ? (
+                            comments.map((comment, index) => (
+                              <>
+                                <details
+                                  open
+                                  className="comment"
+                                  id="comment-2"
+                                  key={index}
+                                >
+                                  <a
+                                    href="#comment-2"
+                                    className="comment-border-link"
+                                  >
+                                    <span className="sr-only">
+                                      Jump to comment-2
+                                    </span>
+                                  </a>
+
+                                  <summary>
+                                    <div className="comment-heading">
+                                      <div className="comment-voting">
+                                        <button type="button">
+                                          <span aria-hidden="true">
+                                            &#9650;
+                                          </span>
+                                          <span className="sr-only">
+                                            Vote up
+                                          </span>
+                                        </button>
+                                        <button type="button">
+                                          <span aria-hidden="true">
+                                            &#9660;
+                                          </span>
+                                          <span className="sr-only">
+                                            Vote down
+                                          </span>
+                                        </button>
+                                      </div>
+                                      <div className="comment-info">
+                                        <span className="comment-author">
+                                          {comment.email}
                                         </span>
-                                      </button>
+                                        <p className="m-0">
+                                          {comment.upVotes} points &bull;{" "}
+                                          {formatDate(comment.time)}
+                                        </p>
+                                      </div>
                                     </div>
-                                    <div className="comment-info">
-                                      <span className="comment-author">
-                                        {comment.email}
-                                      </span>
-                                      <p className="m-0">
-                                        {comment.upVotes} points &bull;{" "}
-                                        {formatDate(comment.time)}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </summary>
+                                  </summary>
 
-                                <div className="comment-body">
-                                  <p>{comment.content}</p>
-                                  {/* <button
+                                  <div className="comment-body">
+                                    <p>{comment.content}</p>
+                                    {/* <button
                               type="button"
                               data-toggle="reply-form"
                               data-target="comment-2-reply-form"
@@ -321,24 +350,24 @@ const DoubtBlogs = () => {
                                 Cancel
                               </button>
                             </form> */}
-                                </div>
-                              </details>
-                            </>
-                          ))
-                        ) : (
-                          <>Not Mentioned</>
-                        )}
+                                  </div>
+                                </details>
+                              </>
+                            ))
+                          ) : (
+                            <>Not Mentioned</>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </details>
-              </>
-            ))
-          ) : (
-            <>Not Mentioned</>
-          )}
-        </div>
-        {/* <div className="comment-post">
+                    )}
+                  </details>
+                </>
+              ))
+            ) : (
+              <>Not Mentioned</>
+            )}
+          </div>
+          {/* <div className="comment-post">
           <h3 className="head">Post </h3>
 
           <div className="reply-form " id="comment-1-reply-form">
@@ -359,6 +388,7 @@ const DoubtBlogs = () => {
             </button>
           </div>
         </div> */}
+        </div>
       </div>
     </div>
   );

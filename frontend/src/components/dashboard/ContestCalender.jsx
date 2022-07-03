@@ -12,9 +12,8 @@ const ContestCalender = () => {
       //  console.log(contest.data);
       setCodeforcesContest(contest.data);
       console.log(contest.data);
-     // setCodeforcesContest(codeforcesContest.sort())    ;
-     // setCodeforcesContest(codeforcesContest.reverse());
-            
+      // setCodeforcesContest(codeforcesContest.sort())    ;
+      // setCodeforcesContest(codeforcesContest.reverse());
     });
   }, []);
 
@@ -22,11 +21,12 @@ const ContestCalender = () => {
     <div id="profileContainer">
       <Navbar />
       <div className="container">
-
         <div className="emp-profile">
-        <h1 className="head">Upcoming Contest</h1>
+          <h1 className="head">Upcoming Contest</h1>
           <hr className="line-practice-head"></hr>
-          {codeforcesContest === "Loading" ? (<p className="text-center">Loading...</p>) : codeforcesContest.length !== 0 ? (
+          {codeforcesContest === "Loading" ? (
+            <p className="text-center">Loading...</p>
+          ) : codeforcesContest.length !== 0 ? (
             codeforcesContest.map((problem, index) => (
               <Collapsible key={index} trigger={problem.name}>
                 <a
@@ -34,7 +34,7 @@ const ContestCalender = () => {
                   href={`https://codeforces.com/contests/${problem.id}`}
                 >
                   <p key={index} className="questionsHead">
-                        Date : 
+                    Date :
                   </p>
                   <button className="form-control btn-success ">
                     Proceed to Contest
