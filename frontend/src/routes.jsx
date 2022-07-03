@@ -6,6 +6,7 @@ import Login from "./components/login/login";
 import Dashboard from "./components/dashboard";
 import EditProfile from "./components/dashboard/EditProfile";
 import DSAPractice from "./components/dashboard/DSAPractice";
+import DailyProblems from "./components/dashboard/DailyProblems";
 import ContestCalender from "./components/dashboard/ContestCalender";
 import Home from "./components/home";
 import CodingPlatformProfile from "./components/dashboard/CodingPlatformProfile";
@@ -21,7 +22,9 @@ export default function AppRouter() {
         <Route path="/editProfile" element={<EditProfile />} />
         {/* <Route path="/EditProfile"  element={<EditProfile/>}></Route> */}
         <Route path="/DSAPractice" element={<DSAPractice />}></Route>
+        <Route path="/DailyProblems" element={<DailyProblems />}></Route>
         <Route path="/ContestCalender" element={<ContestCalender />}></Route>
+
         <Route
           path="/CodingPlatformProfile"
           element={<CodingPlatformProfile />}

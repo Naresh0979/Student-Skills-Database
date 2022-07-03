@@ -97,6 +97,7 @@ const Profile = () => {
                   name="btnAddMore"
                   value='EditProfile'
                 /></form>
+                
                 <form action="/DSAPractice">
 
                 <input
@@ -106,6 +107,23 @@ const Profile = () => {
                   value='DSAPractice'
                 />
                 </form>
+
+                
+                
+                
+                <form action="/DailyProblems">
+
+                <input
+                  type="submit"
+                  className="profile-edit-btn"
+                //  name="btnAddMore"
+                  value='Daily Problem'
+                />
+                </form>
+
+
+
+
                 <form action="/ContestCalender">
 
                 <input
