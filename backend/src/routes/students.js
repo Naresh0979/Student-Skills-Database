@@ -25,39 +25,10 @@ studentRouter.post("/createPost", async (req, res) => {
     res.send(false);
   }
 });
-studentRouter.post("/createcomment", async (req, res) => {
-  try {
-   // console.log(req.body.post);
-    //const postid = await Post.findOne({ name: articleName });
-   // await PersonalDetail.deleteMany({ email: req.body.email });
-   await Post.updateOne(
-    { pid: req.body.post.pid },
-    {
-      $set: {
-        comments: articleInfo.comments.concat({ username, comment }),
-      },
-    }
-  )
-    const post = new Post({
-      email: req.body.post.email,
-      author: req.body.post.author,
-      content:req.body.post.content,
-      pid : uuidv4(),
-      commentID: []
-      
-    });
-    await post.save();
-    res.send(post);
-  //  console.log("post created");
-  } catch (e) {
-    console.log(e);
-    res.send(false);
-  }
-});
 
 studentRouter.post("/createComment", async (req, res) => {
   try {
-    console.log(req.body.comment);
+   // console.log(req.body.comment);
     //await PersonalDetail.deleteMany({ email: req.body.email });
     const comment = new Comment({
       email: req.body.comment.email,
@@ -75,6 +46,7 @@ studentRouter.post("/createComment", async (req, res) => {
 });
 
 studentRouter.post(`/getCommentById`, async (req, res) => {
+  // console.log(req.body.pId);
   try {
     await Comment.find({pId : req.body.pId}, function (err, details) {
       if (err) throw err;
@@ -85,8 +57,44 @@ studentRouter.post(`/getCommentById`, async (req, res) => {
     res.json({ message: e.message });
   }
 });
+// studentRouter.post(`/getPostByComment`, async (req, res) => {
+//   // console.log(req.body.pId);
+//   try {
+//     await Comment.find({pId : req.body.pId}, function (err, details) {
+//       if (err) throw err;
+//       res.json(details);
+//     }).clone();
+//   } catch (e) {
+//     console.log(e);
+//     res.json({ message: e.message });
+//   }
+// });
 
+studentRouter.post(`/getMyComments`, async (req, res) => {
+  // console.log(req.body.pId);
+  try {
+    await Comment.find({email : req.body.email}, function (err, details) {
+      if (err) throw err;
+      res.json(details);
+    }).clone();
+  } catch (e) {
+    console.log(e);
+    res.json({ message: e.message });
+  }
+});
 
+studentRouter.post(`/getMyPosts`, async (req, res) => {
+  // console.log(req.body.pId);
+  try {
+    await Post.find({email : req.body.email}, function (err, details) {
+      if (err) throw err;
+      res.json(details);
+    }).clone();
+  } catch (e) {
+    console.log(e);
+    res.json({ message: e.message });
+  }
+});
 
 studentRouter.post("/getallPost", async (req, res) => {
   try {
