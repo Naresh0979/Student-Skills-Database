@@ -7,13 +7,8 @@ const mongoose = require("mongoose");
 const express = require("express");
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
-const emailjs = require("emailjs-com");
 const cors = require("cors");
 const userRouter = express.Router();
-// const CLIENT_ID = '319667652444-f1m3aj1s1s51mqvvmsabq7n7s5bhmogg.apps.googleusercontent.com'
-// const CLIENT_SECRET = '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'
-// const REDIRECT_URI = 'https://developers.google.com/oauthplayground'
-// const REFRESH_TOKEN = '1//04Y48XPFnWrf5CgYIARAAGAQSNwF-L9Ir-ZNa3gWMkWFBxmDLhcBWSCBGmysI9HDxfCBU48oT2UoRMus-PI8oKq0ml0XCOdRFE-4'
 
 const oAuth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
@@ -54,10 +49,6 @@ async function sendMail(from_email, from_name, to_email, subject, html_code) {
   }
 }
 
-// sendMail()
-//   .then((result) => console.log('Email sent...', result))
-//   .catch((error) => console.log(error.message));
-
 //Login Users
 userRouter.post("/login", async (req, res) => {
   try {
@@ -89,53 +80,6 @@ userRouter.post("/login", async (req, res) => {
 // GOOGLE AUTH
 
 userRouter.post("/sendEnquiry", async (req, res) => {
-  // try {
-  //   let transporter = nodemailer.createTransport({
-  //     host: "smtp.gmail.com",
-  //     port: 465,
-  //     secure: true,
-  //     auth: {
-  //       user: process.env.GEMAIL || "abc@gmail.com",
-  //       pass: process.env.GPASSWORD || "1234",
-  //     },
-  //   });
-  //   let mailOptions = {
-  //     from:
-  //       // process.env.GEMAIL
-  //       {
-  //         name: `${req.body.name}`,
-  //         address: `${req.body.email}`,
-  //       } // TODO: email sender
-  //     ,
-  //     to: process.env.GEMAIL, // TODO: email receiver
-  //     subject: "Contact Us",
-  //     html: `
-  //         <div className="email"
-  //         style="border: 1px solid black;
-  //         font-family: sans-serif;
-  //         text-align: center;
-  //         font-size: 20px;
-  //         ">
-  //         <h2>Enquiry</h2>
-  //         <p>${req.body.message}</p>
-  //         <p>Regards, ${req.body.name}</p>
-  //         <p>${req.body.email}</p>
-  //         </div>`,
-  //   };
-
-  //   // Step 3
-  //   transporter.sendMail(mailOptions, (err, data) => {
-  //     if (err) {
-  //       console.log("Error occurs", err);
-  //       return res.status(400).send(err);
-  //     }
-  //     console.log("Email sent!!!");
-  //     return res.status(200).send("Success");
-  //   });
-  // } catch (error) {
-  //   console.log(error);
-  //   res.status(400).send(error);
-  // }
   let html_code = `
           <div className="email"
             style="border: 1px solid black;
@@ -162,47 +106,7 @@ userRouter.post("/sendEnquiry", async (req, res) => {
 
 //send OTP
 const sendOtp = async (email, name) => {
-  // try {
   const otp = `${Math.floor(Math.random() * 999990 + 1)}`;
-
-  //   let transporter = nodemailer.createTransport({
-  //     host: "smtp.gmail.com",
-  //     port: 465,
-  //     secure: true,
-  //     auth: {
-  //       user: process.env.GEMAIL || "abc@gmail.com",
-  //       pass: process.env.GPASSWORD || "1234",
-  //     },
-  //   });
-  //   let mailOptions = {
-  //     from: process.env.GEMAIL, // TODO: email sender
-  //     to: email, // TODO: email receiver
-  //     subject: "OTP for Account Verfication",
-  //     html: `
-  //         <div className="email"
-  //         style="border: 1px solid black;
-  //         padding: 20px;
-  //         font-family: sans-serif;
-  //         line-height: 2;
-  //         font-size: 20px;
-  //         ">
-  //         <h2>HERE IS YOUR OTP for Verfication</h2>
-  //         <p>OTP is : ${otp}</p>
-  //         <p> OTP will expire in 1 hour <p>
-  //         </div>`,
-  //   };
-
-  //   // Step 3
-  //   transporter.sendMail(mailOptions, (err, data) => {
-  //     if (err) {
-  //       return console.log("Error occurs", err);
-  //     }
-  //     return console.log("Email sent!!!");
-  //   });
-  //   return otp;
-  // } catch (error) {
-  //   console.log(error);
-  // }
   let from_email = process.env.GEMAIL;
   let subject = "OTP for Account Verfication";
   let html_code = `
