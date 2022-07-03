@@ -21,8 +21,9 @@ export const Contact = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(name, email, message);
-    axios
+    // console.log(name, email, message);
+    try {
+      axios
       .post("http://localhost:2000/users/sendEnquiry", {
         name,
         email,
@@ -30,8 +31,16 @@ export const Contact = (props) => {
       })
       .then(() => {
         console.log("sent");
-        clearState();
+        
       });
+      clearState();
+      
+    } catch (error) {
+      console.log(error);
+    }
+   
+
+    // console.log( "E.Taregt ", e.target);
     // emailjs
     //   .sendForm(
     //     'service_t8ys2pt', 'template_rgiy2ie', e.target, '6XEZjgCF8fLyuVKXl'
@@ -43,8 +52,10 @@ export const Contact = (props) => {
     //     },
     //     (error) => {
     //       console.log(error.text)
+    //       clearState();
     //     }
     //   )
+
   };
   return (
     <div>

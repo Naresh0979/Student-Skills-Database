@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(
   express.urlencoded({
     extended: false,
-  })
+  }) 
 );
 
 const corsOptions = {
@@ -36,4 +36,3 @@ app.use('/contest',contestRouter);
 app.listen(PORT, () => {
   console.log(`Server started at http://localhost:${PORT}`);
 });
- 
