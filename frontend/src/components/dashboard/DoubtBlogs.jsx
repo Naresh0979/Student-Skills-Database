@@ -6,9 +6,16 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "long", day: "numeric", hour: '2-digit', minute: '2-digit', second: '2-digit' }
-  return new Date(dateString).toLocaleDateString(undefined, options)
-}
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+};
 const DoubtBlogs = () => {
   let location = useLocation();
   //console.log(location);
@@ -20,6 +27,7 @@ const DoubtBlogs = () => {
   const [posts, setPosts] = useState();
   const [seenPostIndex, setSeenPostIdx] = useState(-1);
   const [comments, setComments] = useState();
+  const [myPosts, setMyPosts] = useState(false);
 
   const handlePost = (e) => {
     setContentPost(e.target.value);
@@ -35,9 +43,9 @@ const DoubtBlogs = () => {
       })
       .then((response) => {
         setComments(response.data);
-        comments.sort(function(x, y){
+        comments.sort(function (x, y) {
           return x.timestamp - y.timestamp;
-      })
+        });
       });
   };
   const handleSubmit = (e) => {
@@ -58,9 +66,9 @@ const DoubtBlogs = () => {
         posts.push(data);
         console.log(posts);
         setPosts(posts);
-        posts.sort(function(x, y){
+        posts.sort(function (x, y) {
           return x.timestamp - y.timestamp;
-      })
+        });
       });
   };
   const handleCommentSubmit = (id, e) => {
@@ -82,28 +90,48 @@ const DoubtBlogs = () => {
         comments.push(data);
         //  console.log(data);
         setComments(comments);
-        comments.sort(function(x, y){
+        comments.sort(function (x, y) {
           return x.timestamp - y.timestamp;
-      })
+        });
         setReplybox(!replybox);
       });
   };
 
   useEffect(() => {
-    axios
-      .post("http://localhost:2000/student/getallPost", {
-        email: location.state.email,
-      })
-      .then((response) => {
-        //   console.log(response);
-        //console.log(response.data);
+    if (myPosts) {
+      axios
+        .post("http://localhost:2000/student/getMyPosts", {
+          email: location.state.email,
+        })
+        .then((response) => {
+          //   console.log(response);
+          //console.log(response.data);
 
-        setPosts(response.data);
-        posts.sort(function(x, y){
-          return x.timestamp - y.timestamp;
-      })
-      });
-  }, [posts]);
+          setPosts(response.data);
+          posts.sort(function (x, y) {
+            return x.time - y.time;
+          });
+          //  setPosts(posts);
+        });
+    } else {
+      axios
+        .post("http://localhost:2000/student/getallPost", {
+          email: location.state.email,
+        })
+        .then((response) => {
+          //   console.log(response);
+          //console.log(response.data);
+
+          setPosts(
+            response.data.sort(function (x, y) {
+              return x.time - y.time;
+            })
+          );
+
+          //  setPosts(posts);
+        });
+    }
+  }, [location.state.email, myPosts, posts]);
 
   return (
     <div id="profileContainer">
@@ -112,8 +140,33 @@ const DoubtBlogs = () => {
       <div className="container container-doubtBlog">
         <div className="comment-sidebar">
           <div className="sidebar-features">
-            <button>my posts</button>
-            <button>my comments</button>
+            <button
+              onClick={() => {
+                setMyPosts(!myPosts);
+              }}
+            >
+              my posts
+            </button>
+            {/* <button>my comments</button> */}
+            {/* <h3 className="head">Post </h3> */}
+
+            <div className="reply-form " id="comment-1-reply-form">
+              <textarea
+                placeholder="Post questions here"
+                rows="4"
+                onChange={handlePost}
+              ></textarea>
+              <button type="submit" onClick={handleSubmit}>
+                Submit
+              </button>
+              <button
+                type="button"
+                data-toggle="reply-form"
+                data-target="comment-1-reply-form"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
 
@@ -128,9 +181,7 @@ const DoubtBlogs = () => {
                   <summary>
                     <div className="comment-heading">
                       <div className="comment-info">
-                        <span className="comment-author">
-                          {post.email}
-                        </span>
+                        <span className="comment-author">{post.email}</span>
                         <button
                           type="button"
                           onClick={() => {
@@ -287,7 +338,7 @@ const DoubtBlogs = () => {
             <>Not Mentioned</>
           )}
         </div>
-        <div className="comment-post">
+        {/* <div className="comment-post">
           <h3 className="head">Post </h3>
 
           <div className="reply-form " id="comment-1-reply-form">
@@ -307,7 +358,7 @@ const DoubtBlogs = () => {
               Cancel
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

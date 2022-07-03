@@ -57,6 +57,18 @@ studentRouter.post(`/getCommentById`, async (req, res) => {
     res.json({ message: e.message });
   }
 });
+// studentRouter.post(`/getPostByComment`, async (req, res) => {
+//   // console.log(req.body.pId);
+//   try {
+//     await Comment.find({pId : req.body.pId}, function (err, details) {
+//       if (err) throw err;
+//       res.json(details);
+//     }).clone();
+//   } catch (e) {
+//     console.log(e);
+//     res.json({ message: e.message });
+//   }
+// });
 
 studentRouter.post(`/getMyComments`, async (req, res) => {
   // console.log(req.body.pId);
