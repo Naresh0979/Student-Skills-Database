@@ -50,6 +50,10 @@ studentRouter.post(`/getCommentById`, async (req, res) => {
   try {
     await Comment.find({pId : req.body.pId}, function (err, details) {
       if (err) throw err;
+      details.sort(function (x, y) {
+        return x.upVotes > y.upVotes;
+      });
+    
       res.json(details);
     }).clone();
   } catch (e) {
@@ -57,11 +61,29 @@ studentRouter.post(`/getCommentById`, async (req, res) => {
     res.json({ message: e.message });
   }
 });
-// studentRouter.post(`/getPostByComment`, async (req, res) => {
+studentRouter.post(`/upVote`, async (req, res) => {
+  //console.log(req.body.cId);
+  try{
+    await Comment.update({cId : req.body.cId},{$inc :{upVotes:1}});
+    // await Comment.find({email : req.body.email}, function (err, details) {
+    //   if (err) throw err;
+     res.json("S");
+    // }).clone();
+    // // console.log("s");
+  }catch(e){
+    console.log(e);
+    res.json({ message: e.message });
+  }
+});
+
+// studentRouter.post(`/getMyComments`, async (req, res) => {
 //   // console.log(req.body.pId);
 //   try {
-//     await Comment.find({pId : req.body.pId}, function (err, details) {
+//     await Comment.find({email : req.body.email}, function (err, details) {
 //       if (err) throw err;
+//       details.sort(function (x, y) {
+//         return x.upVotes > y.upVotes;
+//       });
 //       res.json(details);
 //     }).clone();
 //   } catch (e) {
@@ -69,19 +91,6 @@ studentRouter.post(`/getCommentById`, async (req, res) => {
 //     res.json({ message: e.message });
 //   }
 // });
-
-studentRouter.post(`/getMyComments`, async (req, res) => {
-  // console.log(req.body.pId);
-  try {
-    await Comment.find({email : req.body.email}, function (err, details) {
-      if (err) throw err;
-      res.json(details);
-    }).clone();
-  } catch (e) {
-    console.log(e);
-    res.json({ message: e.message });
-  }
-});
 
 studentRouter.post(`/getMyPosts`, async (req, res) => {
   // console.log(req.body.pId);

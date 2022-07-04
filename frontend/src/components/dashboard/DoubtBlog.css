@@ -53,6 +53,9 @@ button:active {
   background-color: #fff;
   border: 1px solid transparent; /* Removes margin collapse */
 }
+.email{
+  text-align: right;
+}
 .sidebar-features {
   display: flex;
   flex-direction: column;

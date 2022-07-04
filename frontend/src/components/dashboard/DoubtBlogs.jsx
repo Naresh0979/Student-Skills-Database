@@ -36,16 +36,44 @@ const DoubtBlogs = () => {
     setReplyMsg(e.target.value);
   };
 
+  const handleUpVote = (id,e,pid) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:2000/student/upVote", {
+        cId: id,
+      })
+      .then((response) => {
+        // // setComments(response.data);
+         getCommentById(pid);
+        // setSeenPostIdx(0);
+         setComments(comments);
+        // comments.sort(function (x, y) {
+        //   return x.upVotes - y.upVotes;
+        
+        // });
+      });
+      // axios
+      // .post("http://localhost:2000/student/getCommentById", {
+      //   pId: id,
+      // })
+      // .then((response) => {
+      //    setComments(response.data);
+      //   // comments.sort(function (x, y) {
+      //   //   return x.upVotes - y.upVotes;
+      //   // });
+      // });
+  };
+  
   const getCommentById = (id) => {
     axios
       .post("http://localhost:2000/student/getCommentById", {
         pId: id,
       })
       .then((response) => {
-        setComments(response.data);
-        comments.sort(function (x, y) {
-          return x.timestamp - y.timestamp;
-        });
+         setComments(response.data);
+        // comments.sort(function (x, y) {
+        //   return x.upVotes - y.upVotes;
+        // });
       });
   };
   const handleSubmit = (e) => {
@@ -97,6 +125,14 @@ const DoubtBlogs = () => {
         setReplybox(!replybox);
       });
   };
+  function getlength(x){
+    if(x.length<30)
+    {
+      x=x+' ';
+    }
+    // console.log(x);
+    return x;
+  }
 
   useEffect(() => {
     if (myPosts) {
@@ -157,6 +193,7 @@ const DoubtBlogs = () => {
               {/* <h3 className="head">Post </h3> */}
 
               <div className="reply-form" id="comment-1-reply-form">
+                
                 <textarea
                   placeholder="Post Doubts here"
                   rows="4"
@@ -173,14 +210,7 @@ const DoubtBlogs = () => {
                     Post
                   </button>
                 </div>
-                {/* <button
-                  type="button"
-                  className="btn-custom"
-                  data-toggle="reply-form"
-                  data-target="comment-1-reply-form"
-                >
-                  Cancel
-                </button> */}
+              
               </div>
             </div>
           </div>
@@ -198,8 +228,11 @@ const DoubtBlogs = () => {
                     <summary>
                       <div className="comment-heading">
                         <div className="comment-info">
-                          <div className="heading-show-btn">
-                            <p className="comment-author">{post.email}</p>
+                          <div className="heading-show-btn ">
+                            <p className="comment-author">{getlength(post.content.slice(0,30))+"...."}
+                                 {"<"+post.email+">"} 
+                           </p>
+                         
                             <button
                               type="button"
                               className="open-close-post"
@@ -254,13 +287,7 @@ const DoubtBlogs = () => {
                                 >
                                   Submit
                                 </button>
-                                {/* <button
-                                  type="button"
-                                  data-toggle="reply-form"
-                                  data-target="comment-1-reply-form"
-                                >
-                                  Cancel
-                                </button> */}
+                               
                               </div>
                             ) : (
                               <></>
@@ -268,7 +295,7 @@ const DoubtBlogs = () => {
                           </div>
                         </div>
 
-                        <h3 className="head">{ comments.length > 0 ? "Comments" : ""}</h3>
+                        <h3 className="head">{ comments?.length > 0 ? "Comments("+comments?.length+")" : ""}</h3>
 
                         <div className="replies">
                           {comments ? (
@@ -291,8 +318,11 @@ const DoubtBlogs = () => {
 
                                   <summary>
                                     <div className="comment-heading">
-                                      <div className="comment-voting">
-                                        <button type="button">
+                                      {/* <div className="comment-voting"> */}
+                                        <button type="button"
+                                        
+                                        onClick={(e)=>{handleUpVote(comment.cId,e,comment.pId)}}
+                                        >
                                           <span aria-hidden="true">
                                             &#9650;
                                           </span>
@@ -300,15 +330,8 @@ const DoubtBlogs = () => {
                                             Vote up
                                           </span>
                                         </button>
-                                        <button type="button">
-                                          <span aria-hidden="true">
-                                            &#9660;
-                                          </span>
-                                          <span className="sr-only">
-                                            Vote down
-                                          </span>
-                                        </button>
-                                      </div>
+                                       
+                                      {/* </div> */}
                                       <div className="comment-info">
                                         <span className="comment-author">
                                           {comment.email}
@@ -367,27 +390,7 @@ const DoubtBlogs = () => {
               <>Not Mentioned</>
             )}
           </div>
-          {/* <div className="comment-post">
-          <h3 className="head">Post </h3>
-
-          <div className="reply-form " id="comment-1-reply-form">
-            <textarea
-              placeholder="Post questions here"
-              rows="4"
-              onChange={handlePost}
-            ></textarea>
-            <button type="submit" onClick={handleSubmit}>
-              Submit
-            </button>
-            <button
-              type="button"
-              data-toggle="reply-form"
-              data-target="comment-1-reply-form"
-            >
-              Cancel
-            </button>
-          </div>
-        </div> */}
+         
         </div>
       </div>
     </div>
