@@ -106,7 +106,7 @@ userRouter.post("/sendEnquiry", async (req, res) => {
 
 //send OTP
 const sendOtp = async (email, name) => {
-  const otp = `${Math.floor(Math.random() * 999990 + 1)}`;
+  const otp = `${Math.floor(Math.random() * 9999990)}`;
   let from_email = process.env.GEMAIL;
   let subject = "OTP for Account Verfication";
   let html_code = `

@@ -36,7 +36,7 @@ const DoubtBlogs = () => {
     setReplyMsg(e.target.value);
   };
 
-  const handleUpVote = (id,e,pid) => {
+  const handleUpVote = (id, e, pid) => {
     e.preventDefault();
     axios
       .post("http://localhost:2000/student/upVote", {
@@ -44,33 +44,33 @@ const DoubtBlogs = () => {
       })
       .then((response) => {
         // // setComments(response.data);
-         getCommentById(pid);
+        getCommentById(pid);
         // setSeenPostIdx(0);
-         setComments(comments);
+        setComments(comments);
         // comments.sort(function (x, y) {
         //   return x.upVotes - y.upVotes;
-        
+
         // });
       });
-      // axios
-      // .post("http://localhost:2000/student/getCommentById", {
-      //   pId: id,
-      // })
-      // .then((response) => {
-      //    setComments(response.data);
-      //   // comments.sort(function (x, y) {
-      //   //   return x.upVotes - y.upVotes;
-      //   // });
-      // });
+    // axios
+    // .post("http://localhost:2000/student/getCommentById", {
+    //   pId: id,
+    // })
+    // .then((response) => {
+    //    setComments(response.data);
+    //   // comments.sort(function (x, y) {
+    //   //   return x.upVotes - y.upVotes;
+    //   // });
+    // });
   };
-  
+
   const getCommentById = (id) => {
     axios
       .post("http://localhost:2000/student/getCommentById", {
         pId: id,
       })
       .then((response) => {
-         setComments(response.data);
+        setComments(response.data);
         // comments.sort(function (x, y) {
         //   return x.upVotes - y.upVotes;
         // });
@@ -125,10 +125,9 @@ const DoubtBlogs = () => {
         setReplybox(!replybox);
       });
   };
-  function getlength(x){
-    if(x.length<30)
-    {
-      x=x+' ';
+  function getlength(x) {
+    if (x.length < 30) {
+      x = x + " ";
     }
     // console.log(x);
     return x;
@@ -169,7 +168,6 @@ const DoubtBlogs = () => {
         });
     }
   }, [location.state.email, myPosts, posts]);
-
   return (
     <div id="profileContainer">
       <Navbar />
@@ -179,44 +177,10 @@ const DoubtBlogs = () => {
           <h2 className="head">Discussions</h2>
         </div>
         <div className="container container-doubtBlog">
-          <div className="comment-sidebar">
-            <div className="sidebar-features">
-              <button
-                onClick={() => {
-                  setMyPosts(!myPosts);
-                }}
-                className="btn-custom post-btn-margin"
-              >
-                {myPosts ? "All Posts" : "My Posts"}
-              </button>
-              {/* <button>my comments</button> */}
-              {/* <h3 className="head">Post </h3> */}
-
-              <div className="reply-form" id="comment-1-reply-form">
-                
-                <textarea
-                  placeholder="Post Doubts here"
-                  rows="4"
-                  value={contentPost}
-                  className="posting-doubt"
-                  onChange={handlePost}
-                ></textarea>
-                <div className="">
-                  <button
-                    className="btn-custom align-btn"
-                    type="submit"
-                    onClick={handleSubmit}
-                  >
-                    Post
-                  </button>
-                </div>
-              
-              </div>
-            </div>
-          </div>
-
           <div className="comment-thread">
-            <h3 className="posts-container-head">{ !myPosts ? "All Posts" : "My Posts"}</h3>
+            <h3 className="posts-container-head">
+              {!myPosts ? "All Posts" : "My Posts"}
+            </h3>
             {posts ? (
               posts.map((post, index) => (
                 <>
@@ -229,10 +193,11 @@ const DoubtBlogs = () => {
                       <div className="comment-heading">
                         <div className="comment-info">
                           <div className="heading-show-btn ">
-                            <p className="comment-author">{getlength(post.content.slice(0,30))+"...."}
-                                 {"<"+post.email+">"} 
-                           </p>
-                         
+                            <p className="comment-author">
+                              {getlength(post.content.slice(0, 30)) + "...."}
+                              {"<" + post.email + ">"}
+                            </p>
+
                             <button
                               type="button"
                               className="open-close-post"
@@ -287,7 +252,6 @@ const DoubtBlogs = () => {
                                 >
                                   Submit
                                 </button>
-                               
                               </div>
                             ) : (
                               <></>
@@ -295,7 +259,11 @@ const DoubtBlogs = () => {
                           </div>
                         </div>
 
-                        <h3 className="head">{ comments?.length > 0 ? "Comments("+comments?.length+")" : ""}</h3>
+                        <h3 className="head">
+                          {comments?.length > 0
+                            ? "Comments(" + comments?.length + ")"
+                            : ""}
+                        </h3>
 
                         <div className="replies">
                           {comments ? (
@@ -319,18 +287,20 @@ const DoubtBlogs = () => {
                                   <summary>
                                     <div className="comment-heading">
                                       {/* <div className="comment-voting"> */}
-                                        <button type="button"
-                                        
-                                        onClick={(e)=>{handleUpVote(comment.cId,e,comment.pId)}}
-                                        >
-                                          <span aria-hidden="true">
-                                            &#9650;
-                                          </span>
-                                          <span className="sr-only">
-                                            Vote up
-                                          </span>
-                                        </button>
-                                       
+                                      <button
+                                        type="button"
+                                        onClick={(e) => {
+                                          handleUpVote(
+                                            comment.cId,
+                                            e,
+                                            comment.pId
+                                          );
+                                        }}
+                                      >
+                                        <span aria-hidden="true">&#9650;</span>
+                                        <span className="sr-only">Vote up</span>
+                                      </button>
+
                                       {/* </div> */}
                                       <div className="comment-info">
                                         <span className="comment-author">
@@ -390,7 +360,39 @@ const DoubtBlogs = () => {
               <>Not Mentioned</>
             )}
           </div>
-         
+          <div className="comment-sidebar">
+            <div className="sidebar-features">
+              <button
+                onClick={() => {
+                  setMyPosts(!myPosts);
+                }}
+                className="btn-custom post-btn-margin"
+              >
+                {myPosts ? "Show All Posts" : "Show My Posts"}
+              </button>
+              {/* <button>my comments</button> */}
+              {/* <h3 className="head">Post </h3> */}
+
+              <div className="reply-form" id="comment-1-reply-form">
+                <textarea
+                  placeholder="Post Doubts here"
+                  rows="4"
+                  value={contentPost}
+                  className="posting-doubt"
+                  onChange={handlePost}
+                ></textarea>
+                <div className="">
+                  <button
+                    className="btn-custom align-btn"
+                    type="submit"
+                    onClick={handleSubmit}
+                  >
+                    Post
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
