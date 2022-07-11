@@ -15,6 +15,12 @@ const pendingDetail = new mongoose.Schema({
   mobileNumber: {
     type: String,
   },
+  Codeforces: {
+    type: String,
+  },
+  Atcoder: {
+    type: String,
+  },
   country: {
     type: String,
   },

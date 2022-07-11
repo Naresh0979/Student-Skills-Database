@@ -22,16 +22,11 @@ const EditProfile = () => {
     pincode: "",
     bio: "",
     address: "",
+    codeforces:"",
+    Atcoder:"",
   });
 
-  //Skills
-  // document
-  //   .getElementById("skills-add")
-  //   .addEventListener("keypress", function (event) {
-  //     if (event.key == "Enter") {
-  //       event.preventDefault();
-  //     }
-  //   });
+  
   const [skills, setSkills] = useState([]);
   function handleKeyDown(e) {
     if(e.key === "Enter")
@@ -212,6 +207,8 @@ const EditProfile = () => {
           pincode: data.pincode,
           bio: data.bio,
           address: data.address,
+          codeforces:data.codeforces,
+          Atcoder:data.Atcoder,
         };
         setInfo(temporaryInfo);
         setEducationList(data.educationList);
@@ -273,6 +270,13 @@ const EditProfile = () => {
                     disabled
                     value={info?.email}
                   />
+                   <input
+                    className="e-p-input"
+                    placeholder="CodeForces Handle*"
+                    name="codeforces"
+                    onChange={handleChange}
+                    value={info?.codeforces}
+                  />
                   <div className="small-left-right">
                     <input
                       className="e-p-input"
@@ -307,6 +311,14 @@ const EditProfile = () => {
                     value={info?.mobileNumber}
                     onChange={handleChange}
                   />
+                  <input
+                    className="e-p-input"
+                    placeholder="Atcoder Handle*"
+                    name="Atcoder"
+                    value={info?.Atcoder}
+                    onChange={handleChange}
+                  />
+                 
 
                   <div className="small-left-right">
                     <input
@@ -336,6 +348,7 @@ const EditProfile = () => {
                 value={info?.address}
                 onChange={handleChange}
               />
+              
               <input
                 className="e-p-input"
                 name="bio"

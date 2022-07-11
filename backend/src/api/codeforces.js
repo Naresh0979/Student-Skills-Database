@@ -4,11 +4,19 @@ exports.getUserContest = async function (userHandle) {
   const url = `https://codeforces.com/api/user.rating?handle=${userHandle}`;
   const responce = await axios.get(url);
 };
-exports.getUserRating = async function (userHandle) {
-  const url = `https://codeforces.com/api/user.info?handles=${userHandle}`;
+exports.getUserData = async function (req,res) {
+
+  console.log(req.body);
+  const url = `https://codeforces.com/api/user.info?handles=${req.userHandle}`;
   const responce = await axios.get(url);
-  const { maxRating } = responce.data.result[0];
-  return maxRating; 
+  const { maxRating,rating,handle } = responce.data.result[0];
+  const url2 =` https://codeforces.com/api/user.status?handle=${req.userHandle}`;
+  const {data} = await axios.get(url2);
+   const  questions  = data.result.filter((contest) => contest.verdict === "OK").length;
+   console.log(questions);
+   const detail=[questions,maxRating,rating,handle]
+ 
+   res.send( detail); 
 }; 
 exports.getUpcomingContest = async function (req, res) {
   const url = `https://codeforces.com/api/contest.list?gym=false`;

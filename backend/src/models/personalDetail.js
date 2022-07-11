@@ -42,6 +42,12 @@ const personalDetail = new mongoose.Schema({
   address: {
     type: String,
   },
+  Codeforces: {
+    type: String,
+  },
+  Atcoder: {
+    type: String,
+  },
   bio: {
     type: String,
   },

@@ -12,9 +12,9 @@ const ContestCalender = () => {
       //  console.log(contest.data);
       setCodeforcesContest(contest.data);
       console.log(contest.data);
-      // setCodeforcesContest(codeforcesContest.sort())    ;
-      // setCodeforcesContest(codeforcesContest.reverse());
+      
     });
+   
   }, []);
 
   return (
