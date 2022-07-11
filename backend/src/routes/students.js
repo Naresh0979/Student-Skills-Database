@@ -10,7 +10,7 @@ const { v4: uuidv4 } = require("uuid");
 
 studentRouter.post("/createPost", async (req, res) => {
   try {
-   // console.log(req.body.post);
+    // console.log(req.body.post);
     //await PersonalDetail.deleteMany({ email: req.body.email });
     const post = new Post({
       email: req.body.post.email,
@@ -19,7 +19,7 @@ studentRouter.post("/createPost", async (req, res) => {
     });
     await post.save();
     res.send(post);
-  //  console.log("post created");
+    //  console.log("post created");
   } catch (e) {
     console.log(e);
     res.send(false);
@@ -28,17 +28,17 @@ studentRouter.post("/createPost", async (req, res) => {
 
 studentRouter.post("/createComment", async (req, res) => {
   try {
-   // console.log(req.body.comment);
+    // console.log(req.body.comment);
     //await PersonalDetail.deleteMany({ email: req.body.email });
     const comment = new Comment({
       email: req.body.comment.email,
       content: req.body.comment.content,
       cId: uuidv4(),
-      pId: req.body.comment.pId
+      pId: req.body.comment.pId,
     });
     await comment.save();
     res.send(comment);
-    console.log("comment created");
+    // console.log("comment created");
   } catch (e) {
     console.log(e);
     res.send(false);
@@ -48,12 +48,12 @@ studentRouter.post("/createComment", async (req, res) => {
 studentRouter.post(`/getCommentById`, async (req, res) => {
   // console.log(req.body.pId);
   try {
-    await Comment.find({pId : req.body.pId}, function (err, details) {
+    await Comment.find({ pId: req.body.pId }, function (err, details) {
       if (err) throw err;
       details.sort(function (x, y) {
         return x.upVotes > y.upVotes;
       });
-    
+
       res.json(details);
     }).clone();
   } catch (e) {
@@ -63,14 +63,14 @@ studentRouter.post(`/getCommentById`, async (req, res) => {
 });
 studentRouter.post(`/upVote`, async (req, res) => {
   //console.log(req.body.cId);
-  try{
-    await Comment.update({cId : req.body.cId},{$inc :{upVotes:1}});
+  try {
+    await Comment.update({ cId: req.body.cId }, { $inc: { upVotes: 1 } });
     // await Comment.find({email : req.body.email}, function (err, details) {
     //   if (err) throw err;
-     res.json("S");
+    res.json("S");
     // }).clone();
     // // console.log("s");
-  }catch(e){
+  } catch (e) {
     console.log(e);
     res.json({ message: e.message });
   }
@@ -95,7 +95,7 @@ studentRouter.post(`/upVote`, async (req, res) => {
 studentRouter.post(`/getMyPosts`, async (req, res) => {
   // console.log(req.body.pId);
   try {
-    await Post.find({email : req.body.email}, function (err, details) {
+    await Post.find({ email: req.body.email }, function (err, details) {
       if (err) throw err;
       res.json(details);
     }).clone();
@@ -157,12 +157,12 @@ studentRouter.post("/confirmedEditProfile", async (req, res) => {
     // console.log(req.body);
     await PersonalDetail.deleteMany({ email: req.body.email });
     let userData = await PendingDetail.findOne({ email: req.body.email });
-    if(!userData){
+    if (!userData) {
       console.log("User Doesn't exists");
       return res.status(200).send("User Doesn't Exists");
     }
     // userData = userData.data;
-    // console.log(userData);
+    console.log(userData);
     const personalData = new PersonalDetail({
       email: userData.email,
       name: userData.name,
@@ -195,29 +195,25 @@ studentRouter.post("/confirmedEditProfile", async (req, res) => {
   }
 });
 
-studentRouter.get("/getPendingDetails",async(req,res) => {
+studentRouter.get("/getPendingDetails", async (req, res) => {
   const data = await PendingDetail.find();
   return res.send(data);
 });
 
-studentRouter.post('/deletePendingDetails' , async(req,res) => {
-  await PendingDetail.deleteMany({email : req.body.email});
+studentRouter.post("/deletePendingDetails", async (req, res) => {
+  await PendingDetail.deleteMany({ email: req.body.email });
   return res.status(200).send("Deleted");
-})
+});
 
 studentRouter.post("/getStudentData", async (req, res) => {
   try {
-    await PersonalDetail.findOne(
-      { email: req.body.email },
-      function (err, details) {
-        if (err) throw err;
-        res.json(details);
-      }
-    ).clone();
+    let data = await PersonalDetail.findOne({ email: req.body.email });
+    // console.log("Sending DATA ",data);
+    res.send(data);
   } catch (e) {
-    console.log(e);
+    console.log(e); 
     res.json({ message: e.message });
-  }
+  }  
 });
 
 module.exports = studentRouter;

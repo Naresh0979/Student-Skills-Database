@@ -7,7 +7,7 @@ export const DashboardNavigation = (props) => {
     e.preventDefault();
     axios.get("http://localhost:2000/users/logout").then((response) => {
       // write here the page to load when logout
-      console.log(props);
+      // console.log(props);
       navigate('/signUp');
     });
   };

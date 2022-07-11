@@ -1,4 +1,3 @@
-import Sidebar from "../sidebars/Sidebar";
 import React, { useEffect, useState } from "react";
 import Education from "../UserDetails/Education";
 import Experience from "../UserDetails/Experience";
@@ -8,13 +7,13 @@ import Project from "../UserDetails/Project";
 import Links from "../UserDetails/Links";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-const EditProfile = () => {
+const EditProfile = ({ status, email }) => {
   const location = useLocation();
   // console.log(location);
   const [info, setInfo] = useState({
     name: "",
     rollNumber: "",
-    email: location.state || "",
+    email: email || location.state,
     mobileNumber: "",
     country: "",
     state: "",
@@ -22,15 +21,13 @@ const EditProfile = () => {
     pincode: "",
     bio: "",
     address: "",
-    codeforces:"",
-    Atcoder:"",
+    codeforces: "",
+    Atcoder: "",
   });
 
-  
   const [skills, setSkills] = useState([]);
   function handleKeyDown(e) {
-    if(e.key === "Enter")
-      e.preventDefault();
+    if (e.key === "Enter") e.preventDefault();
     if (e.key !== "Enter") return false;
     const value = e.target.value;
     if (!value.trim()) return false;
@@ -190,16 +187,17 @@ const EditProfile = () => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
   useEffect(() => {
+    let emails = email || location.state;
     axios
       .post("http://localhost:2000/student/getStudentData", {
-        email: location.state,
+        email: emails,
       })
       .then(({ data }) => {
-        // console.log("Inside DATA ",data);
+        // console.log("Inside DATA ", data);
         let temporaryInfo = {
           name: data.name,
           rollNumber: data.rollNumber,
-          email: location.state,
+          email: emails,
           mobileNumber: data.mobileNumber,
           country: data.country,
           state: data.state,
@@ -207,8 +205,8 @@ const EditProfile = () => {
           pincode: data.pincode,
           bio: data.bio,
           address: data.address,
-          codeforces:data.codeforces,
-          Atcoder:data.Atcoder,
+          codeforces: data.codeforces,
+          Atcoder: data.Atcoder,
         };
         setInfo(temporaryInfo);
         setEducationList(data.educationList);
@@ -225,10 +223,10 @@ const EditProfile = () => {
 
   const saveDetails = async (e) => {
     e.preventDefault();
-    console.log("KEY" , e.key);
+    // console.log("KEY", e.key);
     if (e.key === "Enter") return;
     try {
-      console.log("INFO", info);
+      // console.log("INFO", info);
       let fullDetails = { ...info };
       fullDetails["skills"] = JSON.stringify(skills);
       fullDetails["linkList"] = JSON.stringify(linkList);
@@ -247,8 +245,7 @@ const EditProfile = () => {
   return (
     <div className="background-body-for-editProfile">
       <Navbar />
-      <div className="edu-personal-info">
-        {/* <ToastContainer /> */}
+      <div className="edu-personal-info" style={status ? {"margin-top" : "20px", "margin-bottom" :"20px"} : {}}>
         <div className="details-container">
           <form onSubmit={saveDetails}>
             <div className="details-container-personal-info">
@@ -261,6 +258,7 @@ const EditProfile = () => {
                     placeholder="Full Name*"
                     name="name"
                     value={info?.name}
+                    disabled={status}
                     onChange={handleChange}
                   />
                   <input
@@ -270,10 +268,11 @@ const EditProfile = () => {
                     disabled
                     value={info?.email}
                   />
-                   <input
+                  <input
                     className="e-p-input"
                     placeholder="CodeForces Handle*"
                     name="codeforces"
+                    disabled={status}
                     onChange={handleChange}
                     value={info?.codeforces}
                   />
@@ -282,12 +281,14 @@ const EditProfile = () => {
                       className="e-p-input"
                       placeholder="Country*"
                       name="country"
+                      disabled={status}
                       value={info?.country}
                       onChange={handleChange}
                     />
                     <input
                       className="e-p-input"
                       name="state"
+                      disabled={status}
                       placeholder="State*"
                       value={info?.state}
                       onChange={handleChange}
@@ -300,6 +301,7 @@ const EditProfile = () => {
                     className="e-p-input"
                     placeholder="Roll Number*"
                     name="rollNumber"
+                    disabled={status}
                     value={info?.rollNumber}
                     onChange={handleChange}
                   />
@@ -307,6 +309,7 @@ const EditProfile = () => {
                     className="e-p-input"
                     placeholder="Mobile no.*"
                     type="tel"
+                    disabled={status}
                     name="mobileNumber"
                     value={info?.mobileNumber}
                     onChange={handleChange}
@@ -315,15 +318,16 @@ const EditProfile = () => {
                     className="e-p-input"
                     placeholder="Atcoder Handle*"
                     name="Atcoder"
+                    disabled={status}
                     value={info?.Atcoder}
                     onChange={handleChange}
                   />
-                 
 
                   <div className="small-left-right">
                     <input
                       className="e-p-input"
                       id="district"
+                      disabled={status}
                       placeholder="City*"
                       name="district"
                       value={info?.district}
@@ -333,6 +337,7 @@ const EditProfile = () => {
                     <input
                       className="e-p-input"
                       name="pincode"
+                      disabled={status}
                       placeholder="Pincode*"
                       value={info?.pincode}
                       onChange={handleChange}
@@ -345,13 +350,15 @@ const EditProfile = () => {
                 className="e-p-input"
                 placeholder="Your Address"
                 name="address"
+                disabled={status}
                 value={info?.address}
                 onChange={handleChange}
               />
-              
+
               <input
                 className="e-p-input"
                 name="bio"
+                disabled={status}
                 placeholder="Bio*"
                 value={info?.bio}
                 onChange={handleChange}
@@ -370,40 +377,48 @@ const EditProfile = () => {
                 {skills.map((skills, index) => (
                   <div className="tag-item" key={index} id={index}>
                     <span className="tags-text">{skills}</span>
-                    <span
-                      className="tags-close"
-                      onClick={() => removeSkills(index)}
-                    >
-                      &times;
-                    </span>
+                    {!status && (
+                      <span
+                        className="tags-close"
+                        onClick={() => !status && removeSkills(index)}
+                      >
+                        &times;
+                      </span>
+                    )}
                   </div>
                 ))}
 
-                <input
-                  type="text"
-                  onKeyDown={handleKeyDown}
-                  id="skills-add"
-                  className="tags-input"
-                  placeholder="Enter Skill"
-                />
+                {!status && (
+                  <input
+                    type="text"
+                    onKeyDown={handleKeyDown}
+                    disabled={status}
+                    id="skills-add"
+                    className="tags-input"
+                    placeholder="Enter Skill"
+                  />
+                )}
               </div>
             </div>
 
             <div className="details-container-education">
               <div className="ed-container">
                 <h3>Website Links</h3>
-                <button
-                  type="button"
-                  onClick={addNewLink}
-                  className=" btn-success btn-adder"
-                >
-                  <i className="fa fa-plus" />
-                </button>
+                {!status && (
+                  <button
+                    type="button"
+                    disabled={status}
+                    onClick={addNewLink}
+                    className=" btn-success btn-adder"
+                  >
+                    <i className="fa fa-plus" />
+                  </button>
+                )}
               </div>
               <div className="ed-container">
                 <div className="table">
                   <Links
-                    status={true}
+                    status={!status}
                     update={handleLinkChange}
                     delete={deleteLink}
                     linkList={linkList}
@@ -415,18 +430,21 @@ const EditProfile = () => {
             <div className="details-container-education mt-4">
               <div className="ed-container">
                 <h3>Education</h3>
-                <button
-                  type="button"
-                  onClick={addNewEducation}
-                  className=" btn-success btn-adder"
-                >
-                  <i className="fa fa-plus" />
-                </button>
+                {!status && (
+                  <button
+                    type="button"
+                    disabled={status}
+                    onClick={addNewEducation}
+                    className=" btn-success btn-adder"
+                  >
+                    <i className="fa fa-plus" />
+                  </button>
+                )}
               </div>
               <div className="ed-container">
                 <div className="table">
                   <Education
-                    status={true}
+                    status={!status}
                     update={handleEducationChange}
                     delete={deleteEducation}
                     educationList={educationList}
@@ -438,18 +456,21 @@ const EditProfile = () => {
             <div className="details-container-education mt-4">
               <div className="ed-container">
                 <h3>Experience</h3>
-                <button
-                  type="button"
-                  onClick={addNewExperience}
-                  className=" btn-success btn-adder"
-                >
-                  <i className="fa fa-plus" />
-                </button>
+                {!status && (
+                  <button
+                    type="button"
+                    disabled={status}
+                    onClick={addNewExperience}
+                    className=" btn-success btn-adder"
+                  >
+                    <i className="fa fa-plus" />
+                  </button>
+                )}
               </div>
               <div className="ed-container">
                 <div className="table">
                   <Experience
-                    status={true}
+                    status={!status}
                     update={handleExperienceChange}
                     delete={deleteExperience}
                     experienceList={experienceList}
@@ -460,18 +481,21 @@ const EditProfile = () => {
             <div className="details-container-education mt-4">
               <div className="ed-container">
                 <h3>Projects</h3>
-                <button
-                  type="button"
-                  onClick={addNewProject}
-                  className=" btn-success btn-adder"
-                >
-                  <i className="fa fa-plus" />
-                </button>
+                {!status && (
+                  <button
+                    disabled={status}
+                    type="button"
+                    onClick={addNewProject}
+                    className=" btn-success btn-adder"
+                  >
+                    <i className="fa fa-plus" />
+                  </button>
+                )}
               </div>
               <div className="ed-container">
                 <div className="table">
                   <Project
-                    status={true}
+                    status={!status}
                     update={handleProjectChange}
                     delete={deleteProject}
                     projectList={projectList}
@@ -480,9 +504,11 @@ const EditProfile = () => {
               </div>
             </div>
             <div className="details-container-button">
-              <button type="submit" className="btn ed-btn btn-primary">
-                Save
-              </button>
+              {!status && (
+                <button type="submit" className="btn ed-btn btn-primary">
+                  Save
+                </button>
+              )}
             </div>
           </form>
         </div>

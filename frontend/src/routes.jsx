@@ -19,7 +19,7 @@ export default function AppRouter() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/signup" element={<Login />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
-        <Route path="/editProfile" element={<EditProfile />} />
+        <Route path="/editProfile" element={<EditProfile status={false}/>} />
         {/* <Route path="/EditProfile"  element={<EditProfile/>}></Route> */}
         <Route path="/DSAPractice" element={<DSAPractice />}></Route>
         <Route path="/DailyProblems" element={<DailyProblems />}></Route>

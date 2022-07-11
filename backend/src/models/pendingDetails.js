@@ -14,8 +14,8 @@ const pendingDetail = new mongoose.Schema({
   },
   mobileNumber: {
     type: String,
-  },
-  Codeforces: {
+  }, 
+  codeforces: {
     type: String,
   },
   Atcoder: {

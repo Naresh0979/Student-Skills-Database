@@ -54,7 +54,7 @@ function Login(props) {
     axios
       .post("http://localhost:2000/users/verifyOTP", userData)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.data.Status === "S") {
           setOtpVerification("True");
           setOtpStatus(!otpStatus);
@@ -72,7 +72,7 @@ function Login(props) {
     axios
       .post("http://localhost:2000/users/login", userData)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.data.Status === "S") {
           const userData = response.data.user;
           setLoginStatus("True");

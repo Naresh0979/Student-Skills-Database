@@ -1,28 +1,37 @@
 import { useEffect, useState } from "react";
 import "./admin.css";
 import axios from "axios";
+import EditProfile from "../dashboard/EditProfile";
 const AcceptVerificaton = (props) => {
   const [pendingVerfication, setpendingVerfication] = useState(null);
+  const [viewDetailStatus, setviewDetailStatus] = useState(false);
+  const [emailId, setemailId] = useState();
+  function changeViewDetailsStatus(email){
+    setemailId(email);
+    if(viewDetailStatus)
+      setemailId(undefined);
+    setviewDetailStatus(!viewDetailStatus);
+  }
   async function deleteRequest(email) {
     await axios.post("http://localhost:2000/student//deletePendingDetails", {
       email: email,
     });
-    let newData = pendingVerfication.filter((val) => val.email != email);
+    let newData = pendingVerfication.filter((val) => val.email !== email);
     setpendingVerfication(newData);
   }
   async function updateRequest(email) {
     await axios.post("http://localhost:2000/student/confirmedEditProfile", {
       email: email,
     });
-    let newData = pendingVerfication.filter((val) => val.email != email);
+    let newData = pendingVerfication.filter((val) => val.email !== email);
     setpendingVerfication(newData);
   }
   useEffect(() => {
     axios
       .get("http://localhost:2000/student/getPendingDetails", {})
       .then(({ data }) => {
-        console.log(data);
-        let val  = data.filter((val) => val.email != props.email);
+        // console.log(data);
+        let val  = data.filter((val) => val.email !== props.email);
         setpendingVerfication(val);
       });
   }, []);
@@ -33,6 +42,7 @@ const AcceptVerificaton = (props) => {
           <div className="section-title">
             <h2 className="admin-head-black">Update Details Requests</h2>
           </div>
+          
           <div className="pending-account-table">
             <table className="table table-striped admin-side-table">
               <thead className="table-header">
@@ -67,8 +77,8 @@ const AcceptVerificaton = (props) => {
                         >
                           Delete
                         </button>
-                        <button id={idx} className="btn-primary">
-                          View Details
+                        <button id={idx} className="btn-primary" onClick={() => changeViewDetailsStatus(val.email)}>
+                          {viewDetailStatus ? "Hide Details" : "View Details"}
                         </button>
                       </td>
                     </tr>
@@ -83,6 +93,9 @@ const AcceptVerificaton = (props) => {
               )
             )}
           </div>
+          {
+            viewDetailStatus && <EditProfile status={true} email={emailId}/>
+          }
         </div>
       </div>
     </div>

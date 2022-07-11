@@ -7,39 +7,32 @@ import axios from "axios";
 // import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-const CodingPlatformProfile = () => {
-  const location = useLocation();
+const CodingPlatformProfile = (props) => {
   const [codeforces, setCodeforces] = useState([]);
   const [atcoder, setAtcoder] = useState([]);
-  const [codeforcesHandle,setCodeforcesHandle]=useState("");
+  const [codeforcesHandle, setCodeforcesHandle] = useState("loading");
   useEffect(() => {
-  
     axios
       .post("http://localhost:2000/student/getStudentData", {
-        email: location.state,
+        email: props.email,
       })
       .then(({ data }) => {
-        // console.log("Inside DATA ",data);
-          setCodeforcesHandle(data.codeforces);
-          
-        });
-
-    
-      
-  
- axios
-  .get("http://localhost:2000/contest/CodeForces/getUserData", {
-    userHandle:'naresh_2000',
-  })
-  .then((details) => {
-    console.log(details);
-    setCodeforces(details);
-    
-    
-  });
-   
-}, []);
-
+        // console.log(data);
+        setCodeforcesHandle(data.codeforces);
+      });
+  }, []);
+  useEffect(() => {
+    if(codeforcesHandle !== "loading"){
+      axios
+      .post("http://localhost:2000/contest/CodeForces/getUserData", {
+        userHandle: codeforcesHandle,
+      })
+      .then((details) => {
+        // console.log(details);
+        setCodeforces(details.data);
+      });
+    }
+  }, [codeforcesHandle]);
   return (
     <div id="team" className="text-center">
       <div className="container">
@@ -57,28 +50,32 @@ const CodingPlatformProfile = () => {
                   />
 
                   <div className="content">
-                    { codeforces.length === 0 ?
-                      
-                    
-                    <><div className="content2"  >
-                        <span>
-                          username - <b>{codeforces[3]}</b>
-                          <br></br>
-                        </span>
-                        <span>
-                          Max Rating-<b>{codeforces[1]}</b> <br></br>
-                        </span>
-                        <span>
-                          Question Solved -<b>{codeforces[0]}</b>
-                        </span>
-                      </div><div className="ratingmeter">
+                    {codeforcesHandle === "loading"  ? (
+                      <p>Loading</p>
+                    ) : codeforces.length !== 0 ? (
+                      <>
+                        <div className="content2">
+                          <span>
+                            username - <b>{codeforces[3]}</b>
+                            <br></br>
+                          </span>
+                          <span>
+                            Max Rating-<b>{codeforces[1]}</b> <br></br>
+                          </span>
+                          <span>
+                            Question Solved -<b>{codeforces[0]}</b>
+                          </span>
+                        </div>
+                        <div className="ratingmeter">
                           <RatingMeter />
                           <span className="details">
                             Rating-<b>{codeforces[2]}</b>
                           </span>
-                        </div></>
-
-  : <span> codeforces handle  not available</span>}
+                        </div>
+                      </>
+                    ) : (
+                      <span> codeforces handle not available</span>
+                    )}
                   </div>
                 </div>
               </div>

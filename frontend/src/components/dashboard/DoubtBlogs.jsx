@@ -92,7 +92,7 @@ const DoubtBlogs = () => {
         // console.log("Inside DATA ", data);
 
         posts.push(data);
-        console.log(posts);
+        // console.log(posts);
         setPosts(posts);
         posts.sort(function (x, y) {
           return x.timestamp - y.timestamp;
@@ -169,7 +169,7 @@ const DoubtBlogs = () => {
     }
   }, [location.state.email, myPosts, posts]);
   return (
-    <div id="profileContainer">
+    <div id="profileContainer" className="blogs-container">
       <Navbar />
       {/* <h1 className="head">Discussions</h1> */}
       <div className="container">

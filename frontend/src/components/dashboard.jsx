@@ -45,7 +45,7 @@ export default function Dashboard(props) {
       {/* <Gallery data={landingPageData.Gallery}/>
     <Testimonials data={landingPageData.Testimonials} /> */}
       {/* <Team data={landingPageData.Team} /> */}
-      <CodingPlatformProfile/>
+      <CodingPlatformProfile email={location.state.email}/>
       {/* <Contact data={landingPageData.Contact} /> */}
       <DashboardNavigation username={location.state.fullName} />
     </div>

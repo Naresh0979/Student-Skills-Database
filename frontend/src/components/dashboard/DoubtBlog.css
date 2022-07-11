@@ -205,8 +205,12 @@ details.comment:not([open]) .comment-heading::after {
   } */
 }
 
+.blogs-container{
+  min-height: 800px;
+}
 /* Styling the reply to comment form */
 .head {
+  
   text-align: center;
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
