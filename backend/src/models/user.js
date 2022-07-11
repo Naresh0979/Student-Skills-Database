@@ -22,7 +22,11 @@ const user = new mongoose.Schema({
     isVerified:{
         type:Boolean,
         required:true
-    }    
+    },
+    isActivated: {
+        type:Boolean,
+        required:true
+    }   
 })
 user.methods.generateAuthToken = async function(){
     try {

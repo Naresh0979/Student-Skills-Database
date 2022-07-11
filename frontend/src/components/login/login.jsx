@@ -20,7 +20,10 @@ function Login(props) {
   const handleclick = () => {
     setlogin(!login);
   };
-  const [accountType, setAccountType] = useState("student");
+  const [accountType, setAccountType] = useState("Student");
+  const [logInStatus, setLoginStatus] = useState(null);
+  const [otpVerification, setOtpVerification] = useState(null);
+  const [registratonStatus, setRegistratonStatus] = useState(null);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,12 +38,11 @@ function Login(props) {
       .then((response) => {
         //   console.log(response);
         if (response.data.Status === "S") {
-          alert("successful Registerd");
-
+          setRegistratonStatus("True");
+          setLoginStatus("True");
           setOtpStatus(!otpStatus);
         } else if (response.data.Status === "F") {
-          //  console.log("jcknc");
-          alert("username or Email Id Already exist");
+          setRegistratonStatus("False");
         }
       });
   };
@@ -54,10 +56,11 @@ function Login(props) {
       .then((response) => {
         console.log(response);
         if (response.data.Status === "S") {
-          alert("Verified");
+          setOtpVerification("True");
+          setOtpStatus(!otpStatus);
           setlogin(!login);
         } else if (response.data.Status === "F") {
-          alert("Invalid credentials");
+          setOtpVerification("False");
         }
       });
   };
@@ -72,10 +75,15 @@ function Login(props) {
         console.log(response);
         if (response.data.Status === "S") {
           const userData = response.data.user;
+          setLoginStatus("True");
           // console.log(userData);
-          navigate("/dashboard", { state: userData });
+          
+          if(userData.accountType === "Student")
+            navigate("/dashboard", { state: userData });
+          else
+            navigate("/admin" , {state : userData});
         } else if (response.data.Status === "F") {
-          alert("Invalid credentials");
+          setLoginStatus("False");
         }
       });
   };
@@ -158,6 +166,18 @@ function Login(props) {
               className="login__create-container__form-container__form"
               onSubmit={handleSignUp}
             >
+              {registratonStatus === "True" ? (
+                <div className="success-div">
+                  <p>Account Created</p>
+                </div>
+              ) : registratonStatus === "False" ? (
+                <div className="invalid-div">
+                  <p>Email Already Registered</p>
+                </div>
+              ) : (
+                <div></div>
+              )}
+
               <input
                 className="login__create-container__form-container__form--name"
                 type="text"
@@ -188,9 +208,9 @@ function Login(props) {
                 name="Account Type"
                 onChange={(e) => setAccountType(e.target.value)}
               >
-                <option value="student">Student</option>
-                <option value="Recuriter">Recuriter</option>
-                <option value="Admin">Admin</option>
+                <option value="Student">Student</option>
+                <option value="Recruiter">Recruiter</option>
+                <option value="Team">Team</option>
               </select>
 
               <button className="login__create-container__form-container__form--submit">
@@ -231,6 +251,17 @@ function Login(props) {
   </span>  */}
           <p>Email Sent to : {email}</p>
           <div className="login__create-container__form-container">
+            {otpVerification === "True" ? (
+              <div className="success-div">
+                <p>Otp Verified</p>
+              </div>
+            ) : otpVerification === "False" ? (
+              <div className="invalid-div">
+                <p>Invalid OTP</p>
+              </div>
+            ) : (
+              <div></div>
+            )}
             <form
               className="login__create-container__form-container__form"
               onSubmit={handleOtp}
@@ -276,6 +307,17 @@ function Login(props) {
                     <span className="login__login-container__main-container--info-text">or use email for your login</span>
                     */}
           <div className="login__login-container__main-container__form-container">
+            {logInStatus === "True" ? (
+              <div className="success-div">
+                <p>Account Created</p>
+              </div>
+            ) : logInStatus === "False" ? (
+              <div className="invalid-div">
+                <p>Invalid Credentials</p>
+              </div>
+            ) : (
+              <div></div>
+            )}
             <form
               className="login__login-container__main-container__form-container__form"
               onSubmit={handleLogin}

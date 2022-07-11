@@ -31,7 +31,7 @@ export default function Dashboard(props) {
 
   axios.defaults.withCredentials = true;
   const location = useLocation();
-  console.log(location.state);
+  // console.log(location.state);
   return (
 
     <div>

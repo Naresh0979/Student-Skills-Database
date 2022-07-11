@@ -1,5 +1,10 @@
 //Imports
 const User = require("../models/user");
+const {
+  getPendingAccounts,
+  getActivatedNonStudent,
+  deleteAccount,
+} = require("../methods/users");
 const Otp = require("../models/otpVerification");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -53,7 +58,7 @@ async function sendMail(from_email, from_name, to_email, subject, html_code) {
 userRouter.post("/login", async (req, res) => {
   try {
     const userData = await User.findOne({ email: req.body.email });
-    if (!userData || !userData.isVerified)
+    if (!userData || !userData.isVerified || !userData.isActivated)
       return res.status(400).send("Invalid Credentials");
 
     const validPassword = await bcrypt.compare(
@@ -107,6 +112,7 @@ userRouter.post("/sendEnquiry", async (req, res) => {
 //send OTP
 const sendOtp = async (email, name) => {
   const otp = `${Math.floor(Math.random() * 9999990)}`;
+  console.log(otp);
   let from_email = process.env.GEMAIL;
   let subject = "OTP for Account Verfication";
   let html_code = `
@@ -129,7 +135,7 @@ const sendOtp = async (email, name) => {
     .catch((error) => console.log(error.message));
   return otp;
 };
-
+ 
 //SignUp Users
 
 userRouter.post("/signUp", async (req, res) => {
@@ -141,12 +147,14 @@ userRouter.post("/signUp", async (req, res) => {
     }
     await User.deleteMany({ email: req.body.email });
     await Otp.deleteMany({ email: req.body.email });
+    let activationStatus = req.body.accountType === "Student" ? true : false;
     const userData = new User({
       accountType: req.body.accountType,
       fullName: req.body.fullName,
       email: req.body.email,
       password: req.body.password,
       isVerified: false,
+      isActivated: activationStatus,
     });
 
     const salt = await bcrypt.genSalt(10);
@@ -174,6 +182,55 @@ userRouter.get("/logout", (req, res) => {
     .status(200)
     .json({ message: "Successfully logged out 😏 🍀" });
 });
+
+// activate recruiters or team account
+userRouter.post("/activateAccount", async (req, res) => {
+  try {
+    const userData = await User.findOne({ email: req.body.email });
+    if (!userData) return res.status(200).send("No Account Found");
+    await User.updateOne(
+      { email: req.body.email },
+      {
+        $set: {
+          isActivated: true,
+        },
+      }
+    );
+    return res.status(200).json({ Status: "S" });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send("Error Occured");
+  }
+});
+
+// deactivate recruiter or team account
+userRouter.post("/deactivateAccount", async (req, res) => {
+  try {
+    const userData = await User.findOne({ email: req.body.email });
+    if (!userData) return res.status(200).send("No Account Found");
+    await User.updateOne(
+      { email: req.body.email },
+      {
+        $set: {
+          isActivated: false,
+        },
+      }
+    );
+    return res.status(200).json({ Status: "S" });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send("Error Occured");
+  }
+});
+
+// delete team or recruiters account
+userRouter.post("/deleteAccount",deleteAccount);
+
+// Get deactivated accounts
+userRouter.get("/getPendingAccounts", getPendingAccounts);
+
+// Get activated recruiter or team accounts
+userRouter.get("/getActivatedNonStudent", getActivatedNonStudent);
 
 // Verify Otp
 userRouter.post("/verifyOTP", async (req, res) => {

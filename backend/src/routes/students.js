@@ -5,7 +5,7 @@ const express = require("express");
 const studentRouter = express.Router();
 const PersonalDetail = require("../models/personalDetail");
 const Post = require("../models/post");
-
+const PendingDetail = require("../models/pendingDetails");
 const { v4: uuidv4 } = require("uuid");
 
 studentRouter.post("/createPost", async (req, res) => {
@@ -120,8 +120,8 @@ studentRouter.post("/getallPost", async (req, res) => {
 studentRouter.post("/editProfile", async (req, res) => {
   try {
     // console.log(req.body);
-    await PersonalDetail.deleteMany({ email: req.body.email });
-    const personalData = new PersonalDetail({
+    await PendingDetail.deleteMany({ email: req.body.email });
+    const personalData = new PendingDetail({
       email: req.body.email,
       name: req.body.name,
       rollNumber: req.body.rollNumber,
@@ -138,10 +138,10 @@ studentRouter.post("/editProfile", async (req, res) => {
       linkList: JSON.parse(req.body.linkList),
       skills: JSON.parse(req.body.skills),
     });
-    await User.updateOne(
-      { email: req.body.email },
-      { $set: { fullName: req.body.name } }
-    );
+    // await User.updateOne(
+    //   { email: req.body.email },
+    //   { $set: { fullName: req.body.name } }
+    // );
     await personalData.save();
     res.send(true);
   } catch (e) {
@@ -149,6 +149,58 @@ studentRouter.post("/editProfile", async (req, res) => {
     res.send(false);
   }
 });
+
+studentRouter.post("/confirmedEditProfile", async (req, res) => {
+  try {
+    // console.log(req.body);
+    await PersonalDetail.deleteMany({ email: req.body.email });
+    let userData = await PendingDetail.findOne({ email: req.body.email });
+    if(!userData){
+      console.log("User Doesn't exists");
+      return res.status(200).send("User Doesn't Exists");
+    }
+    // userData = userData.data;
+    // console.log(userData);
+    const personalData = new PersonalDetail({
+      email: userData.email,
+      name: userData.name,
+      rollNumber: userData.rollNumber,
+      mobileNumber: userData.mobileNumber,
+      country: userData.country,
+      state: userData.state,
+      district: userData.district,
+      pincode: userData.pincode,
+      address: userData.address,
+      bio: userData.bio,
+      educationList: userData.educationList,
+      experienceList: userData.experienceList,
+      projectList: userData.projectList,
+      linkList: userData.linkList,
+      skills: userData.skills,
+    });
+    await User.updateOne(
+      { email: userData.email },
+      { $set: { fullName: userData.name } }
+    );
+    await personalData.save();
+    await PendingDetail.deleteMany({ email: req.body.email });
+    res.send(true);
+  } catch (e) {
+    console.log(e);
+    res.send(false);
+  }
+});
+
+studentRouter.get("/getPendingDetails",async(req,res) => {
+  const data = await PendingDetail.find();
+  return res.send(data);
+});
+
+studentRouter.post('/deletePendingDetails' , async(req,res) => {
+  await PendingDetail.deleteMany({email : req.body.email});
+  return res.status(200).send("Deleted");
+})
+
 studentRouter.post("/getStudentData", async (req, res) => {
   try {
     await PersonalDetail.findOne(

@@ -11,7 +11,7 @@ import ContestCalender from "./components/dashboard/ContestCalender";
 import Home from "./components/home";
 import CodingPlatformProfile from "./components/dashboard/CodingPlatformProfile";
 import DoubtBlogs from "./components/dashboard/DoubtBlogs";
-
+import AdminHomePage from "./components/admin/AdminHomePage.jsx";
 export default function AppRouter() {
   return (
     <Router>
@@ -24,7 +24,7 @@ export default function AppRouter() {
         <Route path="/DSAPractice" element={<DSAPractice />}></Route>
         <Route path="/DailyProblems" element={<DailyProblems />}></Route>
         <Route path="/ContestCalender" element={<ContestCalender />}></Route>
-
+        <Route path="/admin" element={<AdminHomePage/>}/>
         <Route
           path="/CodingPlatformProfile"
           element={<CodingPlatformProfile />}

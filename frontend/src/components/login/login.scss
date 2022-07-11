@@ -24,7 +24,7 @@ $breakpoint-mobile: 768px;
   background-size: 23px;
   color: black;
   font-weight: bold;
-  font-family: "Quicksand-Regular";
+  font-family: "Raleway", sans-serif;
 }
 /*
 * Classes (ampersand + BEM)
@@ -122,7 +122,25 @@ $breakpoint-mobile: 768px;
       }
     }
   }
-
+  .invalid-div{
+    margin-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+    border-radius: 2px;
+    width: 100%;
+    background-color: red;
+    color: white;
+  }
+  .success-div{
+    margin-bottom: 20px;
+    padding-top: 10px;
+    text-align: center;
+    border-radius: 2px;
+    width: 100%;
+    background-color: green;
+    color: white;
+  }
+ 
   &__create-container {
     position: fixed;
     display: flex;

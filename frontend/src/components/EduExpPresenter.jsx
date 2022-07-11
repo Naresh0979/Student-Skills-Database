@@ -21,7 +21,7 @@ const EduExpPresenter = () => {
         setExperienceList(response.data.experienceList);
 
         setEducationList(response.data.educationList);
-        console.log(educationList);
+        // console.log(educationList);
       });
   }, [location.state.email]);
   return (
