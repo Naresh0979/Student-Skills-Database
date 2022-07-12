@@ -59,13 +59,13 @@ userRouter.post("/login", async (req, res) => {
   try {
     const userData = await User.findOne({ email: req.body.email });
     if (!userData || !userData.isVerified || !userData.isActivated)
-      return res.status(400).send("Invalid Credentials");
+      return res.status(200).json({ Status: "F" });
 
     const validPassword = await bcrypt.compare(
       req.body.password,
       userData.password
     );
-    if (!validPassword) return res.status(400).json({ Status: "F" });
+    if (!validPassword) return res.status(200).json({ Status: "F" });
 
     const token = await userData.generateAuthToken();
     return res
@@ -76,6 +76,7 @@ userRouter.post("/login", async (req, res) => {
       .status(200)
       .json({ Status: "S", user: userData });
   } catch (error) {
+    
     console.log(error);
   }
 });
@@ -199,7 +200,7 @@ userRouter.post("/activateAccount", async (req, res) => {
     return res.status(200).json({ Status: "S" });
   } catch (error) {
     console.log(error);
-    return res.status(400).send("Error Occured");
+    return res.status(200).send("Error Occured");
   }
 });
 
@@ -219,7 +220,7 @@ userRouter.post("/deactivateAccount", async (req, res) => {
     return res.status(200).json({ Status: "S" });
   } catch (error) {
     console.log(error);
-    return res.status(400).send("Error Occured");
+    return res.status(200).json({ Status: "F" });
   }
 });
 
@@ -237,15 +238,15 @@ userRouter.post("/verifyOTP", async (req, res) => {
   try {
     const otpData = await Otp.findOne({ email: req.body.email });
     if (!otpData) {
-      return res.status(400).json({ Status: "F", message: "Invalid details" });
+      return res.status(200).json({ Status: "F", message: "Invalid details" });
     }
 
     if (otpData.expireTime < Date.now()) {
       await Otp.deleteMany({ email: req.body.email });
-      return res.status(400).json({ Status: "F", message: "Expired" });
+      return res.status(200).json({ Status: "F", message: "Expired" });
     }
     const validOtp = await bcrypt.compare(req.body.otp, otpData.otp);
-    if (!validOtp) return res.status(400).json({ Status: "F" });
+    if (!validOtp) return res.status(200).json({ Status: "F" });
     await Otp.deleteMany({ email: req.body.email });
     await User.updateOne(
       { email: req.body.email },

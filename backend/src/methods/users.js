@@ -32,6 +32,6 @@ exports.deleteAccount = async (req, res) => {
     return res.status(200).json({ Status: "S" });
   } catch (error) {
     console.log(error);
-    return res.status(400).send("Error Occured");
+    return res.status(200).send("Error Occured");
   }
 }
