@@ -15,6 +15,7 @@ studentRouter.post("/createPost", async (req, res) => {
     const post = new Post({
       email: req.body.post.email,
       content: req.body.post.content,
+      time: Date.now(),
       pId: uuidv4(),
     });
     await post.save();
@@ -34,6 +35,7 @@ studentRouter.post("/createComment", async (req, res) => {
       email: req.body.comment.email,
       content: req.body.comment.content,
       cId: uuidv4(),
+      time: Date.now(),
       pId: req.body.comment.pId,
     });
     await comment.save();

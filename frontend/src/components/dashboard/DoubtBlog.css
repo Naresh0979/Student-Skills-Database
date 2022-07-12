@@ -45,7 +45,7 @@ button:active {
 }
 .comment-sidebar {
   position: fixed;
-  top: 37.5%;
+  top: 29.4%;
   right: 2%;
   border-radius: 2%;
   width: 35%;
@@ -73,6 +73,7 @@ button:active {
   border: 1px solid transparent; /* Removes margin collapse */
 }
 .container-doubtBlog {
+  margin-top: -30px;
   display: flex;
   flex-direction: row;
 }
@@ -256,7 +257,7 @@ details.comment:not([open]) .comment-heading::after {
   position: absolute;
 }
 .section-title .head {
-  margin-top: 50px;
+  margin-top: 20px;
   color: whitesmoke;
   font-weight: bolder;
 }

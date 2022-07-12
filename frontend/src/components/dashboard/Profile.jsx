@@ -1,34 +1,37 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/profile.css";
-import {useState,useEffect} from 'react'
-import axios from 'axios';
-const Profile = () => {
+import { useState, useEffect } from "react";
+import axios from "axios";
+const Profile = (props) => {
   let navigate = useNavigate();
   let location = useLocation();
   //console.log(location.state.);
-  const[name,setName]=useState();
-  const[bio,setBio]=useState();
-  const[skills,setSkills]=useState();
-  const[worklink,setWorklink]=useState();
-  const[rollno,setRollno]=useState();
-  const[mobno,setMobno]=useState();
+  const [name, setName] = useState();
+  const [bio, setBio] = useState();
+  const [skills, setSkills] = useState();
+  const [worklink, setWorklink] = useState();
+  const [rollno, setRollno] = useState();
+  const [mobno, setMobno] = useState();
   axios.defaults.withCredentials = true;
-  
-   useEffect(() => {
-    axios.post("http://localhost:2000/student/getStudentData",{ email:location.state.email}).then((response) => {
-      // console.log(response);
-    console.log(response.data);
-    setName(response.data.name);
-    setBio(response.data.bio);
-    setSkills(response.data.skills);
-    setWorklink(response.data.linkList);
-    setRollno(response.data.rollNumber);
-    setMobno(response.data.mobileNumber);
-  });
-    
-   }, [location.state.email])
-  
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:2000/student/getStudentData", {
+        email: props.email || location.state.email,
+      })
+      .then((response) => {
+        // console.log(response);
+        console.log(response.data);
+        setName(response.data.name);
+        setBio(response.data.bio);
+        setSkills(response.data.skills);
+        setWorklink(response.data.linkList);
+        setRollno(response.data.rollNumber);
+        setMobno(response.data.mobileNumber);
+      });
+  }, [location.state.email , props.email]);
+
   return (
     <div id="profileContainer">
       <div className="container">
@@ -86,85 +89,80 @@ const Profile = () => {
               </div>
               <div className="col-md-2">
                 <form action="/EditProfile">
-                <input
-                  onClick={
-                    () => {
-                      navigate('/editProfile',{state:location.state.email});
-                    }
-                  }
-                  type="submit"
-                  className="profile-edit-btn"
-                  name="btnAddMore"
-                  value='EditProfile'
-                /></form>
-                
+                  <input
+                    onClick={() => {
+                      navigate("/editProfile", { state: props.email || location.state.email });
+                    }}
+                    type="submit"
+                    className="profile-edit-btn"
+                    name="btnAddMore"
+                    value="EditProfile"
+                  />
+                </form>
+
                 <form action="/DSAPractice">
-
-                <input
-                  type="submit"
-                  className="profile-edit-btn"
-                //  name="btnAddMore"
-                  value='DSAPractice'
-                />
+                  <input
+                    type="submit"
+                    className="profile-edit-btn"
+                    //  name="btnAddMore"
+                    value="DSAPractice"
+                  />
                 </form>
 
-                
-                
-                
                 <form action="/DailyProblems">
-
-                <input
-                  type="submit"
-                  className="profile-edit-btn"
-                //  name="btnAddMore"
-                  value='Daily Problem'
-                />
+                  <input
+                    type="submit"
+                    className="profile-edit-btn"
+                    //  name="btnAddMore"
+                    value="Daily Problem"
+                  />
                 </form>
-
-
-
 
                 <form action="/ContestCalender">
-
-                <input
-                  type="submit"
-                  className="profile-edit-btn"
-                //  name="btnAddMore"
-                  value='Calender'
-                />
+                  <input
+                    type="submit"
+                    className="profile-edit-btn"
+                    //  name="btnAddMore"
+                    value="Calender"
+                  />
                 </form>
                 <form action="/CodingPlatformProfile">
-                <input
-                  type="submit"
-                  className="profile-edit-btn"
-                  name="btnAddMore"
-                  value='CodingProfiles'
-                /></form>
+                  <input
+                    type="submit"
+                    className="profile-edit-btn"
+                    name="btnAddMore"
+                    value="CodingProfiles"
+                  />
+                </form>
                 <form action="/DoubtBlogs">
-                  
-                <input
-                onClick={
-                  () => {
-                    navigate('/DoubtBlogs',{state:location.state});
-                  }
-                }
-                  type="submit"
-                  className="profile-edit-btn"
-                  name="btnAddMore"
-                  value='Doubt Blogs'
-                /></form>
-                
+                  <input
+                    onClick={() => {
+                      navigate("/DoubtBlogs", { state: location.state });
+                    }}
+                    type="submit"
+                    className="profile-edit-btn"
+                    name="btnAddMore"
+                    value="Doubt Blogs"
+                  />
+                </form>
               </div>
             </div>
             <div className="row">
               <div className="col-md-4">
                 <div className="profile-work">
                   <p>WORK LINK</p>
-                  {
-                    worklink? worklink.map((worklink, index) => (
-                      <><a href={worklink.link} key={index}>{worklink.linkName}</a><br/></>
-                     )):<>Not Mentioned</>
-                }
+                  {worklink ? (
+                    worklink.map((worklink, index) => (
+                      <>
+                        <a href={worklink.link} key={index}>
+                          {worklink.linkName}
+                        </a>
+                        <br />
+                      </>
+                    ))
+                  ) : (
+                    <>Not Mentioned</>
+                  )}
                   <p>SKILLS</p>
                   {/* <a href="">Web Designer</a>
                   <br />
@@ -175,12 +173,18 @@ const Profile = () => {
                   <a href="">WooCommerce</a>
                   <br />
                   <a href="">PHP, .Net</a> */}
-                  {
-                    skills? skills.map((skill, index) => (
-                      <><a href=""key={index}>{skill}</a><br/></>
-                     )):<></>
-                }
-                  
+                  {skills ? (
+                    skills.map((skill, index) => (
+                      <>
+                        <a href="" key={index}>
+                          {skill}
+                        </a>
+                        <br />
+                      </>
+                    ))
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
               <div className="col-md-8">
@@ -199,13 +203,13 @@ const Profile = () => {
                         <p>{rollno}</p>
                       </div>
                     </div>
-                    
+
                     <div className="row">
                       <div className="col-md-6">
                         <label>Email</label>
                       </div>
                       <div className="col-md-6">
-                        <p>{location.state.email}</p>
+                        <p>{props.email || location.state.email}</p>
                       </div>
                     </div>
                     <div className="row">
@@ -271,7 +275,6 @@ const Profile = () => {
                         <p>6 months</p>
                       </div>
                     </div>
-                    
                   </div>
                 </div>
               </div>
