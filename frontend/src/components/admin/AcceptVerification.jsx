@@ -34,7 +34,7 @@ const AcceptVerificaton = (props) => {
         let val  = data.filter((val) => val.email !== props.email);
         setpendingVerfication(val);
       });
-  }, []);
+  }, [emailId]);
   return (
     <div className="admin-accept-details">
       <div className="container">
@@ -78,7 +78,7 @@ const AcceptVerificaton = (props) => {
                           Delete
                         </button>
                         <button id={idx} className="btn-primary" onClick={() => changeViewDetailsStatus(val.email)}>
-                          {viewDetailStatus ? "Hide Details" : "View Details"}
+                          {viewDetailStatus && val.email === emailId ? "Hide Details" : "View Details"}
                         </button>
                       </td>
                     </tr>
