@@ -71,7 +71,7 @@ const DoubtBlogs = (props) => {
       })
       .then((response) => {
         let commentss = response.data;
-        
+
         commentss.sort(function (x, y) {
           return y.upVotes - x.upVotes;
         });
@@ -122,7 +122,7 @@ const DoubtBlogs = (props) => {
       .then(({ data }) => {
         let commentss = comments;
         commentss.push(data);
-        
+
         commentss.sort(function (x, y) {
           return y.upVotes - x.upVotes;
         });
@@ -213,7 +213,7 @@ const DoubtBlogs = (props) => {
                                 : "Show Post"}
                             </button>
                           </div>
-                          <p className="m-0">{formatDate(post.time)}</p>
+                          <p className="date-posts">{formatDate(post.time)}</p>
                         </div>
                       </div>
                     </summary>
@@ -221,7 +221,10 @@ const DoubtBlogs = (props) => {
                     {seenPostIndex === index && (
                       <div>
                         <div className="comment-body">
-                          <p>{post.content}</p>
+                          <div className="post-data-container">
+                            <p>{post.content}</p>
+                          </div>
+
                           <button
                             type="button"
                             onClick={() => {

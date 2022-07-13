@@ -13,6 +13,8 @@ const Profile = (props) => {
   const [worklink, setWorklink] = useState();
   const [rollno, setRollno] = useState();
   const [mobno, setMobno] = useState();
+  const [totalProjects, settotalProjects] = useState(0);
+  const [totalExpereince, settotalExpereince] = useState(0);
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
@@ -27,6 +29,8 @@ const Profile = (props) => {
         setBio(response.data.bio);
         setSkills(response.data.skills);
         setWorklink(response.data.linkList);
+        settotalProjects(response.data.projectList.length);
+        settotalExpereince(response.data.experienceList.length);
         setRollno(response.data.rollNumber);
         setMobno(response.data.mobileNumber);
       });
@@ -60,13 +64,14 @@ const Profile = (props) => {
                   <ul className="nav nav-pills" id="myTab" role="tablist">
                     <li className="nav-item">
                       <a
-                        className="nav-link active"
-                        id="home-tab"
+                        className="nav-link default-active-nav"
+                        id="home-tab" 
                         data-toggle="tab"
                         href="#home"
                         role="tab"
                         aria-controls="home"
                         aria-selected="true"
+                        
                       >
                         About
                       </a>
@@ -237,23 +242,23 @@ const Profile = (props) => {
                   >
                     <div className="row">
                       <div className="col-md-6">
-                        <label>Experience</label>
+                        <label>Codeforces Rating</label>
                       </div>
                       <div className="col-md-6">
-                        <p>Expert</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>Hourly Rate</label>
-                      </div>
-                      <div className="col-md-6">
-                        <p>10$/hr</p>
+                        <p>NA</p>
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-md-6">
-                        <label>Total Projects</label>
+                        <label>CodeChef Rating</label>
+                      </div>
+                      <div className="col-md-6">
+                        <p>NA</p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6">
+                        <label>Questions Solved</label>
                       </div>
                       <div className="col-md-6">
                         <p>230</p>
@@ -261,18 +266,18 @@ const Profile = (props) => {
                     </div>
                     <div className="row">
                       <div className="col-md-6">
-                        <label>English Level</label>
+                        <label>Total Projects</label>
                       </div>
                       <div className="col-md-6">
-                        <p>Expert</p>
+                        <p>{totalProjects}</p>
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-md-6">
-                        <label>Availability</label>
+                        <label>Total Experience</label>
                       </div>
                       <div className="col-md-6">
-                        <p>6 months</p>
+                        <p>{totalExpereince}</p>
                       </div>
                     </div>
                   </div>

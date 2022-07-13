@@ -56,7 +56,7 @@ button:active {
   background-color: #fff;
   border: 1px solid transparent; /* Removes margin collapse */
 }
-.email{
+.email {
   text-align: right;
 }
 .sidebar-features {
@@ -206,12 +206,11 @@ details.comment:not([open]) .comment-heading::after {
   } */
 }
 
-.blogs-container{
+.blogs-container {
   min-height: 800px;
 }
 /* Styling the reply to comment form */
 .head {
-  
   text-align: center;
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
@@ -264,25 +263,35 @@ details.comment:not([open]) .comment-heading::after {
 .heading-show-btn {
   display: flex;
 }
+.post-data-container {
+  border: 1px solid;
+  background-color: rgb(221, 227, 232);
+  border-color: rgba(0, 0, 0, 0.427);
+  overflow: hidden;
+  padding: 5px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
 .open-close-post {
   position: absolute;
   top: 0;
   right: 0;
 }
-
+.date-posts {
+  margin-top: -10px;
+}
 .posts-container-head {
-
   margin-top: 25px;
   text-align: center;
   text-transform: uppercase;
 }
 
-.post-boxing-border{
+.post-boxing-border {
   border-width: 0.5px;
   border-color: black;
 }
 
-.line-doubt{
-  width : 100%;
-  background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%);;
+.line-doubt {
+  width: 100%;
+  background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%);
 }
