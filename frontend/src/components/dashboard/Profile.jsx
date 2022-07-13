@@ -24,7 +24,7 @@ const Profile = (props) => {
       })
       .then((response) => {
         // console.log(response);
-        console.log(response.data);
+        console.log(typeof(response.data._id));
         setName(response.data.name);
         setBio(response.data.bio);
         setSkills(response.data.skills);

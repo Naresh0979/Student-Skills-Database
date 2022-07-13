@@ -25,7 +25,7 @@ const ProjectPresenter = (props) => {
           <h2 className="projectHead">Project Works</h2>
           <div className="ed-container">
             <div className="table">
-              <ProjectBox projectList={projectList}/>
+              <ProjectBox projectList={projectList} owner={true}/>
             </div>
           </div>
         </div>

@@ -287,24 +287,44 @@ input{
 	display: flex;
 	margin: auto;
 }
+.show-review-btn{
+    width: auto;
+	padding: 6px 12px;
+	font-weight: 500;
+	background-color:  #1f5ecb;
+	color: white;
+}
+.give-review-cont{
+	display: flex;
+	
+}
+.review-box{
+	width: 88%;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.review-submit{
+	width: 10%;
+}
 .names{
-	width: 55%;
+	width: 48%;
 	margin: 10px;
 }
 .startDate {
-	width: 15%;
+	width: 13%;
 	margin: 10px;
 }
 .endDate {
-	width: 15%;
+	width: 13%;
 	margin: 10px;
 }
 .link-btn{
 	width: auto;
+	font-weight: 500;
 }
 .card-description{
 	margin: 10px;
-	width: 98%;
+	width: 99%;
 }
 .degrees{
 	width: 15%;

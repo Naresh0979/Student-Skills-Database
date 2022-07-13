@@ -5,6 +5,7 @@ const express = require("express");
 const studentRouter = express.Router();
 const PersonalDetail = require("../models/personalDetail");
 const Post = require("../models/post");
+const Review = require("../models/reviews");
 const PendingDetail = require("../models/pendingDetails");
 const { v4: uuidv4 } = require("uuid");
 
@@ -164,7 +165,7 @@ studentRouter.post("/confirmedEditProfile", async (req, res) => {
       return res.status(200).send("User Doesn't Exists");
     }
     // userData = userData.data;
-    console.log(userData);
+    // console.log(userData);
     const personalData = new PersonalDetail({
       email: userData.email,
       name: userData.name,
@@ -213,9 +214,36 @@ studentRouter.post("/getStudentData", async (req, res) => {
     // console.log("Sending DATA ",data);
     res.send(data);
   } catch (e) {
-    console.log(e); 
+    console.log(e);
     res.json({ message: e.message });
-  }  
+  }
+});
+
+studentRouter.post("/getProjectReviews", async (req, res) => {
+  try {
+    let data = await Review.find({
+      projectId : req.body.projectId
+      // $and: [
+      //   { creatorEmail: req.body.creatorEmail, projectId: req.body.projectId },
+      // ],
+    });
+    return res.send(data);
+  } catch (error) {
+    console.log(error);
+    return res.send(error);
+  }
+});
+
+studentRouter.post("/deleteProjectReview", async (req, res) => {
+  try {
+    await Review.deleteMany({
+      _id: req.body.reviewId,
+    });
+    return res.send("DELETED");
+  } catch (error) {
+    console.log(error);
+    return res.send(error);
+  }
 });
 
 module.exports = studentRouter;

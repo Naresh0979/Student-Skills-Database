@@ -14,7 +14,7 @@ const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const cors = require("cors");
 const userRouter = express.Router();
-
+const Review = require("../models/reviews");
 const oAuth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
   process.env.CLIENT_SECRET,
@@ -76,7 +76,6 @@ userRouter.post("/login", async (req, res) => {
       .status(200)
       .json({ Status: "S", user: userData });
   } catch (error) {
-    
     console.log(error);
   }
 });
@@ -113,7 +112,7 @@ userRouter.post("/sendEnquiry", async (req, res) => {
 //send OTP
 const sendOtp = async (email, name) => {
   const otp = `${Math.floor(Math.random() * 999990)}`;
-  console.log(otp);
+  // console.log(otp);
   let from_email = process.env.GEMAIL;
   let subject = "OTP for Account Verfication";
   let html_code = `
@@ -136,7 +135,7 @@ const sendOtp = async (email, name) => {
     .catch((error) => console.log(error.message));
   return otp;
 };
- 
+
 //SignUp Users
 
 userRouter.post("/signUp", async (req, res) => {
@@ -169,7 +168,7 @@ userRouter.post("/signUp", async (req, res) => {
     });
     const otpSalt = await bcrypt.genSalt(5);
     otpData.otp = await bcrypt.hash(otpData.otp, otpSalt);
-    otpData.save();
+    await otpData.save();
     return res.status(200).json({ Status: "S", user: userData });
   } catch (error) {
     console.log(error);
@@ -225,7 +224,7 @@ userRouter.post("/deactivateAccount", async (req, res) => {
 });
 
 // delete team or recruiters account
-userRouter.post("/deleteAccount",deleteAccount);
+userRouter.post("/deleteAccount", deleteAccount);
 
 // Get deactivated accounts
 userRouter.get("/getPendingAccounts", getPendingAccounts);
@@ -262,4 +261,18 @@ userRouter.post("/verifyOTP", async (req, res) => {
   }
 });
 
+userRouter.post("/addReview", async (req, res) => {
+  try {
+    const reviewData = new Review({
+      creatorEmail: req.body.creatorEmail,
+      reviewerEmail: req.body.reviewerEmail,
+      projectId: req.body.projectId,
+      content: req.body.content,
+    });
+    await reviewData.save();
+    return res.send("Saved");
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = userRouter;
