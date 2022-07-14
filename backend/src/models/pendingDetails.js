@@ -18,9 +18,13 @@ const pendingDetail = new mongoose.Schema({
   codeforces: {
     type: String,
   },
-  Atcoder: {
+  codechef: {
     type: String,
   },
+  leetcode: {
+    type: String,
+  },
+ 
   country: {
     type: String,
   },

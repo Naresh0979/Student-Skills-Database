@@ -43,9 +43,12 @@ const personalDetail = new mongoose.Schema({
     type: String,
   },
   codeforces: {
+    type: String, 
+  },
+  codechef: {
     type: String,
   },
-  Atcoder: {
+  leetcode: {
     type: String,
   },
   bio: {

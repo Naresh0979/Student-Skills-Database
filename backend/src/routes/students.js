@@ -127,7 +127,8 @@ studentRouter.post("/editProfile", async (req, res) => {
       rollNumber: req.body.rollNumber,
       mobileNumber: req.body.mobileNumber,
       codeforces: req.body.codeforces,
-      Atcoder: req.body.Atcoder,
+      codechef: req.body.codechef,
+      leetcode: req.body.leetcode,
       country: req.body.country,
       state: req.body.state,
       district: req.body.district,
@@ -169,7 +170,9 @@ studentRouter.post("/confirmedEditProfile", async (req, res) => {
       rollNumber: userData.rollNumber,
       mobileNumber: userData.mobileNumber,
       codeforces: userData.codeforces,
-      Atcoder: userData.Atcoder,
+      codechef: userData.codechef,
+      leetcode: userData.leetcode,
+     
       country: userData.country,
       state: userData.state,
       district: userData.district,
@@ -212,7 +215,7 @@ studentRouter.post("/getStudentData", async (req, res) => {
     res.send(data);
   } catch (e) {
     console.log(e); 
-    res.json({ message: e.message });
+    res.json({ message: e.message }); 
   }  
 });
 
