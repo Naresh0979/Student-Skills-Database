@@ -149,7 +149,7 @@ const CodingPlatformProfile = (props) => {
                             Max Rating-<b>{codechef[0]}</b> <br></br>
                           </span>
                           <span>
-                            Global Rank -<b>{codechef[3]}</b>
+                          Question Solved -<b>{codechef[3]}</b>
                           </span>
                         </div>
                         <div className="ratingmeter">
