@@ -3,10 +3,11 @@ import "../dashboard/editProfile.css";
 
 const Experience = (props) => {
   return props.experienceList.map((val, idx) => {
-    let experienceName = `inst-${idx}`,
-      start = `st-${idx}`,
-      end = `end-${idx}`,
-      index = val.index;
+    let experienceName = `inst-${idx}`
+    // ,
+    //   start = `st-${idx}`,
+    //   end = `end-${idx}`,
+    let index = val.index;
     return (
       <div>
         <div id={experienceName} className="flex-div-left-right-med-container">
@@ -32,8 +33,8 @@ const Experience = (props) => {
               />
             </div>
           </div>
-          <div className="flex-div-right-med-container">
-            <div className="flex-div-right-med-container-line">
+          <div id={experienceName} className="flex-div-right-med-container">
+            <div id={experienceName} className="flex-div-right-med-container-line">
               <input
                 className="e-p-input endDate-input"
                 value={val.startDate}
@@ -55,6 +56,7 @@ const Experience = (props) => {
               />
 
               <input
+                id={experienceName}
                 className="e-p-input grade-input"
                 type="text"
                 placeholder="Location"
@@ -83,6 +85,7 @@ const Experience = (props) => {
           </div>
         </div>
         <textarea
+          id={experienceName}
           className="e-p-input description"
           placeholder="Description"
           disabled={!props.status}

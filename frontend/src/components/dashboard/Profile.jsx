@@ -6,7 +6,7 @@ import axios from "axios";
 const Profile = (props) => {
   let navigate = useNavigate();
   let location = useLocation();
-  //console.log(location.state.);
+  const emailId = props.email || location.state.email;
   const [name, setName] = useState();
   const [bio, setBio] = useState();
   const [skills, setSkills] = useState();
@@ -17,15 +17,14 @@ const Profile = (props) => {
   const [totalExpereince, settotalExpereince] = useState(0);
   const [doubtsSolved, setDoubtsSolved] = useState(0);
   axios.defaults.withCredentials = true;
-
   useEffect(() => {
     axios
       .post("http://localhost:2000/student/getStudentData", {
-        email: props.email || location.state.email,
+        email: emailId,
       })
       .then((response) => {
         // console.log(response);
-        console.log(typeof(response.data._id));
+        // console.log(typeof(response.data._id));
         setName(response.data.name);
         setBio(response.data.bio);
         setSkills(response.data.skills);
@@ -36,7 +35,7 @@ const Profile = (props) => {
         setMobno(response.data.mobileNumber);
         setDoubtsSolved(response.data.doubtSolved);
       });
-  }, [location.state.email , props.email]);
+  }, [emailId]);
 
   return (
     <div id="profileContainer">
@@ -66,7 +65,7 @@ const Profile = (props) => {
                   <ul className="nav nav-pills" id="myTab" role="tablist">
                     <li className="nav-item">
                       <a
-                        className="nav-link default-active-nav"
+                        className="nav-link active default-active-nav"
                         id="home-tab" 
                         data-toggle="tab"
                         href="#home"
@@ -98,7 +97,7 @@ const Profile = (props) => {
                 <form action="/EditProfile">
                   <input
                     onClick={() => {
-                      navigate("/editProfile", { state: props.email || location.state.email });
+                      navigate("/editProfile", { state: emailId });
                     }}
                     type="submit"
                     className="profile-edit-btn"
@@ -164,7 +163,7 @@ const Profile = (props) => {
                         <a href={worklink.link} key={index}>
                           {worklink.linkName}
                         </a>
-                        <br />
+                        <br id={index} />
                       </>
                     ))
                   ) : (
@@ -183,10 +182,10 @@ const Profile = (props) => {
                   {skills ? (
                     skills.map((skill, index) => (
                       <>
-                        <a href="" key={index}>
+                        <a key={index}>
                           {skill}
                         </a>
-                        <br />
+                        <br key={index}/>
                       </>
                     ))
                   ) : (
@@ -216,7 +215,7 @@ const Profile = (props) => {
                         <label>Email</label>
                       </div>
                       <div className="col-md-6">
-                        <p>{props.email || location.state.email}</p>
+                        <p>{emailId}</p>
                       </div>
                     </div>
                     <div className="row">

@@ -3,14 +3,15 @@ import "../dashboard/editProfile.css";
 
 const Project = (props) => {
   return props.projectList.map((val, idx) => {
-    let projectName = `inst-${idx}`,
-      start = `st-${idx}`,
-      end = `end-${idx}`,
-      index = val.index;
+    let projectName = `inst-${idx}`
+    // ,
+    //   start = `st-${idx}`,
+    //   end = `end-${idx}`,
+    let  index = val.index;
     return (
       <div>
         <div id={projectName} className="flex-div-left-right-med-container">
-          <div className="flex-div-left-med-container">
+          <div id={projectName} className="flex-div-left-med-container">
             
             <input
               className="e-p-input"
@@ -22,8 +23,8 @@ const Project = (props) => {
               onChange={(event) => props.update(idx, event)}
             />
           </div>
-          <div className="flex-div-right-med-container">
-            <div className="flex-div-right-med-container-line">
+          <div id={projectName} className="flex-div-right-med-container">
+            <div id={projectName} className="flex-div-right-med-container-line">
               <input
                 className="e-p-input endDate-input"
                 value={val.startDate}
@@ -64,6 +65,7 @@ const Project = (props) => {
           </div>
         </div>
         <textarea
+          id={projectName}
           className="e-p-input description"
           value={val.description}
           placeholder="Description"
@@ -72,6 +74,7 @@ const Project = (props) => {
           onChange={(event) => props.update(idx, event)}
         />
         <input
+          id={projectName}
           className="e-p-input link-input"
           type="text"
           value={val.link}

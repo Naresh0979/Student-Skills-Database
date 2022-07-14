@@ -6,7 +6,6 @@ import React from "react";
 import axios from "axios";
 // import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 const CodingPlatformProfile = (props) => {
   const [codeforces, setCodeforces] = useState([]);
   const [codechef, setCodechef] = useState([]);
@@ -14,7 +13,7 @@ const CodingPlatformProfile = (props) => {
   const [codeforcesHandle, setCodeforcesHandle] = useState("loading");
   const [codechefHandle, setCodechefHandle] = useState("loading");
   const [leetcodeHandle, setLeetcodeHandle] = useState("loading");
- 
+
   useEffect(() => {
     axios
       .post("http://localhost:2000/student/getStudentData", {
@@ -23,57 +22,59 @@ const CodingPlatformProfile = (props) => {
       .then(({ data }) => {
         // console.log(data);
         setCodeforcesHandle(data.codeforces);
-      });
-      axios
-      .post("http://localhost:2000/student/getStudentData", {
-        email: props.email,
-      })
-      .then(({ data }) => {
-        //  console.log(data.leetcode);
         setLeetcodeHandle(data.leetcode);
-      });
-      axios
-      .post("http://localhost:2000/student/getStudentData", {
-        email: props.email,
-      })
-      .then(({ data }) => {
-        // console.log(data);
         setCodechefHandle(data.codechef);
       });
-      
-  }, []);
+    // axios
+    //   .post("http://localhost:2000/student/getStudentData", {
+    //     email: props.email,
+    //   })
+    //   .then(({ data }) => {
+    //     //  console.log(data.leetcode);
+    //     setLeetcodeHandle(data.leetcode);
+    //   });
+    // axios
+    //   .post("http://localhost:2000/student/getStudentData", {
+    //     email: props.email,
+    //   })
+    //   .then(({ data }) => {
+    //     // console.log(data);
+    //     setCodechefHandle(data.codechef);
+    //   });
+  }, [props.email]);
   useEffect(() => {
-    if(codeforcesHandle !== "loading" ){
+    if (codeforcesHandle !== "loading" && codeforcesHandle !== "") {
       axios
-      .post("http://localhost:2000/contest/CodeForces/getUserData", {
-        userHandle: codeforcesHandle,
-      })
-      .then((details) => {
-        // console.log(details);
-        setCodeforces(details.data);
-      });
+        .post("http://localhost:2000/contest/CodeForces/getUserData", {
+          userHandle: codeforcesHandle,
+        })
+        .then((details) => {
+          // console.log(details);
+
+          setCodeforces(details.data);
+        });
     }
-    if(codechefHandle !== "loading"){
+    if (codechefHandle !== "loading" && codechefHandle !== "") {
       axios
-      .post("http://localhost:2000/contest/Codechef/getUserData", {
-        userHandle: codechefHandle,
-      })
-      .then((details) => {
-        // console.log(details);
-        setCodechef(details.data);
-      });
+        .post("http://localhost:2000/contest/Codechef/getUserData", {
+          userHandle: codechefHandle,
+        })
+        .then((details) => {
+          // console.log(details);
+          setCodechef(details.data);
+        });
     }
-    if(leetcodeHandle !== "loading" &&leetcodeHandle !== ""){
+    if (leetcodeHandle !== "loading" && leetcodeHandle !== "") {
       axios
-      .post("http://localhost:2000/contest/Leetcode/getUserData", {
-        userHandle: leetcodeHandle,
-      })
-      .then((details) => {
-        // console.log(details);
-        setLeetcode(details.data);
-      });
+        .post("http://localhost:2000/contest/Leetcode/getUserData", {
+          userHandle: leetcodeHandle,
+        })
+        .then((details) => {
+          // console.log(details);
+          setLeetcode(details.data);
+        });
     }
-  }, [codeforcesHandle,codechefHandle,leetcodeHandle]);
+  }, [codeforcesHandle, codechefHandle, leetcodeHandle]);
   return (
     <div id="team" className="text-center">
       <div className="container">
@@ -91,31 +92,50 @@ const CodingPlatformProfile = (props) => {
                   />
 
                   <div className="content">
-                    {codeforcesHandle === "loading"  ? (
+                    {codeforcesHandle === "loading" ? (
                       <p>Loading</p>
                     ) : codeforces.length !== 0 ? (
-                      <>
+                      <div className="codeforces-container">
                         <div className="content2">
-                          <span>
-                            username - <b>{codeforces[3]}</b>
-                            <br></br>
-                          </span>
-                          <span>
-                            Max Rating-<b>{codeforces[1]}</b> <br></br>
-                          </span>
-                          <span>
-                            Question Solved -<b>{codeforces[0]}</b>
-                          </span>
+                          <div className="coding-profile-data">
+                            <p className="coding-profile-data-label">
+                              Username :{" "}
+                            </p>
+                            <p className="coding-profile-data-head">
+                              {codeforces[3]}
+                            </p>
+                          </div>
+                          <div className="coding-profile-data">
+                            <p className="coding-profile-data-label">
+                              Max Rating :{" "}
+                            </p>
+                            <p className="coding-profile-data-head">
+                              {codeforces[1]}
+                            </p>
+                          </div>
+                          <div className="coding-profile-data">
+                            <p className="coding-profile-data-label">
+                              Question Solved :{" "}
+                            </p>
+                            <p className="coding-profile-data-head">
+                              {codeforces[0]}
+                            </p>
+                          </div>
                         </div>
                         <div className="ratingmeter">
-                          <RatingMeter />
-                          <span className="details">
-                            Rating-<b>{codeforces[2]}</b>
-                          </span>
+                          <RatingMeter
+                            rating={codeforces[2] / 2500}
+                            levels={5}
+                            colors={["grey", "lime", "green", "orchid", "red"]}
+                          />
+                          <p className="rating-meter-head">{codeforces[2]}</p>
+                          <p className="rating-meter-label">( Rating )</p>
                         </div>
-                      </>
+                      </div>
                     ) : (
-                      <span> codeforces handle not available</span>
+                      <div className="not-available">
+                        <p>CodeForces handle not available</p>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -129,38 +149,66 @@ const CodingPlatformProfile = (props) => {
               </div> */}
               <div className="card-inner">
                 <div className="header">
-                  <img className="Img"
+                  <img
+                    className="Img"
                     src={require("../../assets/images/Codechef.png")}
                     alt="codeforces"
                   />
                   {/* <h2>Codeforces</h2>   */}
 
                   <div className="content">
-                    {codechefHandle === "loading"  ? (
+                    {codechefHandle === "loading" ? (
                       <p>Loading</p>
                     ) : codechef.length !== 0 ? (
-                      <>
+                      <div className="codeforces-container">
                         <div className="content2">
-                          <span>
-                            username - <b>{codechef[2]}</b>
-                            <br></br>
-                          </span>
-                          <span>
-                            Max Rating-<b>{codechef[0]}</b> <br></br>
-                          </span>
-                          <span>
-                          Question Solved -<b>{codechef[3]}</b>
-                          </span>
+                          <div className="coding-profile-data">
+                            <p className="coding-profile-data-label">
+                              Username :{" "}
+                            </p>
+                            <p className="coding-profile-data-head">
+                              {codechef[2]}
+                            </p>
+                          </div>
+                          <div className="coding-profile-data">
+                            <p className="coding-profile-data-label">
+                              Max Rating :{" "}
+                            </p>
+                            <p className="coding-profile-data-head">
+                              {codechef[0]}
+                            </p>
+                          </div>
+                          <div className="coding-profile-data">
+                            <p className="coding-profile-data-label">
+                              Question Solved :{" "}
+                            </p>
+                            <p className="coding-profile-data-head">
+                              {codechef[3]}
+                            </p>
+                          </div>
                         </div>
                         <div className="ratingmeter">
-                          <RatingMeter />
-                          <span className="details">
-                            Rating-<b>{codechef[1]}</b>
-                          </span>
+                          <RatingMeter
+                            rating={codechef[1] / 3500}
+                            levels={7}
+                            colors={[
+                              "grey",
+                              "green",
+                              "blue",
+                              "orchid",
+                              "yellow",
+                              "orange",
+                              "red",
+                            ]}
+                          />
+                          <p className="rating-meter-head">{codechef[1]}</p>
+                          <p className="rating-meter-label">( Rating )</p>
                         </div>
-                      </>
+                      </div>
                     ) : (
-                      <span> codechef handle not available</span>
+                      <div className="not-available">
+                        <p>Codechef handle not available</p>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -174,45 +222,67 @@ const CodingPlatformProfile = (props) => {
               </div> */}
               <div className="card-inner">
                 <div className="header">
-                  <img className="Img"
+                  <img
+                    className="leet-img"
                     src={require("../../assets/images/leetcode.png")}
                     alt="codeforces"
                   />
                   {/* <h2>Codeforces</h2>   */}
 
                   <div className="content">
-                    {leetcodeHandle === "loading"  ? (
+                    {leetcodeHandle === "loading" ? (
                       <p>Loading</p>
                     ) : codechef.length !== 0 ? (
-                      <>
+                      <div className="codeforces-container">
                         <div className="content2">
-                          <span>
-                            username - <b>{leetcodeHandle}</b>
-                            <br></br>
-                          </span>
-                          <span>
-                             Ranking-<b>{leetcode[2]}</b> <br></br>
-                          </span>
-                          <span>
-                            Question Solved -<b>{leetcode[0]}</b>
-                          </span>
+                          <div className="coding-profile-data">
+                            <p className="coding-profile-data-label">
+                              Username :{" "}
+                            </p>
+                            <p className="coding-profile-data-head">
+                              {leetcodeHandle}
+                            </p>
+                          </div>
+                          <div className="coding-profile-data">
+                            <p className="coding-profile-data-label">
+                              Ranking :{" "}
+                            </p>
+                            <p className="coding-profile-data-head">
+                              {leetcode[2]}
+                            </p>
+                          </div>
+                          <div className="coding-profile-data">
+                            <p className="coding-profile-data-label">
+                              Question Solved :{" "}
+                            </p>
+                            <p className="coding-profile-data-head">
+                              {leetcode[0]}
+                            </p>
+                          </div>
                         </div>
                         <div className="ratingmeter">
-                          <RatingMeter />
-                          <span className="details">
-                            Acceptance-<b>{leetcode[1]}</b>
-                          </span>
+                          <RatingMeter
+                            rating={
+                              // (leetcode ? leetcode[1].slice(0, 5) : 0)
+                              67 / 100
+                            }
+                            levels={4}
+                            colors={["grey", "lime", "green", "red"]}
+                          />
+                          <p className="rating-meter-head">{leetcode[1]}</p>
+                          <p className="rating-meter-label">( Acceptance )</p>
                         </div>
-                      </>
+                      </div>
                     ) : (
-                      <span> Leetcode handle not available</span>
+                      <div className="not-available">
+                        <p>LeetCode handle not available</p>
+                      </div>
                     )}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          
         </div>
       </div>
     </div>

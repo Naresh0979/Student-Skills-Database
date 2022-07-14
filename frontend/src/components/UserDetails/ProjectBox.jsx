@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import "../dashboard/editProfile.css";
-import { useEffect } from "react";
 const ProjectBox = (props) => {
   const [reviewsList, setreviewsList] = useState(null);
   const [getReviewBtnStatus, setGetReviewBtnStatus] = useState(false);
@@ -17,7 +16,7 @@ const ProjectBox = (props) => {
       await axios.post("http://localhost:2000/student/deleteProjectReview", {
         reviewId: reviewId,
       });
-      let data = reviewsList.filter((val) => val._id != reviewId);
+      let data = reviewsList.filter((val) => val._id !== reviewId);
       setreviewsList(data);
     } catch (error) {
       console.log(error);
@@ -51,13 +50,13 @@ const ProjectBox = (props) => {
   }
 
   return props.projectList.map((val, idx) => {
-    let projectName = `inst-${idx}`,
-      start = `st-${idx}`,
-      end = `end-${idx}`,
-      index = val.index;
+    let projectName = `inst-${idx}`;
+      // start = `st-${idx}`,
+      // end = `end-${idx}`,
+      // index = val.index;
     return (
-      <div className="whiteBackground">
-        <div className="name-dates">
+      <div id={projectName} className="whiteBackground">
+        <div id={projectName} className="name-dates">
           <input
             className="names form-control"
             placeholder="Project Name"
@@ -66,8 +65,8 @@ const ProjectBox = (props) => {
             value={val.projectName}
             name="projectName"
           />
-          <a href={val.link}>
-            <button className="link-btn btn btn-success">Go to Project</button>{" "}
+          <a id={projectName} href={val.link}>
+            <button id={projectName} className="link-btn btn btn-success">Go to Project</button>{" "}
           </a>
           <input
             className="startDate form-control"
@@ -113,19 +112,19 @@ const ProjectBox = (props) => {
           name="description"
         />
         {getReviewBtnStatus && clickedProjectIdx === val._id && (
-          <div className="">
-            <h3 className="text-center" style={{ color: "black" }}>
+          <div id={projectName} className="">
+            <h3 id={projectName} className="text-center" style={{ color: "black" }}>
               {owner ? "Reviews" : "Give Reviews"}
             </h3>
             {owner ? (
-              <div className="pending-account-table">
-                <table className="table table-striped admin-side-table">
-                  <thead className="table-header">
-                    <tr className="">
-                      <th>S No.</th>
-                      <th>Reviewer</th>
-                      <th>Review</th>
-                      <th>Actions</th>
+              <div id={projectName} className="pending-account-table">
+                <table id={projectName} className="table table-striped admin-side-table">
+                  <thead id={projectName} className="table-header">
+                    <tr id={projectName} className="">
+                      <th id={projectName}>S No.</th>
+                      <th id={projectName}>Reviewer</th>
+                      <th id={projectName}>Review</th>
+                      <th id={projectName}>Actions</th>
                     </tr>
                   </thead>
                   {reviewsList !== null &&
@@ -149,21 +148,23 @@ const ProjectBox = (props) => {
                     })}
                 </table>
                 {reviewsList === null ? (
-                  <p className="no-account">Loading</p>
+                  <p id={projectName} className="no-account">Loading</p>
                 ) : (
                   reviewsList.length === 0 && (
-                    <p className="no-account">No Reviews</p>
+                    <p id={projectName} className="no-account">No Reviews</p>
                   )
                 )}
               </div>
             ) : (
-              <div className="give-review-cont">
+              <div id={projectName} className="give-review-cont">
                 <textarea
+                  id={projectName}
                   className="form-control review-box"
                   val={reviewContent}
                   onChange={(e) => setreviewContent(e.target.value)}
                 />
                 <button
+                  id={projectName}
                   className="btn-success review-submit"
                   onClick={() => postReview(val._id)}
                 >

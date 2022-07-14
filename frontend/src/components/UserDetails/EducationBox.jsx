@@ -2,13 +2,14 @@ import React from "react";
 import "../dashboard/editProfile.css";
 const EducationBox = (props) => {
     return props.educationList.map((val, idx) => {
-        let projectName = `inst-${idx}`,
-          start = `st-${idx}`,
-          end = `end-${idx}`,
-          index = val.index;
+        let projectName = `inst-${idx}`
+        // ,
+        //   start = `st-${idx}`,
+        //   end = `end-${idx}`,
+        //   index = val.index;
         return (
-          <div className="coloredBackground">
-            <div className="name-dates">
+          <div id={projectName} className="coloredBackground">
+            <div id={projectName} className="name-dates">
               <input
                 className="names form-control"
                 placeholder="Institute Name"

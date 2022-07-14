@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+
 import GaugeChart from "react-gauge-chart";
 
 const RatingMeter = (props) => {
@@ -18,10 +17,10 @@ const RatingMeter = (props) => {
   return (
     <GaugeChart
       id={`uph-chart`}
-      nrOfLevels={8}
+      nrOfLevels={props.levels}
       percent={rating}
       hideText
-      colors={["green", "red", "black", "red"]}
+      colors={props.colors}
     />
   );
 };

@@ -2,13 +2,14 @@ import React from "react";
 import "../dashboard/editProfile.css";
 const ExperienceBox = (props) => {
     return props.experienceList.map((val, idx) => {
-        let projectName = `inst-${idx}`,
-          start = `st-${idx}`,
-          end = `end-${idx}`,
-          index = val.index;
+        let projectName = `inst-${idx}`
+        // ,
+        //   start = `st-${idx}`,
+        //   end = `end-${idx}`,
+        //   index = val.index;
         return (
-          <div className="coloredBackground">
-            <div className="name-dates">
+          <div id={projectName} className="coloredBackground">
+            <div id={projectName} className="name-dates">
               <input
                 className="names form-control"
                 placeholder="Organization Name"
@@ -34,6 +35,7 @@ const ExperienceBox = (props) => {
                 name="endDate"
               />
               <input
+                id={projectName}
                 className="form-control grades"
                 type="text"
                 placeholder="Location"
@@ -44,6 +46,7 @@ const ExperienceBox = (props) => {
             </div>
     
             <textarea
+              id={projectName}
               className="card-description form-control"
               value={val.description}
               placeholder="Description"

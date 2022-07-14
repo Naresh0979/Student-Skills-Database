@@ -4,14 +4,15 @@ import "../dashboard/editProfile.css";
 const Links = (props) => {
   return props.linkList.map((val, idx) => {
     // console.log(val);
-    let projectName = `inst-${idx}`,
-      start = `st-${idx}`,
-      end = `end-${idx}`,
-      index = val.index;
+    let projectName = `inst-${idx}`
+    // ,
+    //   start = `st-${idx}`,
+    //   end = `end-${idx}`,
+    let index = val.index;
     return (
       // <div id={projectName} className="flex-div-left-right-med-container">
       //   <div className="flex-div-left-med-container">
-        <div className="flex-div-right-med-container-line link-div">
+        <div id={projectName} className="flex-div-right-med-container-line link-div">
           <input
             className="e-p-input websiteName"
             placeholder="Link Name"

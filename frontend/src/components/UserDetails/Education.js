@@ -3,12 +3,13 @@ import "../dashboard/editProfile.css";
 
 const Education = (props) => {
   return props.educationList.map((val, idx) => {
-    let instituteName = `inst-${idx}`,
-      start = `st-${idx}`,
-      end = `end-${idx}`,
-      index = val.index;
+    let instituteName = `inst-${idx}`
+    // ,
+    //   start = `st-${idx}`,
+    //   end = `end-${idx}`,
+    let index = val.index;
     return (
-      <div>
+      <div id={instituteName}>
         <div id={instituteName} className="flex-div-left-right-med-container">
           <div id={instituteName} className="flex-div-left-med-container">
             <div
