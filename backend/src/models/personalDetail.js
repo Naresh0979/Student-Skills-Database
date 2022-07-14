@@ -36,8 +36,8 @@ const personalDetail = new mongoose.Schema({
   pincode: {
     type: String,
   },
-  district:{
-    type:String,
+  district: {
+    type: String,
   },
   address: {
     type: String,
@@ -50,6 +50,10 @@ const personalDetail = new mongoose.Schema({
   },
   bio: {
     type: String,
+  },
+  doubtSolved: {
+    type: Number,
+    default: 0,
   },
   educationList: [
     {
@@ -130,8 +134,8 @@ const personalDetail = new mongoose.Schema({
       },
       link: {
         type: String,
-      }
-    }
+      },
+    },
   ],
   skills: [],
 });

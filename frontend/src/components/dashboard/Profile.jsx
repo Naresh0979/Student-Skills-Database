@@ -15,6 +15,7 @@ const Profile = (props) => {
   const [mobno, setMobno] = useState();
   const [totalProjects, settotalProjects] = useState(0);
   const [totalExpereince, settotalExpereince] = useState(0);
+  const [doubtsSolved, setDoubtsSolved] = useState(0);
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const Profile = (props) => {
         settotalExpereince(response.data.experienceList.length);
         setRollno(response.data.rollNumber);
         setMobno(response.data.mobileNumber);
+        setDoubtsSolved(response.data.doubtSolved);
       });
   }, [location.state.email , props.email]);
 
@@ -262,6 +264,14 @@ const Profile = (props) => {
                       </div>
                       <div className="col-md-6">
                         <p>230</p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6">
+                        <label>Doubts Solved</label>
+                      </div>
+                      <div className="col-md-6">
+                        <p>{doubtsSolved}</p>
                       </div>
                     </div>
                     <div className="row">

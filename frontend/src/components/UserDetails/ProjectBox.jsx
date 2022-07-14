@@ -40,8 +40,7 @@ const ProjectBox = (props) => {
   async function getReview(projectId) {
     try {
       const { data } = await axios.post(
-        "http://localhost:2000/student/getProjectReviews",
-        {
+        "http://localhost:2000/student/getProjectReviews", {
           projectId: projectId,
         }
       );
@@ -89,12 +88,12 @@ const ProjectBox = (props) => {
           <button
             type="button"
             className="show-review-btn"
+            id={projectName}
             onClick={() => {
               if (!getReviewBtnStatus) getReview(val._id);
               else setreviewsList(null);
               setGetReviewBtnStatus(!getReviewBtnStatus);
               setClickedProjectIdx(val._id);
-              
             }}
           >
             {!owner
@@ -108,6 +107,7 @@ const ProjectBox = (props) => {
         <textarea
           className="card-description form-control"
           value={val.description}
+          id={projectName}
           placeholder="Description"
           disabled
           name="description"
@@ -161,7 +161,7 @@ const ProjectBox = (props) => {
                 <textarea
                   className="form-control review-box"
                   val={reviewContent}
-                  onChange={e => setreviewContent(e.target.value)}
+                  onChange={(e) => setreviewContent(e.target.value)}
                 />
                 <button
                   className="btn-success review-submit"

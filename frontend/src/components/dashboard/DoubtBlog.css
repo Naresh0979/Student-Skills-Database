@@ -73,6 +73,7 @@ button:active {
   border: 1px solid transparent; /* Removes margin collapse */
 }
 .container-doubtBlog {
+  min-height: 420px;
   margin-top: -30px;
   display: flex;
   flex-direction: row;
@@ -250,6 +251,9 @@ details.comment:not([open]) .comment-heading::after {
 
 .d-none {
   display: none;
+}
+.comment-below-head{
+  margin-top: -10px;
 }
 .align-btn {
   margin-top: 10px;

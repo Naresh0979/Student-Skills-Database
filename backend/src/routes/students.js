@@ -222,7 +222,7 @@ studentRouter.post("/getStudentData", async (req, res) => {
 studentRouter.post("/getProjectReviews", async (req, res) => {
   try {
     let data = await Review.find({
-      projectId : req.body.projectId
+      projectId: req.body.projectId,
       // $and: [
       //   { creatorEmail: req.body.creatorEmail, projectId: req.body.projectId },
       // ],
@@ -240,6 +240,23 @@ studentRouter.post("/deleteProjectReview", async (req, res) => {
       _id: req.body.reviewId,
     });
     return res.send("DELETED");
+  } catch (error) {
+    console.log(error);
+    return res.send(error);
+  }
+});
+
+studentRouter.post("/solvedDoubt", async (req, res) => {
+  try {
+    await PersonalDetail.updateOne(
+      { email: req.body.email },
+      { $inc: { doubtSolved: 1 } }
+    );
+    await Post.updateOne(
+      { _id: req.body.postId },
+      { $set: { isSolved: true } }
+    );
+    return res.send("Updated");
   } catch (error) {
     console.log(error);
     return res.send(error);
