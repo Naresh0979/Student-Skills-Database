@@ -16,7 +16,7 @@ const formatDate = (dateString) => {
   };
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
-const DoubtBlogs = () => {
+const DoubtBlogs = (props) => {
   let location = useLocation();
   //console.log(location);
   const [replybox, setReplybox] = useState(false);
@@ -70,7 +70,12 @@ const DoubtBlogs = () => {
         pId: id,
       })
       .then((response) => {
-        setComments(response.data);
+        let commentss = response.data;
+
+        commentss.sort(function (x, y) {
+          return y.upVotes - x.upVotes;
+        });
+        setComments(commentss);
         // comments.sort(function (x, y) {
         //   return x.upVotes - y.upVotes;
         // });
@@ -79,7 +84,7 @@ const DoubtBlogs = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let post = {
-      email: location.state.email,
+      email: props.email || location.state.email,
       content: contentPost,
     };
 
@@ -90,20 +95,21 @@ const DoubtBlogs = () => {
       })
       .then(({ data }) => {
         // console.log("Inside DATA ", data);
-
-        posts.push(data);
+        let postss = posts;
+        postss.unshift(data);
+        // posts.push(data);
         // console.log(posts);
-        setPosts(posts);
-        posts.sort(function (x, y) {
-          return x.timestamp - y.timestamp;
-        });
+        setPosts(postss);
+        // posts.sort(function (x, y) {
+        //   return x.timestamp - y.timestamp;
+        // });
         setContentPost("");
       });
   };
   const handleCommentSubmit = (id, e) => {
     e.preventDefault();
     let comment = {
-      email: location.state.email,
+      email: props.email || location.state.email,
       content: replyMsg,
       pId: id,
     };
@@ -114,14 +120,13 @@ const DoubtBlogs = () => {
         comment,
       })
       .then(({ data }) => {
-        // console.log("Inside DATA ", data);
+        let commentss = comments;
+        commentss.push(data);
 
-        comments.push(data);
-        //  console.log(data);
-        setComments(comments);
-        comments.sort(function (x, y) {
-          return x.timestamp - y.timestamp;
+        commentss.sort(function (x, y) {
+          return y.upVotes - x.upVotes;
         });
+        setComments(commentss);
         setReplybox(!replybox);
       });
   };
@@ -137,37 +142,31 @@ const DoubtBlogs = () => {
     if (myPosts) {
       axios
         .post("http://localhost:2000/student/getMyPosts", {
-          email: location.state.email,
+          email: props.email || location.state.email,
         })
         .then((response) => {
           //   console.log(response);
           //console.log(response.data);
-
-          setPosts(response.data);
-          posts.sort(function (x, y) {
-            return x.time - y.time;
-          });
+          let postss = response.data;
+          postss.reverse();
+          setPosts(postss);
           //  setPosts(posts);
         });
     } else {
       axios
         .post("http://localhost:2000/student/getallPost", {
-          email: location.state.email,
+          email: props.email || location.state.email,
         })
         .then((response) => {
           //   console.log(response);
           //console.log(response.data);
-
-          setPosts(
-            response.data.sort(function (x, y) {
-              return x.time - y.time;
-            })
-          );
-
+          let postss = response.data;
+          postss.reverse();
+          setPosts(postss);
           //  setPosts(posts);
         });
     }
-  }, [location.state.email, myPosts, posts]);
+  }, [location.state.email, props.email, myPosts, posts]);
   return (
     <div id="profileContainer" className="blogs-container">
       <Navbar />
@@ -214,7 +213,7 @@ const DoubtBlogs = () => {
                                 : "Show Post"}
                             </button>
                           </div>
-                          <p className="m-0">{formatDate(post.time)}</p>
+                          <p className="date-posts">{formatDate(post.time)}</p>
                         </div>
                       </div>
                     </summary>
@@ -222,7 +221,10 @@ const DoubtBlogs = () => {
                     {seenPostIndex === index && (
                       <div>
                         <div className="comment-body">
-                          <p>{post.content}</p>
+                          <div className="post-data-container">
+                            <p>{post.content}</p>
+                          </div>
+
                           <button
                             type="button"
                             onClick={() => {

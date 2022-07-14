@@ -77,11 +77,10 @@ function Login(props) {
           const userData = response.data.user;
           setLoginStatus("True");
           // console.log(userData);
-          
-          if(userData.accountType === "Student")
+
+          if (userData.accountType === "Student")
             navigate("/dashboard", { state: userData });
-          else
-            navigate("/admin" , {state : userData});
+          else navigate("/admin", { state: userData });
         } else if (response.data.Status === "F") {
           setLoginStatus("False");
         }
@@ -204,6 +203,7 @@ function Login(props) {
               />
 
               <select
+                className="login__create-container__form-container__form--email"
                 id="ac"
                 name="Account Type"
                 onChange={(e) => setAccountType(e.target.value)}

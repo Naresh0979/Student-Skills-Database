@@ -18,7 +18,7 @@ const ContestCalender = () => {
   }, []);
 
   return (
-    <div id="profileContainer">
+    <div id="profileContainer" className="coding-div">
       <Navbar />
       <div className="container">
         <div className="emp-profile">

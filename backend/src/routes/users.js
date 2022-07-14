@@ -14,7 +14,7 @@ const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const cors = require("cors");
 const userRouter = express.Router();
-
+const Review = require("../models/reviews");
 const oAuth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
   process.env.CLIENT_SECRET,
@@ -59,13 +59,13 @@ userRouter.post("/login", async (req, res) => {
   try {
     const userData = await User.findOne({ email: req.body.email });
     if (!userData || !userData.isVerified || !userData.isActivated)
-      return res.status(400).send("Invalid Credentials");
+      return res.status(200).json({ Status: "F" });
 
     const validPassword = await bcrypt.compare(
       req.body.password,
       userData.password
     );
-    if (!validPassword) return res.status(400).json({ Status: "F" });
+    if (!validPassword) return res.status(200).json({ Status: "F" });
 
     const token = await userData.generateAuthToken();
     return res
@@ -112,7 +112,7 @@ userRouter.post("/sendEnquiry", async (req, res) => {
 //send OTP
 const sendOtp = async (email, name) => {
   const otp = `${Math.floor(Math.random() * 999990)}`;
-  console.log(otp);
+  // console.log(otp);
   let from_email = process.env.GEMAIL;
   let subject = "OTP for Account Verfication";
   let html_code = `
@@ -135,7 +135,7 @@ const sendOtp = async (email, name) => {
     .catch((error) => console.log(error.message));
   return otp;
 };
- 
+
 //SignUp Users
 
 userRouter.post("/signUp", async (req, res) => {
@@ -168,7 +168,7 @@ userRouter.post("/signUp", async (req, res) => {
     });
     const otpSalt = await bcrypt.genSalt(5);
     otpData.otp = await bcrypt.hash(otpData.otp, otpSalt);
-    otpData.save();
+    await otpData.save();
     return res.status(200).json({ Status: "S", user: userData });
   } catch (error) {
     console.log(error);
@@ -199,7 +199,7 @@ userRouter.post("/activateAccount", async (req, res) => {
     return res.status(200).json({ Status: "S" });
   } catch (error) {
     console.log(error);
-    return res.status(400).send("Error Occured");
+    return res.status(200).send("Error Occured");
   }
 });
 
@@ -219,12 +219,12 @@ userRouter.post("/deactivateAccount", async (req, res) => {
     return res.status(200).json({ Status: "S" });
   } catch (error) {
     console.log(error);
-    return res.status(400).send("Error Occured");
+    return res.status(200).json({ Status: "F" });
   }
 });
 
 // delete team or recruiters account
-userRouter.post("/deleteAccount",deleteAccount);
+userRouter.post("/deleteAccount", deleteAccount);
 
 // Get deactivated accounts
 userRouter.get("/getPendingAccounts", getPendingAccounts);
@@ -237,15 +237,15 @@ userRouter.post("/verifyOTP", async (req, res) => {
   try {
     const otpData = await Otp.findOne({ email: req.body.email });
     if (!otpData) {
-      return res.status(400).json({ Status: "F", message: "Invalid details" });
+      return res.status(200).json({ Status: "F", message: "Invalid details" });
     }
 
     if (otpData.expireTime < Date.now()) {
       await Otp.deleteMany({ email: req.body.email });
-      return res.status(400).json({ Status: "F", message: "Expired" });
+      return res.status(200).json({ Status: "F", message: "Expired" });
     }
     const validOtp = await bcrypt.compare(req.body.otp, otpData.otp);
-    if (!validOtp) return res.status(400).json({ Status: "F" });
+    if (!validOtp) return res.status(200).json({ Status: "F" });
     await Otp.deleteMany({ email: req.body.email });
     await User.updateOne(
       { email: req.body.email },
@@ -261,4 +261,18 @@ userRouter.post("/verifyOTP", async (req, res) => {
   }
 });
 
+userRouter.post("/addReview", async (req, res) => {
+  try {
+    const reviewData = new Review({
+      creatorEmail: req.body.creatorEmail,
+      reviewerEmail: req.body.reviewerEmail,
+      projectId: req.body.projectId,
+      content: req.body.content,
+    });
+    await reviewData.save();
+    return res.send("Saved");
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = userRouter;
