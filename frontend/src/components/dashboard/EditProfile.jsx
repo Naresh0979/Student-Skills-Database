@@ -22,7 +22,8 @@ const EditProfile = ({ status, email }) => {
     bio: "",
     address: "",
     codeforces: "",
-    Atcoder: "",
+    codechef: "",
+    leetcode: "",
   });
 
   const [skills, setSkills] = useState([]);
@@ -206,7 +207,8 @@ const EditProfile = ({ status, email }) => {
           bio: data.bio,
           address: data.address,
           codeforces: data.codeforces,
-          Atcoder: data.Atcoder,
+          codechef: data.codechef,
+          leetcode:data.leetcode
         };
         setInfo(temporaryInfo);
         setEducationList(data.educationList);
@@ -314,14 +316,27 @@ const EditProfile = ({ status, email }) => {
                     value={info?.mobileNumber}
                     onChange={handleChange}
                   />
-                  <input
-                    className="e-p-input"
-                    placeholder="Atcoder Handle*"
-                    name="Atcoder"
-                    disabled={status}
-                    value={info?.Atcoder}
-                    onChange={handleChange}
-                  />
+                  
+                  <div className="small-left-right">
+                    <input
+                      className="e-p-input"
+                      id="district"
+                      disabled={status}
+                      placeholder="Codechef Handle*"
+                      name="codechef"
+                      value={info?.codechef}
+                      onChange={handleChange}
+                    />
+
+                    <input
+                      className="e-p-input"
+                      name="leetcode"
+                      disabled={status}
+                      placeholder="Leetcode Handle*"
+                      value={info?.leetcode}
+                      onChange={handleChange}
+                    />
+                  </div>
 
                   <div className="small-left-right">
                     <input
