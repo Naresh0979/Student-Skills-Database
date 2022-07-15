@@ -20,6 +20,13 @@ const ExperienceBox = (props) => {
               />
               <input
                 className="startDate form-control"
+                value={val.role}
+                id={projectName}
+                disabled
+                name="startDate"
+              />
+              <input
+                className="startDate form-control"
                 value={val.startDate}
                 id={projectName}
                 type="month"

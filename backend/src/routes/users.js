@@ -275,4 +275,58 @@ userRouter.post("/addReview", async (req, res) => {
     console.log(error);
   }
 });
+
+userRouter.post("/sendOTP", async (req, res) => {
+  try {
+    let data = await User.findOne({ email: req.body.email });
+    if (!data) return res.send("F");
+
+    let otpNumber = await sendOtp(req.body.email, data.fullName);
+    console.log(otpNumber);
+    const otpData = new Otp({
+      email: req.body.email,
+      otp: otpNumber,
+      expireTime: Date.now() + 3600000,
+    });
+    const otpSalt = await bcrypt.genSalt(5);
+    otpData.otp = await bcrypt.hash(otpData.otp, otpSalt);
+    await otpData.save();
+    return res.send("S");
+  } catch (error) {
+    console.log(error);
+    return res.send("F");
+  }
+});
+
+userRouter.post("/setPassword", async (req, res) => {
+  // console.log(req.body);
+  try {
+    const otpData = await Otp.findOne({ email: req.body.email });
+    if (!otpData) return res.status(200).send("F");
+
+    if (otpData.expireTime < Date.now()) {
+      await Otp.deleteMany({ email: req.body.email });
+      return res.status(200).send("F");
+    }
+    const validOtp = await bcrypt.compare(req.body.otp, otpData.otp);
+    if (!validOtp) return res.status(200).send("F");
+
+    await Otp.deleteMany({ email: req.body.email });
+    const salt = await bcrypt.genSalt(10);
+    let pwd = await bcrypt.hash(req.body.password, salt);
+    await User.updateOne(
+      { email: req.body.email },
+      {
+        $set: {
+          password: pwd,
+        },
+      }
+    );
+    return res.status(200).send("S");
+  } catch (error) {
+    console.log(error);
+    return res.send("F");
+  }
+});
+
 module.exports = userRouter;

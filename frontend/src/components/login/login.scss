@@ -122,6 +122,46 @@ $breakpoint-mobile: 768px;
       }
     }
   }
+  .recovery-email-pwd{
+  
+  }
+  .forget-pwd-button-div{
+    padding-left: 22%;
+    
+  }
+  .back-to-login{
+    margin-top: 8px;
+    text-align: center;
+  }
+  .input-email-recovery{
+    margin-top: 5px;
+    width: 250px;
+    padding: 5px;
+    padding-left: 40px;
+  }
+  .recovery-email-pwd p{
+    text-align: center;
+  }
+  .forget-email{
+    width: max-content;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .forgot-pwd-div{
+    margin-top: -20px;
+    text-align: center;
+  }
+  .forgot-password{
+    font-size: medium;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+    color: #5ca9fb;
+
+  }
+  .forgot-password:hover{
+    text-decoration: none;
+  }
   .invalid-div{
     margin-bottom: 10px;
     padding-top: 10px;

@@ -124,7 +124,7 @@ const CodingPlatformProfile = (props) => {
                         </div>
                         <div className="ratingmeter">
                           <RatingMeter
-                            rating={codeforces[2] / 2500}
+                            rating={(codeforces[2] || 0) / 2500}
                             levels={5}
                             colors={["grey", "lime", "green", "orchid", "red"]}
                           />
@@ -189,7 +189,7 @@ const CodingPlatformProfile = (props) => {
                         </div>
                         <div className="ratingmeter">
                           <RatingMeter
-                            rating={codechef[1] / 3500}
+                            rating={(codechef[1] || 0) / 3500}
                             levels={7}
                             colors={[
                               "grey",
@@ -263,8 +263,8 @@ const CodingPlatformProfile = (props) => {
                         <div className="ratingmeter">
                           <RatingMeter
                             rating={
-                              // (leetcode ? leetcode[1].slice(0, 5) : 0)
-                              67 / 100
+                              (leetcode ? leetcode[1].slice(0, 2) / 100 : 0)
+                              // 67 / 100
                             }
                             levels={4}
                             colors={["grey", "lime", "green", "red"]}

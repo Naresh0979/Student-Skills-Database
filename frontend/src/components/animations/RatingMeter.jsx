@@ -2,7 +2,7 @@
 import GaugeChart from "react-gauge-chart";
 
 const RatingMeter = (props) => {
-  let rating = props.rating;
+  let rating = props.rating || 0;
   // const [rating, setRating] = useState(0.6);
   // useEffect(() => {
   //   setTimeout(() => {
@@ -18,7 +18,7 @@ const RatingMeter = (props) => {
     <GaugeChart
       id={`uph-chart`}
       nrOfLevels={props.levels}
-      percent={rating}
+      percent={props.rating}
       hideText
       colors={props.colors}
     />

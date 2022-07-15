@@ -23,30 +23,17 @@ export const scroll = new SmoothScroll('a[href*="#"]', {
 });
 
 export default function Dashboard(props) {
-  const [landingPageData, setLandingPageData] = useState({});
-  // const [userName, setuserName] = useState('');
-  useEffect(() => {
-    setLandingPageData(JsonData);
-  }, []);
+  
 
   axios.defaults.withCredentials = true;
   const location = useLocation();
-  // console.log(location.state);
   return (
 
     <div>
-   {/* <div>Welcome {location.state.fullName}</div> */}
-      {/* <RatingMeter/> */}
       <Profile user = {location.state} />
-      {/* <Features data={landingPageData.Features} />  */}
-      {/* <About data={landingPageData.About} /> */}
       <EduExpPresenter data={location.state} />
       <ProjectPresenter data={location.state} />
-      {/* <Gallery data={landingPageData.Gallery}/>
-    <Testimonials data={landingPageData.Testimonials} /> */}
-      {/* <Team data={landingPageData.Team} /> */}
       <CodingPlatformProfile email={location.state.email}/>
-      {/* <Contact data={landingPageData.Contact} /> */}
       <DashboardNavigation username={location.state.fullName} />
     </div>
   );

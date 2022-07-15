@@ -16,19 +16,37 @@ function Login(props) {
   let navigate = useNavigate();
   const [login, setlogin] = useState(false);
   const [otpStatus, setOtpStatus] = useState(false);
-
+  const [forgotPassword, setForgotPassword] = useState("initial");
   const handleclick = () => {
     setlogin(!login);
   };
   const [accountType, setAccountType] = useState("Student");
   const [logInStatus, setLoginStatus] = useState(null);
   const [otpVerification, setOtpVerification] = useState(null);
+  const [otpValid, setOtpValid] = useState(true);
+  const [emailValid, setEmailValid] = useState(true);
   const [registratonStatus, setRegistratonStatus] = useState(null);
+  const [passwordChangedStatus, setPasswordChangedStatus] = useState(false);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
-
+  const setInitialState = () => {
+    handleclick();
+    setOtpStatus(false);
+    setForgotPassword("initial");
+    setAccountType("Student");
+    setLoginStatus(null);
+    setOtpVerification(null);
+    setOtpValid(true);
+    setEmailValid(true);
+    setRegistratonStatus(null);
+    setPasswordChangedStatus(false);
+    setFullName("");
+    setEmail("");
+    setPassword("");
+    setOtp("");
+  };
   // SignUp
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -46,8 +64,31 @@ function Login(props) {
         }
       });
   };
-  // Account Verification
 
+  const sendOtp = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:2000/users/sendOTP", {email : email})
+      .then((response) => {
+        console.log(response);
+        if (response.data === 'F') setEmailValid(false);
+        else setForgotPassword("SecondClick");
+      });
+  };
+  const setNewPassword = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:2000/users/setPassword", { email : email, otp : otp,password: password })
+      .then(({ data }) => {
+        if (data === "F") setOtpValid(false);
+        else {
+          setPasswordChangedStatus(true);
+          setForgotPassword("initial");
+        }
+      });
+  };
+
+  // Account Verification
   const handleOtp = (e) => {
     e.preventDefault();
     const userData = { email, otp };
@@ -123,7 +164,7 @@ function Login(props) {
                         </span> */}
           </div>
           <div
-            onClick={handleclick}
+            onClick={setInitialState}
             className="login__welcome-back__main-container__button-container"
           >
             SIGN IN
@@ -174,7 +215,11 @@ function Login(props) {
                   <p>Email Already Registered</p>
                 </div>
               ) : (
-                <div></div>
+                passwordChangedStatus && (
+                  <div className="success-div">
+                    <p>Password Changed</p>
+                  </div>
+                )
               )}
 
               <input
@@ -316,32 +361,135 @@ function Login(props) {
                 <p>Invalid Credentials</p>
               </div>
             ) : (
-              <div></div>
+              passwordChangedStatus && (
+                <div className="success-div">
+                  <p>Password Changed</p>
+                </div>
+              )
             )}
-            <form
-              className="login__login-container__main-container__form-container__form"
-              onSubmit={handleLogin}
-            >
-              <input
-                className="login__login-container__main-container__form-container__form--email"
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <input
-                className="login__login-container__main-container__form-container__form--password"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <button className="login__login-container__main-container__form-container__form--submit">
-                SIGN IN
-              </button>
-            </form>
+            {forgotPassword === "initial" ? (
+              <>
+                <form
+                  className="login__login-container__main-container__form-container__form"
+                  onSubmit={handleLogin}
+                >
+                  <input
+                    className="login__login-container__main-container__form-container__form--email"
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <input
+                    className="login__login-container__main-container__form-container__form--password"
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+
+                  <button className="login__login-container__main-container__form-container__form--submit">
+                    SIGN IN
+                  </button>
+                </form>
+              </>
+            ) : forgotPassword === "FirstClick" ? (
+              <div className="recovery-email-pwd">
+                {!emailValid && (
+                  <div className="invalid-div">
+                    <p>Email Not Registered</p>
+                  </div>
+                )}
+                <p>Recover Password</p>
+                <div>
+                  <input
+                    className="login__login-container__main-container__form-container__form--email input-email-recovery"
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="forget-pwd-button-div">
+                  <button className="login__login-container__main-container__form-container__form--submit forget-email"
+                  onClick={sendOtp}>
+                    Send OTP
+                  </button>
+                </div>
+                <div className="back-to-login">
+                  <a
+                    className="forgot-password "
+                    onClick={() => {
+                      setForgotPassword("initial");
+                    }}
+                  >
+                    Back to Login
+                  </a>
+                </div>
+              </div>
+            ) : (
+              <div className="recovery-email-pwd">
+                {!otpValid && (
+                  <div className="invalid-div">
+                    <p>Invalid Otp</p>
+                  </div>
+                )}
+                <p>Email Sent to {email}</p>
+                <form>
+                  <div>
+                    <input
+                      className="login__create-container__form-container__form--name input-email-recovery"
+                      type="text"
+                      placeholder="Otp"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <input
+                      className="login__login-container__main-container__form-container__form--password input-email-recovery"
+                      type="password"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="forget-pwd-button-div">
+                    <button className="login__login-container__main-container__form-container__form--submit forget-email"
+                    onClick={setNewPassword}>
+                      Set Password
+                    </button>
+                  </div>
+                </form>
+                <div className="back-to-login">
+                  <a
+                    className="forgot-password "
+                    onClick={() => {
+                      setForgotPassword("initial");
+                    }}
+                  >
+                    Back to Login
+                  </a>
+                </div>
+              </div>
+            )}
+            {forgotPassword === "initial" && (
+              <div className="forgot-pwd-div">
+                <a
+                  className="forgot-password"
+                  onClick={() => {
+                    setForgotPassword("FirstClick");
+                  }}
+                >
+                  Forgot Password ?
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -362,7 +510,7 @@ function Login(props) {
           </span> */}
         </div>
         <div
-          onClick={handleclick}
+          onClick={setInitialState}
           className="login__welcome-back__main-container__button-container"
         >
           SIGN UP

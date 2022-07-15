@@ -13,27 +13,20 @@ import CodingPlatformProfile from "./components/dashboard/CodingPlatformProfile"
 import DoubtBlogs from "./components/dashboard/DoubtBlogs";
 import AdminHomePage from "./components/admin/AdminHomePage.jsx";
 export default function AppRouter() {
+  console.log("HERE");
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/signup" element={<Login />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
-        <Route path="/editProfile" element={<EditProfile status={false}/>} />
-        {/* <Route path="/EditProfile"  element={<EditProfile/>}></Route> */}
+        <Route path="/editProfile" element={<EditProfile status={false} />} />
         <Route path="/DSAPractice" element={<DSAPractice />}></Route>
         <Route path="/DailyProblems" element={<DailyProblems />}></Route>
         <Route path="/ContestCalender" element={<ContestCalender />}></Route>
-        <Route path="/admin" element={<AdminHomePage/>}/>
-        <Route
-          path="/CodingPlatformProfile"
-          element={<CodingPlatformProfile />}
-        ></Route>
-        <Route
-          path="/DoubtBlogs"
-          element={<DoubtBlogs />}
-        ></Route>
-
+        <Route path="/admin" element={<AdminHomePage />} />
+        <Route path="/CodingPlatformProfile" element={<CodingPlatformProfile />} />
+        <Route path="/DoubtBlogs" element={<DoubtBlogs />} />
 
         {/* <AuthenticatedRoute
             path="/dashboard"
