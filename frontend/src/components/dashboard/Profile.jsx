@@ -130,51 +130,6 @@ const Profile = (props) => {
                   />
                 </form>
 
-                <form action="/DSAPractice">
-                  <input
-                    type="submit"
-                    className="profile-edit-btn"
-                    //  name="btnAddMore"
-                    value="DSAPractice"
-                  />
-                </form>
-
-                <form action="/DailyProblems">
-                  <input
-                    type="submit"
-                    className="profile-edit-btn"
-                    //  name="btnAddMore"
-                    value="Daily Problem"
-                  />
-                </form>
-
-                <form action="/ContestCalender">
-                  <input
-                    type="submit"
-                    className="profile-edit-btn"
-                    //  name="btnAddMore"
-                    value="Calender"
-                  />
-                </form>
-                {/* <form action="/CodingPlatformProfile">
-                  <input
-                    type="submit"
-                    className="profile-edit-btn"
-                    name="btnAddMore"
-                    value="CodingProfiles"
-                  />
-                </form> */}
-                <form action="/DoubtBlogs">
-                  <input
-                    onClick={() => {
-                      navigate("/DoubtBlogs", { state: { email: emailId } });
-                    }}
-                    type="submit"
-                    className="profile-edit-btn"
-                    name="btnAddMore"
-                    value="Doubt Blogs"
-                  />
-                </form>
               </div>
             </div>
             <div className="row">

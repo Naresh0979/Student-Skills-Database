@@ -1,14 +1,15 @@
-import { Link , useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation } from "react-router-dom";
 import axios from "axios";
 export const DashboardNavigation = (props) => {
   let navigate = useNavigate();
+  let location =useLocation();
   axios.defaults.withCredentials = true;
   const handleLogOut = (e) => {
     e.preventDefault();
     axios.get("http://localhost:2000/users/logout").then((response) => {
       // write here the page to load when logout
       // console.log(props);
-      navigate('/signUp');
+      navigate("/signUp");
     });
   };
 
@@ -78,13 +79,57 @@ export const DashboardNavigation = (props) => {
               </li> */}
               <li>
                 {props.username ? (
-                  <Link
-                    to="/signup"
-                    onClick={handleLogOut}
-                    className="page-scroll"
-                  >
-                    Logout
-                  </Link>
+
+                  <div className="dropdown navdropdown" >
+                    <button
+                      className="btn btn-primary dropdown-toggle"
+                      type="button"
+                      data-toggle="dropdown"
+                    >
+                      {props.username}
+                      <span className="caret"></span>
+                    </button>
+                    <ul className="dropdown-menu">
+                      <li>
+                        {" "}
+                        <Link to="/DSAPractice" className="dropdown-item">
+                          DSA practice
+                        </Link>
+                      </li>
+                      <li>
+                        {" "}
+                        <Link to="/DailyProblems" className="dropdown-item">
+                          Daily problems
+                        </Link>
+                      </li>
+                      <li>
+                        {" "}
+                        <Link to="/ContestCalender" className="dropdown-item">
+                        Calender
+                        </Link>
+                      </li>
+                     
+                      <li>
+                        {" "}
+                        <button className="dropdown-item dropbtn" 
+                        onClick={() => {
+                      navigate("/DoubtBlogs", { state: location.state });
+                    }}>
+                     Doubt Blogs
+                        </button>
+                       
+                      </li>
+                      <li>
+                        <Link
+                          to="/signup"
+                          onClick={handleLogOut}
+                          className="page-scroll"
+                        >
+                          Logout
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
                 ) : (
                   <Link to="/signup" className="page-scroll">
                     LogIN
