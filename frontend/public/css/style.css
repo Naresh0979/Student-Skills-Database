@@ -87,6 +87,15 @@ hr {
   color: #333;
   text-transform: uppercase;
 }
+.navdropdown{
+  padding-top: 10px;
+  
+}
+.dropbtn{
+
+  padding-left: 20px;
+  border: none;
+}
 #menu.navbar-default .navbar-nav > li > a {
   font-family: "Lato", sans-serif;
   text-transform: uppercase;
