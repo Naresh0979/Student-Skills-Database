@@ -133,17 +133,20 @@
     {
       "img": "img/team/01.jpg",
       "name": "Amit Gupta",
-      "job": "19ucs011@lnmiit.ac.in"
+      "job": "19ucs011@lnmiit.ac.in",
+      "role": "(Developer)"
     },
     {
       "img": "img/team/02.jpg",
       "name": "Naresh Kumawat",
-      "job": "19ucs046@lnmiit.ac.in"
+      "job": "19ucs046@lnmiit.ac.in",
+      "role": "(Developer)"
     },
     {
       "img": "img/team/03.jpg",
       "name": "Roshan Kumar",
-      "job": "19ucs178@lnmiit.ac.in"
+      "job": "19ucs178@lnmiit.ac.in",
+      "role" : "(Content Writer)"
     }
   ],
   "Contact": {

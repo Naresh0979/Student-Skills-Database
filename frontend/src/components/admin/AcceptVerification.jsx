@@ -56,28 +56,28 @@ const AcceptVerificaton = (props) => {
               {pendingVerfication !== null &&
                 pendingVerfication.map((val, idx) => {
                   return (
-                    <tr className="align-middle" id={idx}>
-                      <td id={idx}>{idx + 1}</td>
-                      <td id={idx}>{val.name}</td>
-                      <td id={idx}>{val.email}</td>
-                      <td id={idx}>{val.mobileNumber}</td>
-                      <td id={idx}>
+                    <tr className="align-middle" key={idx}>
+                      <td key={idx}>{idx + 1}</td>
+                      <td key={idx}>{val.name}</td>
+                      <td key={idx}>{val.email}</td>
+                      <td key={idx}>{val.mobileNumber}</td>
+                      <td key={idx}>
                         <button
-                          id={idx}
+                          key={idx}
                           className="btn-success"
                           onClick={() => updateRequest(val.email)}
                         >
                           Accept
                         </button>
                         <button
-                          id={idx}
+                          key={idx}
                           className="btn-danger"
                           onClick={() => deleteRequest(val.email)}
                         >
                           Delete
                         </button>
                         <button
-                          id={idx}
+                          key={idx}
                           className="btn-primary"
                           onClick={() => changeViewDetailsStatus(val.email)}
                         >

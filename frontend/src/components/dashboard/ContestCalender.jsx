@@ -36,7 +36,7 @@ const ContestCalender = () => {
                   <p key={index} className="questionsHead">
                     Date :
                   </p>
-                  <button className="form-control btn-success ">
+                  <button key={index} className="form-control btn-success ">
                     Proceed to Contest
                   </button>
                 </a>

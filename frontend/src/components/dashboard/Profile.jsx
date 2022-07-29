@@ -6,6 +6,7 @@ import axios from "axios";
 const Profile = (props) => {
   let navigate = useNavigate();
   let location = useLocation();
+  const [navBtnClicked, setNavBtnClicked] = useState(false);
   const emailId = props.email || location.state.email;
   const [name, setName] = useState();
   const [bio, setBio] = useState();
@@ -62,12 +63,14 @@ const Profile = (props) => {
                   <p className="proile-rating">
                     RANKINGS : <span>8/10</span>
                   </p>
-                  <ul className="nav nav-pills" id="myTab" role="tablist">
-                    <li className="nav-item">
+                  <ul key="003" className="nav nav-pills" id="myTab" role="tablist">
+                    <li key="001" className="nav-item">
                       <a
-                        className="nav-link active default-active-nav"
+                        key="004"
+                        className= {navBtnClicked ? "nav-link default-active-nav" : "nav-link active-default-pill default-active-nav" }
                         id="home-tab" 
                         data-toggle="tab"
+                        onClick={() => setNavBtnClicked(true)}
                         href="#home"
                         role="tab"
                         aria-controls="home"
@@ -77,8 +80,10 @@ const Profile = (props) => {
                         About
                       </a>
                     </li>
-                    <li className="nav-item">
+                    <li key="002" className="nav-item">
                       <a
+                        key="005"
+                        onClick={() => setNavBtnClicked(true)}
                         className="nav-link "
                         id="profile-tab"
                         data-toggle="tab"
@@ -132,14 +137,14 @@ const Profile = (props) => {
                     value="Calender"
                   />
                 </form>
-                <form action="/CodingPlatformProfile">
+                {/* <form action="/CodingPlatformProfile">
                   <input
                     type="submit"
                     className="profile-edit-btn"
                     name="btnAddMore"
                     value="CodingProfiles"
                   />
-                </form>
+                </form> */}
                 <form action="/DoubtBlogs">
                   <input
                     onClick={() => {
@@ -160,10 +165,10 @@ const Profile = (props) => {
                   {worklink ? (
                     worklink.map((worklink, index) => (
                       <>
-                        <a href={worklink.link} key={index}>
+                        <a href={worklink.link} key={index + "1"}>
                           {worklink.linkName}
                         </a>
-                        <br id={index} />
+                        <br key={index + "2"}  />
                       </>
                     ))
                   ) : (
@@ -182,10 +187,10 @@ const Profile = (props) => {
                   {skills ? (
                     skills.map((skill, index) => (
                       <>
-                        <a key={index}>
+                        <a key={index+'1'}>
                           {skill}
                         </a>
-                        <br key={index}/>
+                        <br key={index+'2'}/>
                       </>
                     ))
                   ) : (

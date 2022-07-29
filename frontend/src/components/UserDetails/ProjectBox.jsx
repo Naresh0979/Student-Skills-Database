@@ -55,23 +55,23 @@ const ProjectBox = (props) => {
       // end = `end-${idx}`,
       // index = val.index;
     return (
-      <div id={projectName} className="whiteBackground">
-        <div id={projectName} className="name-dates">
+      <div key={projectName + "1"} className="whiteBackground">
+        <div key={projectName + "2"} className="name-dates">
           <input
             className="names form-control"
             placeholder="Project Name"
-            id={projectName}
+            key={projectName + "3"}
             disabled
             value={val.projectName}
             name="projectName"
           />
-          <a id={projectName} href={val.link}>
-            <button id={projectName} className="link-btn btn btn-success">Go to Project</button>{" "}
+          <a key={projectName + "4"} href={val.link}>
+            <button key={projectName + "5"} className="link-btn btn btn-success">Go to Project</button>{" "}
           </a>
           <input
             className="startDate form-control"
             value={val.startDate}
-            id={projectName}
+            key={projectName + "6"}
             type="month"
             disabled
             name="startDate"
@@ -79,7 +79,7 @@ const ProjectBox = (props) => {
           <input
             className="endDate form-control"
             value={val.endDate}
-            id={projectName}
+            key={projectName + "7"}
             type="month"
             disabled
             name="endDate"
@@ -87,7 +87,7 @@ const ProjectBox = (props) => {
           <button
             type="button"
             className="show-review-btn"
-            id={projectName}
+            key={projectName + "8"}
             onClick={() => {
               if (!getReviewBtnStatus) getReview(val._id);
               else setreviewsList(null);
@@ -106,37 +106,37 @@ const ProjectBox = (props) => {
         <textarea
           className="card-description form-control"
           value={val.description}
-          id={projectName}
+          key={projectName + "9"}
           placeholder="Description"
           disabled
           name="description"
         />
         {getReviewBtnStatus && clickedProjectIdx === val._id && (
-          <div id={projectName} className="">
-            <h3 id={projectName} className="text-center" style={{ color: "black" }}>
+          <div key={projectName + "10"} className="">
+            <h3 key={projectName + "11"} className="text-center" style={{ color: "black" }}>
               {owner ? "Reviews" : "Give Reviews"}
             </h3>
             {owner ? (
-              <div id={projectName} className="pending-account-table">
-                <table id={projectName} className="table table-striped admin-side-table">
-                  <thead id={projectName} className="table-header">
-                    <tr id={projectName} className="">
-                      <th id={projectName}>S No.</th>
-                      <th id={projectName}>Reviewer</th>
-                      <th id={projectName}>Review</th>
-                      <th id={projectName}>Actions</th>
+              <div key={projectName + "12"} className="pending-account-table">
+                <table key={projectName + "13"} className="table table-striped admin-side-table">
+                  <thead key={projectName + "14"} className="table-header">
+                    <tr key={projectName + "15"} className="">
+                      <th key={projectName + "16"}>S No.</th>
+                      <th key={projectName + "17"}>Reviewer</th>
+                      <th key={projectName + "18"}>Review</th>
+                      <th key={projectName + "19"}>Actions</th>
                     </tr>
                   </thead>
                   {reviewsList !== null &&
                     reviewsList.map((val, idx) => {
                       return (
-                        <tr className="align-middle" id={idx}>
-                          <td id={idx}>{idx + 1}</td>
-                          <td id={idx}>{val.reviewerEmail}</td>
-                          <td id={idx}>{val.content}</td>
-                          <td id={idx}>
+                        <tr className="align-middle" key={idx + "20"}>
+                          <td key={idx + "21"}>{idx + 1}</td>
+                          <td key={idx + "22"}>{val.reviewerEmail}</td>
+                          <td key={idx + "23"}>{val.content}</td>
+                          <td key={idx + "24"}>
                             <button
-                              id={idx}
+                              key={idx + "25"}
                               className="btn-danger"
                               onClick={() => deleteRequest(val._id)}
                             >
@@ -148,23 +148,23 @@ const ProjectBox = (props) => {
                     })}
                 </table>
                 {reviewsList === null ? (
-                  <p id={projectName} className="no-account">Loading</p>
+                  <p key={projectName + "26"} className="no-account">Loading</p>
                 ) : (
                   reviewsList.length === 0 && (
-                    <p id={projectName} className="no-account">No Reviews</p>
+                    <p key={projectName + "27"} className="no-account">No Reviews</p>
                   )
                 )}
               </div>
             ) : (
-              <div id={projectName} className="give-review-cont">
+              <div key={projectName + "28"} className="give-review-cont">
                 <textarea
-                  id={projectName}
+                  key={projectName + "29"}
                   className="form-control review-box"
                   val={reviewContent}
                   onChange={(e) => setreviewContent(e.target.value)}
                 />
                 <button
-                  id={projectName}
+                  key={projectName + "30"}
                   className="btn-success review-submit"
                   onClick={() => postReview(val._id)}
                 >

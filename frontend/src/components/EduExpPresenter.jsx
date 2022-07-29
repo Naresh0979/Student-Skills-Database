@@ -6,47 +6,26 @@ import ProjectBox from "./UserDetails/ProjectBox";
 import EducationBox from "./UserDetails/EducationBox";
 import ExperienceBox from "./UserDetails/ExperienceBox";
 import "./dashboard/editProfile.css";
-const EduExpPresenter = () => {
-  let navigate = useNavigate();
-  let location = useLocation();
+const EduExpPresenter = ({ email }) => {
   axios.defaults.withCredentials = true;
   const [educationList, setEducationList] = useState([]);
   const [experienceList, setExperienceList] = useState([]);
   useEffect(() => {
     axios
       .post("http://localhost:2000/student/getStudentData", {
-        email: location.state.email,
+        email: email,
       })
       .then((response) => {
         setExperienceList(response.data.experienceList);
-
         setEducationList(response.data.educationList);
-        // console.log(educationList);
       });
-  }, [location.state.email]);
+  }, [email]);
   return (
     <div id="team" className="text-center">
       <div className="container">
         <div className="section-title changes2">
           <h2>Education</h2>
         </div>
-        {/* <div className="name-dates">
-            <div className="names">
-              <p> Institute Name</p>
-            </div>
-            <div className="degree">
-              <p>Degree</p>
-            </div>
-            <div className="startDate">
-              <p>Start Date </p>
-            </div>
-            <div className="endDate">
-              <p>End Date</p>
-            </div>
-            <div className="grades">
-              <p>Grades</p>
-            </div>
-          </div> */}
         <div className="ed-container">
           <div className="table">
             {educationList.length > 0 ? (

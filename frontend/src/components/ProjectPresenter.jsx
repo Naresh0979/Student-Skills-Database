@@ -4,20 +4,18 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ProjectBox from "./UserDetails/ProjectBox";
 import './dashboard/editProfile.css'
-const ProjectPresenter = (props) => {
-  let navigate = useNavigate();
-  let location = useLocation();
+const ProjectPresenter = ({email}) => {
   axios.defaults.withCredentials = true;
   const [projectList, setProjectList] = useState([]);
   useEffect(() => {
     axios
       .post("http://localhost:2000/student/getStudentData", {
-        email: location.state.email,
+        email: email,
       })
       .then((response) => {
         setProjectList(response.data.projectList);
       });
-  }, [location.state.email]);
+  }, [email]);
   return (
     <div id="services" className="text-center">
       <div className="container">

@@ -8,9 +8,9 @@ import { DashboardNavigation } from "./DashboardNavigation";
 //import { Features } from "./components/features";
 import { About } from "./about";
 import { Services } from "./services";
-import Profile  from "./dashboard/Profile";
+import Profile from "./dashboard/Profile";
 import EduExpPresenter from "./EduExpPresenter";
-import  CodingPlatformProfile  from "./dashboard/CodingPlatformProfile";
+import CodingPlatformProfile from "./dashboard/CodingPlatformProfile";
 import { Contact } from "./contact";
 import JsonData from "../data/data.json";
 import RatingMeter from "./animations/RatingMeter";
@@ -23,17 +23,14 @@ export const scroll = new SmoothScroll('a[href*="#"]', {
 });
 
 export default function Dashboard(props) {
-  
-
   axios.defaults.withCredentials = true;
   const location = useLocation();
   return (
-
     <div>
-      <Profile user = {location.state} />
-      <EduExpPresenter data={location.state} />
-      <ProjectPresenter data={location.state} />
-      <CodingPlatformProfile email={location.state.email}/>
+      <Profile user={location.state} />
+      <EduExpPresenter email={location.state.email} />
+      <ProjectPresenter email={location.state.email} />
+      <CodingPlatformProfile email={location.state.email} />
       <DashboardNavigation username={location.state.fullName} />
     </div>
   );

@@ -294,6 +294,21 @@ input{
 	background-color:  #1f5ecb;
 	color: white;
 }
+.terms-check{
+	display: flex;
+	margin-bottom: 20px;
+}
+.terms-text{
+	margin-left: 15px;
+	color: black;
+	font-weight: 400;
+	font-size: large;
+}
+.terms-check-box{
+	transform : scale(1.5);
+	height: 15px;
+	margin-right: 15px;
+}
 .give-review-cont{
 	display: flex;
 	
