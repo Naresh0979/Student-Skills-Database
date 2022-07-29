@@ -1,14 +1,14 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/profile.css";
 import "./profilePhoto.scss";
 import { useState, useEffect } from "react";
 import axios from "axios";
 const Profile = (props) => {
   let navigate = useNavigate();
-  let location = useLocation();
+  const owner = props.owner;
   const [navBtnClicked, setNavBtnClicked] = useState(false);
-  const emailId = props.email || location.state.email;
+  const emailId = props.email;
   const [name, setName] = useState();
   const [bio, setBio] = useState();
   const [skills, setSkills] = useState();
@@ -36,10 +36,11 @@ const Profile = (props) => {
         setDoubtsSolved(response.data.doubtSolved);
       });
   }, [emailId]);
-  var loadFile = function (event) {
-    console.log(event.target.files[0]);
+  var loadFile = async function (event) {
+    // console.log(event.target.files[0]);
     var image = document.getElementById("output");
     image.src = URL.createObjectURL(event.target.files[0]);
+    console.log(event.target.files[0]);
   };
   return (
     <div id="profileContainer">
@@ -49,22 +50,33 @@ const Profile = (props) => {
             <div className="row">
               <div className="col-md-3">
                 {/* <div className="profile-img"> */}
-                  {/* <img
+                {/* <img
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
                     alt=""
                   /> */}
-                  <div className="profile-pic">
-                    <label className="-label" for="file">
-                      <i className="fa fa-camera" />
-                      <span>Change Profile</span>
-                    </label>
-                    <input id="file" type="file" onChange={loadFile} />
-                    <img
-                      src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg"
-                      id="output"
-                      height="200"
+                <div className="profile-pic">
+                  <label className="-label" htmlFor="file">
+                    {owner && (
+                      <>
+                        <i className="fa fa-camera" />
+                        <span>Change Profile</span>
+                      </>
+                    )}
+                  </label>
+                  {owner && (
+                    <input
+                      id="file"
+                      accept="image/png, image/jpeg"
+                      type="file"
+                      onChange={loadFile}
                     />
-                  </div>
+                  )}
+                  <img
+                    src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg"
+                    id="output"
+                    height="200"
+                  />
+                </div>
                 {/* </div> */}
               </div>
               <div className="col-md-7">
@@ -118,8 +130,8 @@ const Profile = (props) => {
                 </div>
               </div>
               <div className="col-md-2">
-                <form action="/EditProfile">
-                  <input
+                {
+                  owner && <input
                     onClick={() => {
                       navigate("/editProfile", { state: emailId });
                     }}
@@ -128,8 +140,7 @@ const Profile = (props) => {
                     name="btnAddMore"
                     value="EditProfile"
                   />
-                </form>
-
+                }
               </div>
             </div>
             <div className="row">

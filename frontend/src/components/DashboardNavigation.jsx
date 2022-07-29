@@ -1,8 +1,8 @@
-import { Link, useNavigate,useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 export const DashboardNavigation = (props) => {
   let navigate = useNavigate();
-  let location =useLocation();
+  let location = useLocation();
   axios.defaults.withCredentials = true;
   const handleLogOut = (e) => {
     e.preventDefault();
@@ -79,14 +79,13 @@ export const DashboardNavigation = (props) => {
               </li> */}
               <li>
                 {props.username ? (
-
-                  <div className="dropdown navdropdown" >
+                  <div className="dropdown navdropdown">
                     <button
                       className="btn btn-primary dropdown-toggle"
                       type="button"
                       data-toggle="dropdown"
                     >
-                      {props.username}
+                      {props.username + " "}
                       <span className="caret"></span>
                     </button>
                     <ul className="dropdown-menu">
@@ -105,19 +104,31 @@ export const DashboardNavigation = (props) => {
                       <li>
                         {" "}
                         <Link to="/ContestCalender" className="dropdown-item">
-                        Calender
+                          Calender
                         </Link>
                       </li>
-                     
+
                       <li>
                         {" "}
-                        <button className="dropdown-item dropbtn" 
-                        onClick={() => {
-                      navigate("/DoubtBlogs", { state: location.state });
-                    }}>
-                     Doubt Blogs
+                        <button
+                          className="dropdown-item dropbtn"
+                          onClick={() => {
+                            navigate("/DoubtBlogs", { state: location.state });
+                          }}
+                        >
+                          Doubt Blogs
                         </button>
-                       
+                      </li>
+                      <li>
+                        {" "}
+                        <button
+                          className="dropdown-item dropbtn"
+                          onClick={() => {
+                            navigate("/viewProfile/19ucs011@lnmiit.ac.in", { state: location.state });
+                          }}
+                        >
+                          View Pr
+                        </button>
                       </li>
                       <li>
                         <Link

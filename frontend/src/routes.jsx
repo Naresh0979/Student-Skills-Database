@@ -19,7 +19,7 @@ export default function AppRouter() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/signup" element={<Login />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="/dashboard" element={<Dashboard owner={true} />}></Route>
         <Route path="/editProfile" element={<EditProfile status={false} />} />
         <Route path="/DSAPractice" element={<DSAPractice />}></Route>
         <Route path="/DailyProblems" element={<DailyProblems />}></Route>
@@ -27,7 +27,8 @@ export default function AppRouter() {
         <Route path="/admin" element={<AdminHomePage />} />
         <Route path="/CodingPlatformProfile" element={<CodingPlatformProfile />} />
         <Route path="/DoubtBlogs" element={<DoubtBlogs />} />
-
+        <Route path="/viewProfile/:profileEmail" element={<Dashboard owner={false} />}></Route>
+        {/* need to send userdata name , email in state and profileEmail as params */}
         {/* <AuthenticatedRoute
             path="/dashboard"
             isAuthenticated={this.props.username.trim().length > 0}
