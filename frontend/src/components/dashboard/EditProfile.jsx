@@ -6,14 +6,17 @@ import "./editProfile.css";
 import Project from "../UserDetails/Project";
 import Links from "../UserDetails/Links";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const EditProfile = ({ status, email }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [saveBtnStatus, setSaveBtnStatus] = useState(true);
+  const emailId = email || location.state;
   // console.log(location);
   const [info, setInfo] = useState({
     name: "",
     rollNumber: "",
-    email: email || location.state,
+    email: emailId,
     mobileNumber: "",
     country: "",
     state: "",
@@ -208,7 +211,7 @@ const EditProfile = ({ status, email }) => {
           address: data.address,
           codeforces: data.codeforces,
           codechef: data.codechef,
-          leetcode:data.leetcode
+          leetcode: data.leetcode,
         };
         setInfo(temporaryInfo);
         setEducationList(data.educationList);
@@ -239,7 +242,10 @@ const EditProfile = ({ status, email }) => {
         "http://localhost:2000/student/editProfile",
         fullDetails
       );
-      if (responce) alert("done");
+      if (responce) 
+        navigate("/dashboard", { state: {email : emailId , fullName : info.name} });
+      else 
+        alert("Error Occured!");
     } catch (error) {
       console.log(error);
     }
@@ -247,7 +253,10 @@ const EditProfile = ({ status, email }) => {
   return (
     <div className="background-body-for-editProfile">
       <Navbar />
-      <div className="edu-personal-info" style={status ? {"margin-top" : "20px", "margin-bottom" :"20px"} : {}}>
+      <div
+        className="edu-personal-info"
+        style={status ? { "margin-top": "20px", "margin-bottom": "20px" } : {}}
+      >
         <div className="details-container">
           <form onSubmit={saveDetails}>
             <div className="details-container-personal-info">
@@ -316,7 +325,7 @@ const EditProfile = ({ status, email }) => {
                     value={info?.mobileNumber}
                     onChange={handleChange}
                   />
-                  
+
                   <div className="small-left-right">
                     <input
                       className="e-p-input"
@@ -403,7 +412,7 @@ const EditProfile = ({ status, email }) => {
                   </div>
                 ))}
 
-                {!status && (
+                {!status && skills.length < 4 && (
                   <input
                     type="text"
                     onKeyDown={handleKeyDown}
@@ -419,7 +428,7 @@ const EditProfile = ({ status, email }) => {
             <div className="details-container-education">
               <div className="ed-container">
                 <h3>Website Links</h3>
-                {!status && (
+                {!status && linkList.length < 4 && (
                   <button
                     type="button"
                     disabled={status}
@@ -520,9 +529,31 @@ const EditProfile = ({ status, email }) => {
             </div>
             <div className="details-container-button">
               {!status && (
-                <button type="submit" className="btn ed-btn btn-primary">
-                  Save
-                </button>
+                <>
+                  <div className="terms-check">
+                    <input
+                      className="terms-check-box"
+                      id="terms-check-box"
+                      name="terms-check-box"
+                      type="checkbox"
+                      onClick={() => setSaveBtnStatus(!saveBtnStatus)}
+                    />
+                    <p className="terms-text">
+                      I hereby declare that information furnished above is true
+                      and correct in every respect and in case any information
+                      is found incorrect even partially the candidature shall be
+                      liable to be rejected.
+                    </p>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={saveBtnStatus}
+                    className="btn ed-btn btn-primary"
+                  >
+                    Save
+                  </button>
+                </>
               )}
             </div>
           </form>

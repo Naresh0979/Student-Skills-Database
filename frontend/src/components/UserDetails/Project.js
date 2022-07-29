@@ -9,26 +9,26 @@ const Project = (props) => {
     //   end = `end-${idx}`,
     let  index = val.index;
     return (
-      <div>
-        <div id={projectName} className="flex-div-left-right-med-container">
-          <div id={projectName} className="flex-div-left-med-container">
+      <div key={projectName + "1"}>
+        <div key={projectName + "2"} className="flex-div-left-right-med-container">
+          <div key={projectName + "3"} className="flex-div-left-med-container">
             
             <input
               className="e-p-input"
               placeholder="Project Name"
-              id={projectName}
+              key={projectName + "4"}
               disabled={!props.status}
               value={val.projectName}
               name="projectName"
               onChange={(event) => props.update(idx, event)}
             />
           </div>
-          <div id={projectName} className="flex-div-right-med-container">
-            <div id={projectName} className="flex-div-right-med-container-line">
+          <div key={projectName + "5"} className="flex-div-right-med-container">
+            <div key={projectName + "6"} className="flex-div-right-med-container-line">
               <input
                 className="e-p-input endDate-input"
                 value={val.startDate}
-                id={projectName}
+                key={projectName + "7"}
                 type="month"
                 disabled={!props.status}
                 name="startDate"
@@ -38,7 +38,7 @@ const Project = (props) => {
               <input
                 className="e-p-input endDate-input"
                 value={val.endDate}
-                id={projectName}
+                key={projectName + "8"}
                 type="month"
                 disabled={!props.status}
                 name="endDate"
@@ -47,7 +47,7 @@ const Project = (props) => {
 
               {props.status  && (
                 <button
-                  id={projectName}
+                  key={projectName + "9"}
                   className="btn-danger btn-minus"
                   type="button"
                   onClick={() => {
@@ -55,7 +55,7 @@ const Project = (props) => {
                   }}
                 >
                   <i
-                    id={projectName}
+                    key={projectName + "10"}
                     className="fa fa-minus"
                     aria-hidden="true"
                   ></i>
@@ -65,7 +65,7 @@ const Project = (props) => {
           </div>
         </div>
         <textarea
-          id={projectName}
+          key={projectName + "11"}
           className="e-p-input description"
           value={val.description}
           placeholder="Description"
@@ -74,7 +74,7 @@ const Project = (props) => {
           onChange={(event) => props.update(idx, event)}
         />
         <input
-          id={projectName}
+          key={projectName + "12"}
           className="e-p-input link-input"
           type="text"
           value={val.link}

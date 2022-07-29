@@ -7,6 +7,7 @@ import axios from "axios";
 // import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 const CodingPlatformProfile = (props) => {
+  
   const [codeforces, setCodeforces] = useState([]);
   const [codechef, setCodechef] = useState([]);
   const [leetcode, setLeetcode] = useState([]);
@@ -87,7 +88,8 @@ const CodingPlatformProfile = (props) => {
               <div className="card-inner">
                 <div className="header">
                   <img
-                    src={require("../../assets/images/codeforces.jpg")}
+                    className="codeforces-logo-png"
+                    src={require("../../assets/images/codeforces.png")}
                     alt="codeforces"
                   />
 
@@ -263,7 +265,7 @@ const CodingPlatformProfile = (props) => {
                         <div className="ratingmeter">
                           <RatingMeter
                             rating={
-                              (leetcode ? leetcode[1].slice(0, 2) / 100 : 0)
+                              (leetcode && leetcode[1] ? leetcode[1].slice(0, 2) / 100 : 0)
                               // 67 / 100
                             }
                             levels={4}

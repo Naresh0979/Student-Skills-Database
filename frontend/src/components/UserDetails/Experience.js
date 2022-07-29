@@ -9,14 +9,14 @@ const Experience = (props) => {
     //   end = `end-${idx}`,
     let index = val.index;
     return (
-      <div>
-        <div id={experienceName} className="flex-div-left-right-med-container">
-          <div id={experienceName} className="flex-div-left-med-container">
-            <div className="flex-div-right-med-container-line">
+      <div key={experienceName + "14"}>
+        <div key={experienceName + "1"} className="flex-div-left-right-med-container">
+          <div key={experienceName + "2"} className="flex-div-left-med-container">
+            <div key={experienceName + "3"} className="flex-div-right-med-container-line">
               <input
                 className="e-p-input"
                 placeholder="Organization Name"
-                id={experienceName}
+                key={experienceName + "4"}
                 disabled={!props.status}
                 value={val.organizationName}
                 name="organizationName"
@@ -25,7 +25,7 @@ const Experience = (props) => {
               <input
                 className="e-p-input degree-input"
                 placeholder="Role"
-                id={experienceName}
+                key={experienceName + "5"}
                 disabled={!props.status}
                 value={val.role}
                 name="role"
@@ -33,12 +33,12 @@ const Experience = (props) => {
               />
             </div>
           </div>
-          <div id={experienceName} className="flex-div-right-med-container">
-            <div id={experienceName} className="flex-div-right-med-container-line">
+          <div key={experienceName + "6"} className="flex-div-right-med-container">
+            <div key={experienceName + "7"} className="flex-div-right-med-container-line">
               <input
                 className="e-p-input endDate-input"
                 value={val.startDate}
-                id={experienceName}
+                key={experienceName + "8"}
                 type="month"
                 disabled={!props.status}
                 name="startDate"
@@ -48,7 +48,7 @@ const Experience = (props) => {
               <input
                 className="e-p-input endDate-input"
                 value={val.endDate}
-                id={experienceName}
+                key={experienceName + "9"}
                 type="month"
                 disabled={!props.status}
                 name="endDate"
@@ -56,7 +56,7 @@ const Experience = (props) => {
               />
 
               <input
-                id={experienceName}
+                key={experienceName + "10"}
                 className="e-p-input grade-input"
                 type="text"
                 placeholder="Location"
@@ -67,7 +67,7 @@ const Experience = (props) => {
               />
               {props.status  && (
                 <button
-                  id={experienceName}
+                  key={experienceName + "11"}
                   className="btn-danger btn-minus"
                   type="button"
                   onClick={() => {
@@ -75,7 +75,7 @@ const Experience = (props) => {
                   }}
                 >
                   <i
-                    id={experienceName}
+                    key={experienceName + "12"}
                     className="fa fa-minus"
                     aria-hidden="true"
                   ></i>
@@ -85,7 +85,7 @@ const Experience = (props) => {
           </div>
         </div>
         <textarea
-          id={experienceName}
+          key={experienceName + "13"}
           className="e-p-input description"
           placeholder="Description"
           disabled={!props.status}

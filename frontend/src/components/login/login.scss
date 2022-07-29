@@ -134,6 +134,7 @@ $breakpoint-mobile: 768px;
     text-align: center;
   }
   .input-email-recovery{
+    background-color: rgb(235, 230, 230);
     margin-top: 5px;
     width: 250px;
     padding: 5px;
@@ -161,6 +162,7 @@ $breakpoint-mobile: 768px;
   }
   .forgot-password:hover{
     text-decoration: none;
+    color: grey;
   }
   .invalid-div{
     margin-bottom: 10px;

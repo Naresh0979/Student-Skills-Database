@@ -3,20 +3,16 @@ import "../dashboard/editProfile.css";
 
 const Links = (props) => {
   return props.linkList.map((val, idx) => {
-    // console.log(val);
     let projectName = `inst-${idx}`
-    // ,
-    //   start = `st-${idx}`,
-    //   end = `end-${idx}`,
     let index = val.index;
     return (
-      // <div id={projectName} className="flex-div-left-right-med-container">
+      // <div key={projectName} className="flex-div-left-right-med-container">
       //   <div className="flex-div-left-med-container">
-        <div id={projectName} className="flex-div-right-med-container-line link-div">
+        <div key={projectName + "1"} className="flex-div-right-med-container-line link-div">
           <input
             className="e-p-input websiteName"
             placeholder="Link Name"
-            id={projectName}
+            key={projectName + "2"}
             disabled={!props.status}
             value={val.linkName}
             name="linkName"
@@ -25,7 +21,7 @@ const Links = (props) => {
           <input
               className="e-p-input websiteLink"
               placeholder="Link"
-              id={projectName}
+              key={projectName + "3"}
               disabled={!props.status}
               value={val.link}
               name="link"
@@ -33,7 +29,7 @@ const Links = (props) => {
             />
           {props.status && (
               <button
-                id={projectName}
+                key={projectName + "4"}
                 className="btn-danger btn-delete"
                 type="button"
                 onClick={() => {
@@ -41,7 +37,7 @@ const Links = (props) => {
                 }}
               >
                 <i
-                  id={projectName}
+                  key={projectName + "5"}
                   className="fa fa-minus"
                   aria-hidden="true"
                 ></i>

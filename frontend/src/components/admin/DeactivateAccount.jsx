@@ -26,7 +26,7 @@ const DeactivateAccount = (props) => {
       });
   }, []);
   return (
-    <div id="profileContainer">
+    <div id="profileContainer" className="deactivate-container">
       <div className="container">
         <div className="">
           <div className="section-title">
@@ -46,21 +46,21 @@ const DeactivateAccount = (props) => {
               {pendingAccounts !== null &&
                 pendingAccounts.map((val, idx) => {
                   return (
-                    <tr className="align-middle" id={idx}>
-                      <td id={idx}>{idx + 1}</td>
-                      <td id={idx}>{val.fullName}</td>
-                      <td id={idx}>{val.email}</td>
-                      <td id={idx}>{val.accountType}</td>
-                      <td id={idx}>
+                    <tr className="align-middle" key={idx}>
+                      <td key={idx}>{idx + 1}</td>
+                      <td key={idx}>{val.fullName}</td>
+                      <td key={idx}>{val.email}</td>
+                      <td key={idx}>{val.accountType}</td>
+                      <td key={idx}>
                         <button
-                          id={idx}
+                          key={idx}
                           className="btn-warning"
                           onClick={() => deactivateAccount(val.email)}
                         >
                           Deactivate
                         </button>
                         <button
-                          id={idx}
+                          key={idx}
                           className="btn-danger"
                           onClick={() => deleteAccount(val.email)}
                         >

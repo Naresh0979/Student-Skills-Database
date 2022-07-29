@@ -1,11 +1,13 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/profile.css";
+import "./profilePhoto.scss";
 import { useState, useEffect } from "react";
 import axios from "axios";
 const Profile = (props) => {
   let navigate = useNavigate();
   let location = useLocation();
+  const [navBtnClicked, setNavBtnClicked] = useState(false);
   const emailId = props.email || location.state.email;
   const [name, setName] = useState();
   const [bio, setBio] = useState();
@@ -23,8 +25,6 @@ const Profile = (props) => {
         email: emailId,
       })
       .then((response) => {
-        // console.log(response);
-        // console.log(typeof(response.data._id));
         setName(response.data.name);
         setBio(response.data.bio);
         setSkills(response.data.skills);
@@ -36,49 +36,73 @@ const Profile = (props) => {
         setDoubtsSolved(response.data.doubtSolved);
       });
   }, [emailId]);
-
+  var loadFile = function (event) {
+    console.log(event.target.files[0]);
+    var image = document.getElementById("output");
+    image.src = URL.createObjectURL(event.target.files[0]);
+  };
   return (
     <div id="profileContainer">
       <div className="container">
         <div className="emp-profile">
           <form method="post">
             <div className="row">
-              <div className="col-md-4">
-                <div className="profile-img">
-                  <img
+              <div className="col-md-3">
+                {/* <div className="profile-img"> */}
+                  {/* <img
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
                     alt=""
-                  />
-                  {/* <div className="file btn btn-lg btn-primary">
-                    Change Photo
-                    <input type="file" name="file" />
-                  </div> */}
-                </div>
+                  /> */}
+                  <div className="profile-pic">
+                    <label className="-label" for="file">
+                      <i className="fa fa-camera" />
+                      <span>Change Profile</span>
+                    </label>
+                    <input id="file" type="file" onChange={loadFile} />
+                    <img
+                      src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg"
+                      id="output"
+                      height="200"
+                    />
+                  </div>
+                {/* </div> */}
               </div>
-              <div className="col-md-6">
+              <div className="col-md-7">
                 <div className="profile-head">
                   <h5>{name}</h5>
                   <h6>{bio}</h6>
                   <p className="proile-rating">
                     RANKINGS : <span>8/10</span>
                   </p>
-                  <ul className="nav nav-pills" id="myTab" role="tablist">
-                    <li className="nav-item">
+                  <ul
+                    key="003"
+                    className="nav nav-pills"
+                    id="myTab"
+                    role="tablist"
+                  >
+                    <li key="001" className="nav-item">
                       <a
-                        className="nav-link active default-active-nav"
-                        id="home-tab" 
+                        key="004"
+                        className={
+                          navBtnClicked
+                            ? "nav-link default-active-nav"
+                            : "nav-link active-default-pill default-active-nav"
+                        }
+                        id="home-tab"
                         data-toggle="tab"
+                        onClick={() => setNavBtnClicked(true)}
                         href="#home"
                         role="tab"
                         aria-controls="home"
                         aria-selected="true"
-                        
                       >
                         About
                       </a>
                     </li>
-                    <li className="nav-item">
+                    <li key="002" className="nav-item">
                       <a
+                        key="005"
+                        onClick={() => setNavBtnClicked(true)}
                         className="nav-link "
                         id="profile-tab"
                         data-toggle="tab"
@@ -109,16 +133,16 @@ const Profile = (props) => {
               </div>
             </div>
             <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="profile-work">
                   <p>WORK LINK</p>
                   {worklink ? (
                     worklink.map((worklink, index) => (
                       <>
-                        <a href={worklink.link} key={index}>
+                        <a href={worklink.link} key={index + "1"}>
                           {worklink.linkName}
                         </a>
-                        <br id={index} />
+                        <br key={index + "2"} />
                       </>
                     ))
                   ) : (
@@ -137,10 +161,8 @@ const Profile = (props) => {
                   {skills ? (
                     skills.map((skill, index) => (
                       <>
-                        <a key={index}>
-                          {skill}
-                        </a>
-                        <br key={index}/>
+                        <a key={index + "1"}>{skill}</a>
+                        <br key={index + "2"} />
                       </>
                     ))
                   ) : (
@@ -148,7 +170,7 @@ const Profile = (props) => {
                   )}
                 </div>
               </div>
-              <div className="col-md-8">
+              <div className="col-md-9">
                 <div className="tab-content profile-tab" id="myTabContent">
                   <div
                     className="tab-pane active"

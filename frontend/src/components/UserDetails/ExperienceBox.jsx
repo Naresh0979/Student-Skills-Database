@@ -8,12 +8,12 @@ const ExperienceBox = (props) => {
         //   end = `end-${idx}`,
         //   index = val.index;
         return (
-          <div id={projectName} className="coloredBackground">
-            <div id={projectName} className="name-dates">
+          <div key={projectName + "1"} className="coloredBackground">
+            <div key={projectName + "2"} className="name-dates">
               <input
                 className="names form-control"
                 placeholder="Organization Name"
-                id={projectName}
+                key={projectName + "3"}
                 disabled
                 value={val.organizationName}
                 name="projectName"
@@ -21,14 +21,14 @@ const ExperienceBox = (props) => {
               <input
                 className="startDate form-control"
                 value={val.role}
-                id={projectName}
+                key={projectName + "4"}
                 disabled
                 name="startDate"
               />
               <input
                 className="startDate form-control"
                 value={val.startDate}
-                id={projectName}
+                key={projectName + "5"}
                 type="month"
                 disabled
                 name="startDate"
@@ -36,13 +36,13 @@ const ExperienceBox = (props) => {
               <input
                 className="endDate form-control"
                 value={val.endDate}
-                id={projectName}
+                key={projectName + "6"}
                 type="month"
                 disabled
                 name="endDate"
               />
               <input
-                id={projectName}
+                key={projectName + "7"}
                 className="form-control grades"
                 type="text"
                 placeholder="Location"
@@ -53,7 +53,7 @@ const ExperienceBox = (props) => {
             </div>
     
             <textarea
-              id={projectName}
+              key={projectName + "8"}
               className="card-description form-control"
               value={val.description}
               placeholder="Description"

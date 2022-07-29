@@ -67,7 +67,7 @@ studentRouter.post(`/getCommentById`, async (req, res) => {
 studentRouter.post(`/upVote`, async (req, res) => {
   //console.log(req.body.cId);
   try {
-    await Comment.update({ cId: req.body.cId }, { $inc: { upVotes: 1 } });
+    await Comment.updateOne({ cId: req.body.cId }, { $inc: { upVotes: 1 } });
     // await Comment.find({email : req.body.email}, function (err, details) {
     //   if (err) throw err;
     res.json("S");

@@ -8,19 +8,21 @@ const EducationBox = (props) => {
         //   end = `end-${idx}`,
         //   index = val.index;
         return (
-          <div id={projectName} className="coloredBackground">
-            <div id={projectName} className="name-dates">
+          <div id={projectName + "6"} key={projectName + "6"} className="coloredBackground">
+            <div id={projectName + "7"} key={projectName + "7"}  className="name-dates">
               <input
                 className="names form-control"
                 placeholder="Institute Name"
-                id={projectName}
+                id= {projectName + "1"}
+                key={projectName + "1"} 
                 disabled
                 value={val.instituteName}
                 name="instituteName"
               />
               <input
                 className="degrees form-control"
-                id={projectName}
+                id={projectName + "2"}
+                key={projectName + "2"} 
                 placeholder="Degree"
                 value={val.degreeName}
                 disabled
@@ -29,7 +31,8 @@ const EducationBox = (props) => {
               <input
                 className="startDate form-control"
                 value={val.startDate}
-                id={projectName}
+                id={projectName + "3"}
+                key={projectName + "3"} 
                 type="month"
                 disabled
                 name="startDate"
@@ -37,7 +40,8 @@ const EducationBox = (props) => {
               <input
                 className="endDate form-control"
                 value={val.endDate}
-                id={projectName}
+                id={projectName + "4"}
+                key={projectName + "4"} 
                 type="month"
                 disabled
                 name="endDate"
@@ -46,7 +50,8 @@ const EducationBox = (props) => {
                 className="form-control grades"
                 placeholder="Grade"
                 disabled
-                id={projectName}
+                id={projectName + "5"}
+                key={projectName + "5"} 
                 value={val.grade}
                 name="grade"
               />
