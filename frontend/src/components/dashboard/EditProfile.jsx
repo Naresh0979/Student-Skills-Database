@@ -6,15 +6,17 @@ import "./editProfile.css";
 import Project from "../UserDetails/Project";
 import Links from "../UserDetails/Links";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const EditProfile = ({ status, email }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [saveBtnStatus, setSaveBtnStatus] = useState(true);
+  const emailId = email || location.state;
   // console.log(location);
   const [info, setInfo] = useState({
     name: "",
     rollNumber: "",
-    email: email || location.state,
+    email: emailId,
     mobileNumber: "",
     country: "",
     state: "",
@@ -240,7 +242,10 @@ const EditProfile = ({ status, email }) => {
         "http://localhost:2000/student/editProfile",
         fullDetails
       );
-      if (responce) alert("done");
+      if (responce) 
+        navigate("/dashboard", { state: {email : emailId , fullName : info.name} });
+      else 
+        alert("Error Occured!");
     } catch (error) {
       console.log(error);
     }
@@ -407,7 +412,7 @@ const EditProfile = ({ status, email }) => {
                   </div>
                 ))}
 
-                {!status && (
+                {!status && skills.length < 4 && (
                   <input
                     type="text"
                     onKeyDown={handleKeyDown}
@@ -423,7 +428,7 @@ const EditProfile = ({ status, email }) => {
             <div className="details-container-education">
               <div className="ed-container">
                 <h3>Website Links</h3>
-                {!status && (
+                {!status && linkList.length < 4 && (
                   <button
                     type="button"
                     disabled={status}

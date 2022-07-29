@@ -302,7 +302,7 @@ input{
 	margin-left: 15px;
 	color: black;
 	font-weight: 400;
-	font-size: large;
+	font-size:1.5rem;
 }
 .terms-check-box{
 	transform : scale(1.5);

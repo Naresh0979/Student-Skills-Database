@@ -26,7 +26,7 @@ const DeactivateAccount = (props) => {
       });
   }, []);
   return (
-    <div key="profileContainer">
+    <div id="profileContainer" className="deactivate-container">
       <div className="container">
         <div className="">
           <div className="section-title">
