@@ -7,7 +7,6 @@ import axios from "axios";
 // import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 const CodingPlatformProfile = (props) => {
-  
   const [codeforces, setCodeforces] = useState([]);
   const [codechef, setCodechef] = useState([]);
   const [leetcode, setLeetcode] = useState([]);
@@ -22,9 +21,15 @@ const CodingPlatformProfile = (props) => {
       })
       .then(({ data }) => {
         // console.log(data);
-        setCodeforcesHandle(data.codeforces);
-        setLeetcodeHandle(data.leetcode);
-        setCodechefHandle(data.codechef);
+        if (data) {
+          setCodeforcesHandle(data.codeforces);
+          setLeetcodeHandle(data.leetcode);
+          setCodechefHandle(data.codechef);
+        } else {
+          setCodeforcesHandle("");
+          setLeetcodeHandle("");
+          setCodechefHandle("");
+        }
       });
     // axios
     //   .post("http://localhost:2000/student/getStudentData", {
@@ -50,8 +55,6 @@ const CodingPlatformProfile = (props) => {
           userHandle: codeforcesHandle,
         })
         .then((details) => {
-          // console.log(details);
-
           setCodeforces(details.data);
         });
     }
@@ -61,7 +64,6 @@ const CodingPlatformProfile = (props) => {
           userHandle: codechefHandle,
         })
         .then((details) => {
-          // console.log(details);
           setCodechef(details.data);
         });
     }
@@ -71,7 +73,6 @@ const CodingPlatformProfile = (props) => {
           userHandle: leetcodeHandle,
         })
         .then((details) => {
-          // console.log(details);
           setLeetcode(details.data);
         });
     }
@@ -265,7 +266,9 @@ const CodingPlatformProfile = (props) => {
                         <div className="ratingmeter">
                           <RatingMeter
                             rating={
-                              (leetcode && leetcode[1] ? leetcode[1].slice(0, 2) / 100 : 0)
+                              leetcode && leetcode[1]
+                                ? leetcode[1].slice(0, 2) / 100
+                                : 0
                               // 67 / 100
                             }
                             levels={4}

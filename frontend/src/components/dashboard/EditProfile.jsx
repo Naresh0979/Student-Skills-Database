@@ -7,7 +7,7 @@ import Project from "../UserDetails/Project";
 import Links from "../UserDetails/Links";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-const EditProfile = ({ status, email }) => {
+const EditProfile = ({ status, email , pending}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [saveBtnStatus, setSaveBtnStatus] = useState(true);
@@ -195,34 +195,37 @@ const EditProfile = ({ status, email }) => {
     axios
       .post("http://localhost:2000/student/getStudentData", {
         email: emails,
+        pending : pending || false
       })
       .then(({ data }) => {
-        // console.log("Inside DATA ", data);
-        let temporaryInfo = {
-          name: data.name,
-          rollNumber: data.rollNumber,
-          email: emails,
-          mobileNumber: data.mobileNumber,
-          country: data.country,
-          state: data.state,
-          district: data.district,
-          pincode: data.pincode,
-          bio: data.bio,
-          address: data.address,
-          codeforces: data.codeforces,
-          codechef: data.codechef,
-          leetcode: data.leetcode,
-        };
-        setInfo(temporaryInfo);
-        setEducationList(data.educationList);
-        setEducationCount(data.educationList.length - 1);
-        setExperienceList(data.experienceList);
-        setExperienceCount(data.experienceList.length - 1);
-        setProjectList(data.projectList);
-        setProjectCount(data.projectList.length - 1);
-        setLinkList(data.linkList);
-        setLinkCount(data.linkList.length - 1);
-        setSkills(data.skills);
+        console.log("Inside DATA ", data);
+        if (data) {
+          let temporaryInfo = {
+            name: data.name,
+            rollNumber: data.rollNumber,
+            email: emails,
+            mobileNumber: data.mobileNumber,
+            country: data.country,
+            state: data.state,
+            district: data.district,
+            pincode: data.pincode,
+            bio: data.bio,
+            address: data.address,
+            codeforces: data.codeforces,
+            codechef: data.codechef,
+            leetcode: data.leetcode,
+          };
+          setInfo(temporaryInfo);
+          setEducationList(data.educationList);
+          setEducationCount(data.educationList.length - 1);
+          setExperienceList(data.experienceList);
+          setExperienceCount(data.experienceList.length - 1);
+          setProjectList(data.projectList);
+          setProjectCount(data.projectList.length - 1);
+          setLinkList(data.linkList);
+          setLinkCount(data.linkList.length - 1);
+          setSkills(data.skills);
+        }
       });
   }, []);
 
@@ -232,20 +235,32 @@ const EditProfile = ({ status, email }) => {
     if (e.key === "Enter") return;
     try {
       // console.log("INFO", info);
+      let education = educationList.filter((val) => val.instituteName.length > 0);
+      let experience = experienceList.filter((val) => val.organizationName.length > 0);
+      let project = projectList.filter((val) => val.projectName.length > 0);
+      let links = linkList.filter((val) => val.linkName.length > 0);
+      console.log(project);
+      // await setEducationList(education);
+      // await setExperienceList(experience);
+      // await setProjectList(project);
+      // await setLinkList(links);
+      // console.log(educationList);
       let fullDetails = { ...info };
       fullDetails["skills"] = JSON.stringify(skills);
-      fullDetails["linkList"] = JSON.stringify(linkList);
-      fullDetails["educationList"] = JSON.stringify(educationList);
-      fullDetails["experienceList"] = JSON.stringify(experienceList);
-      fullDetails["projectList"] = JSON.stringify(projectList);
+      fullDetails["linkList"] = JSON.stringify(links);
+      fullDetails["educationList"] = JSON.stringify(education);
+      fullDetails["experienceList"] = JSON.stringify(experience);
+      fullDetails["projectList"] = JSON.stringify(project);
+      console.log(fullDetails);
       const responce = await axios.post(
         "http://localhost:2000/student/editProfile",
         fullDetails
       );
-      if (responce) 
-        navigate("/dashboard", { state: {email : emailId , fullName : info.name} });
-      else 
-        alert("Error Occured!");
+      if (responce)
+        navigate("/dashboard", {
+          state: { email: emailId, fullName: info.name },
+        });
+      else alert("Error Occured!");
     } catch (error) {
       console.log(error);
     }
@@ -383,7 +398,7 @@ const EditProfile = ({ status, email }) => {
                 className="e-p-input"
                 name="bio"
                 disabled={status}
-                placeholder="Bio*"
+                placeholder="Profession*"
                 value={info?.bio}
                 onChange={handleChange}
               />

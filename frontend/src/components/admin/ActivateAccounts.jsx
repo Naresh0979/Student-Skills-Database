@@ -44,24 +44,25 @@ const ActivateAccounts = (props) => {
                   <th>Actions</th>
                 </tr>
               </thead>
+              <tbody>
               {pendingAccounts !== null &&
                 pendingAccounts.map((val, idx) => {
                   return (
-                    <tr className="align-middle" key={idx}>
-                      <td key={idx}>{idx + 1}</td>
-                      <td key={idx}>{val.fullName}</td>
-                      <td key={idx}>{val.email}</td>
-                      <td key={idx}> {val.accountType}</td>
-                      <td key={idx}>
+                    <tr className="align-middle" key={idx + "1"}>
+                      <td key={idx + "2"}>{idx + 1}</td>
+                      <td key={idx + "3"}>{val.fullName}</td>
+                      <td key={idx + "4"}>{val.email}</td>
+                      <td key={idx + "5"}> {val.accountType}</td>
+                      <td key={idx + "6"}>
                         <button
-                          key={idx}
+                          key={idx + "7"}
                           className="btn-success"
                           onClick={() => activateAccount(val.email)}
                         >
                           Activate
                         </button>
                         <button
-                          key={idx}
+                          key={idx + "8"}
                           className="btn-danger"
                           onClick={() => deleteAccount(val.email)}
                         >
@@ -71,6 +72,7 @@ const ActivateAccounts = (props) => {
                     </tr>
                   );
                 })}
+              </tbody>
             </table>
             {pendingAccounts === null ? (
               <p className="no-account">Loading</p>

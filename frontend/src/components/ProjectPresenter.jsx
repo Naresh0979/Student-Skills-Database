@@ -12,7 +12,7 @@ const ProjectPresenter = ({ email, owner, reviewer }) => {
         email: email,
       })
       .then((response) => {
-        setProjectList(response.data.projectList);
+        setProjectList(response.data.projectList || []);
       });
   }, [email]);
   return (
@@ -22,12 +22,13 @@ const ProjectPresenter = ({ email, owner, reviewer }) => {
           <h2 className="projectHead">Project Works</h2>
           <div className="ed-container">
             <div className="table">
-              <ProjectBox
+              { projectList && projectList.length > 0 ? <ProjectBox
                 projectList={projectList}
                 owner={owner}
                 reviewer={reviewer}
                 creator={email}
-              />
+              /> : <p> No Project Found </p>
+            }
             </div>
           </div>
         </div>

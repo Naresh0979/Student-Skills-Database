@@ -6,6 +6,10 @@ const personalDetail = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  profilePhotoId: {
+    type: String,
+    default: "62e54137977a665078fe8ff4",
+  },
   name: {
     type: String,
   },

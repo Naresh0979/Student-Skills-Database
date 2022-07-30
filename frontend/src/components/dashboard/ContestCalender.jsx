@@ -11,7 +11,7 @@ const ContestCalender = () => {
     axios.get("http://localhost:2000/contest/CodeForces").then((contest) => {
       //  console.log(contest.data);
       setCodeforcesContest(contest.data);
-      console.log(contest.data);
+      // console.log(contest.data);
       
     });
    
@@ -28,15 +28,15 @@ const ContestCalender = () => {
             <p className="text-center">Loading...</p>
           ) : codeforcesContest.length !== 0 ? (
             codeforcesContest.map((problem, index) => (
-              <Collapsible key={index} trigger={problem.name}>
+              <Collapsible key={index + "1"} trigger={problem.name}>
                 <a
-                  key={index}
+                  key={index + "2"}
                   href={`https://codeforces.com/contests/${problem.id}`}
                 >
-                  <p key={index} className="questionsHead">
+                  <p key={index + "3"} className="questionsHead">
                     Date :
                   </p>
-                  <button key={index} className="form-control btn-success ">
+                  <button key={index + "4"} className="form-control btn-success ">
                     Proceed to Contest
                   </button>
                 </a>

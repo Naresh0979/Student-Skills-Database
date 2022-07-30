@@ -31,18 +31,25 @@ const DSAPractice = () => {
           <hr className="line-practice-head"></hr>
 
           {QuestionBank.map((tags, index) => (
-            <div className="tagsGroup">
-              <h2 key={index} className="innerHeading">
+            <div key={index + "1"} className="tagsGroup">
+              <h2 key={index + "2"} className="innerHeading">
                 {tags.title}
               </h2>
               {tags.bank.map((problem, index) => (
-                <Collapsible key={index} trigger={problem.title}>
-                  <p key={index} className="questionsHead">
+                <Collapsible key={index + "3"} trigger={problem.title}>
+                  <p key={index + "4"} className="questionsHead">
                     {problem.paragraph}
                   </p>
 
-                  <a key={index} className="questionsHead" href={problem.link}>
-                    <button className="form-control btn-success ">
+                  <a
+                    key={index + "5"}
+                    className="questionsHead"
+                    href={problem.link}
+                  >
+                    <button
+                      key={index + "6"}
+                      className="form-control btn-success "
+                    >
                       Proceed to problem
                     </button>
                   </a>

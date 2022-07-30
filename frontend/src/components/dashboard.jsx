@@ -2,7 +2,6 @@ import React from "react";
 import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { Navbar } from "../Navbar";
-import { useState } from "react";
 import { DashboardNavigation } from "./DashboardNavigation";
 
 import Profile from "./dashboard/Profile";
@@ -18,12 +17,12 @@ export const scroll = new SmoothScroll('a[href*="#"]', {
 
 export default function Dashboard(props) {
   axios.defaults.withCredentials = true;
-
+  console.log(props);
   const params = useParams();
   const location = useLocation();
 
   const owner = props.owner;
-  let emailId = location.state.email;
+  let emailId = props.emailName || location.state.email;
   // const [emailId, setEmailId] = useState(location.state.email);
   if (owner === false) emailId = params.profileEmail;
 
@@ -33,12 +32,15 @@ export default function Dashboard(props) {
       <EduExpPresenter email={emailId} owner={owner} />
       <ProjectPresenter
         email={emailId}
-        reviewer={location.state.email}
+        reviewer={props.emailName || location.state.email}
         owner={owner}
       />
       <CodingPlatformProfile email={emailId} owner={owner} />
       {owner ? (
-        <DashboardNavigation username={location.state.fullName} owner={owner} />
+        <DashboardNavigation
+          username={props.fName || location.state.fullName}
+          owner={owner}
+        />
       ) : (
         <Navbar />
       )}

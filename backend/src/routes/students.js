@@ -214,6 +214,8 @@ studentRouter.post("/deletePendingDetails", async (req, res) => {
 studentRouter.post("/getStudentData", async (req, res) => {
   try {
     let data = await PersonalDetail.findOne({ email: req.body.email });
+    if(req.body.pending === true)
+      data = await PendingDetail.findOne({ email: req.body.email });
     // console.log("Sending DATA ",data);
     res.send(data);
   } catch (e) {
