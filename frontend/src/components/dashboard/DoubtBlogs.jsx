@@ -204,21 +204,21 @@ const DoubtBlogs = (props) => {
               posts.length > 0 ? (
                 posts.map((post, index) => (
                   <>
-                    <hr className="line-doubt"></hr>
+                    <hr key={index + "1"} className="line-doubt"></hr>
                     <details
                       open
                       className="comment"
                       id="comment-1"
-                      key={index}
+                      key={index + "2"}
                     >
-                      <a href="#comment-1" className="comment-border-link">
-                        <span className="sr-only">Jump to comment-1</span>
+                      <a key={index + "3"} href="#comment-1" className="comment-border-link">
+                        <span key={index + "4"} className="sr-only">Jump to comment-1</span>
                       </a>
-                      <summary>
-                        <div className="comment-heading">
-                          <div className="comment-info">
-                            <div className="heading-show-btn ">
-                              <p className="comment-author">
+                      <summary key={index + "5"}>
+                        <div className="comment-heading" key={index + "6"}>
+                          <div className="comment-info" key={index + "7"}>
+                            <div className="heading-show-btn " key={index + "8"}>
+                              <p className="comment-author" key={index + "9"}>
                                 {getlength(post.content.slice(0, 30)) + "...."}
                                 {"<" + post.email + ">"}
                                 {post.isSolved ? "  ---[Solved]---" : ""}
@@ -227,6 +227,7 @@ const DoubtBlogs = (props) => {
                               <button
                                 type="button"
                                 className="open-close-post"
+                                key={index + "10"}
                                 onClick={() => {
                                   if (seenPostIndex === -1) {
                                     setSeenPostIdx(index);
@@ -241,6 +242,7 @@ const DoubtBlogs = (props) => {
                               </button>
                             </div>
                             <p className="date-posts">
+                            key={index + "11"}
                               {formatDate(post.time)}
                             </p>
                           </div>
@@ -248,13 +250,14 @@ const DoubtBlogs = (props) => {
                       </summary>
 
                       {seenPostIndex === index && (
-                        <div>
-                          <div className="comment-body">
-                            <div className="post-data-container">
-                              <p>{post.content}</p>
+                        <div key={index + "12"}>
+                          <div className="comment-body" key={index + "13"}>
+                            <div className="post-data-container" key={index + "14"}>
+                              <p key={index + "15"}>{post.content}</p>
                             </div>
 
                             <button
+                              key={index + "16"}
                               type="button"
                               onClick={() => {
                                 setReplybox(!replybox);
@@ -263,19 +266,22 @@ const DoubtBlogs = (props) => {
                             >
                               Reply
                             </button>
-                            <div>
+                            <div key={index + "17"}>
                               {replybox && index === replyPostIndex ? (
                                 <div
+                                key={index + "18"}
                                   className="reply-form "
                                   id="comment-1-reply-form"
                                 >
                                   <textarea
+                                    key={index + "19"}
                                     placeholder="Reply to comment"
                                     className="posting-comment"
                                     rows="4"
                                     onChange={handleComment}
                                   ></textarea>
                                   <button
+                                    key={index + "20"}
                                     type="button"
                                     onClick={(e) => {
                                       handleCommentSubmit(post.pId, e);
@@ -290,13 +296,13 @@ const DoubtBlogs = (props) => {
                             </div>
                           </div>
 
-                          <h3 className="head">
+                          <h3 key={index + "21"} className="head">
                             {comments?.length > 0
                               ? "Comments(" + comments?.length + ")"
                               : ""}
                           </h3>
 
-                          <div className="replies">
+                          <div key={index + "22"} className="replies">
                             {comments ? (
                               comments.map((comment, index) => (
                                 <>
@@ -304,21 +310,23 @@ const DoubtBlogs = (props) => {
                                     open
                                     className="comment"
                                     id="comment-2"
-                                    key={index}
+                                    key={index + "23"}
                                   >
                                     <a
+                                      key={index + "24"}
                                       href="#comment-2"
                                       className="comment-border-link"
                                     >
-                                      <span className="sr-only">
+                                      <span key={index + "25"} className="sr-only">
                                         Jump to comment-2
                                       </span>
                                     </a>
 
-                                    <summary>
-                                      <div className="comment-heading">
+                                    <summary key={index + "26"}>
+                                      <div key={index + "27"} className="comment-heading">
                                         {/* <div className="comment-voting"> */}
                                         <button
+                                          key={index + "28"}
                                           type="button"
                                           onClick={(e) => {
                                             handleUpVote(
@@ -328,21 +336,22 @@ const DoubtBlogs = (props) => {
                                             );
                                           }}
                                         >
-                                          <span aria-hidden="true">
+                                          <span key={index + "29"} aria-hidden="true">
                                             &#9650;
                                           </span>
-                                          <span className="sr-only">
+                                          <span key={index + "30"} className="sr-only">
                                             Vote up
                                           </span>
                                         </button>
 
                                         {/* </div> */}
-                                        <div className="comment-info">
-                                          <p className="comment-author">
+                                        <div key={index + "31"} className="comment-info">
+                                          <p key={index + "32"} className="comment-author">
                                             {comment.email}
                                           </p>
                                           {myPosts && !post.isSolved && (
                                             <button
+                                            key={index + "33"}
                                               type="button"
                                               className="open-close-post  btn-warning"
                                               onClick={() =>
@@ -355,7 +364,7 @@ const DoubtBlogs = (props) => {
                                               Accept Solution
                                             </button>
                                           )}
-                                          <p className="m-0 comment-below-head">
+                                          <p className="m-0 comment-below-head" key={index + "34"}>
                                             {comment.upVotes} points &bull;{" "}
                                             {formatDate(comment.time)}
                                           </p>
@@ -363,8 +372,8 @@ const DoubtBlogs = (props) => {
                                       </div>
                                     </summary>
 
-                                    <div className="comment-body">
-                                      <p>{comment.content}</p>
+                                    <div className="comment-body" key={index + "35"}>
+                                      <p key={index + "36"}>{comment.content}</p>
                                       {/* <button
                               type="button"
                               data-toggle="reply-form"
@@ -408,7 +417,7 @@ const DoubtBlogs = (props) => {
               ) : (
                 <>
                   <hr className="line-doubt"></hr>
-                  <p className="text-center posts-responce">No Posts Found</p>
+                  <p  className="text-center posts-responce">No Posts Found</p>
                 </>
               )
             ) : (

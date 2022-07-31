@@ -1,19 +1,12 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
-
-import { useState, useEffect } from "react";
+import { Navbar } from "../Navbar";
 import { DashboardNavigation } from "./DashboardNavigation";
-// import { Header } from "./header";
-//import { Features } from "./components/features";
-import { About } from "./about";
-import { Services } from "./services";
+
 import Profile from "./dashboard/Profile";
 import EduExpPresenter from "./EduExpPresenter";
 import CodingPlatformProfile from "./dashboard/CodingPlatformProfile";
-import { Contact } from "./contact";
-import JsonData from "../data/data.json";
-import RatingMeter from "./animations/RatingMeter";
 
 import ProjectPresenter from "./ProjectPresenter";
 import SmoothScroll from "smooth-scroll";
@@ -24,14 +17,33 @@ export const scroll = new SmoothScroll('a[href*="#"]', {
 
 export default function Dashboard(props) {
   axios.defaults.withCredentials = true;
+  console.log(props);
+  const params = useParams();
   const location = useLocation();
+
+  const owner = props.owner;
+  let emailId = props.emailName || location.state.email;
+  // const [emailId, setEmailId] = useState(location.state.email);
+  if (owner === false) emailId = params.profileEmail;
+
   return (
     <div>
-      <Profile user={location.state} />
-      <EduExpPresenter email={location.state.email} />
-      <ProjectPresenter email={location.state.email} />
-      <CodingPlatformProfile email={location.state.email} />
-      <DashboardNavigation username={location.state.fullName} />
+      <Profile email={emailId} owner={owner} />
+      <EduExpPresenter email={emailId} owner={owner} />
+      <ProjectPresenter
+        email={emailId}
+        reviewer={props.emailName || location.state.email}
+        owner={owner}
+      />
+      <CodingPlatformProfile email={emailId} owner={owner} />
+      {owner ? (
+        <DashboardNavigation
+          username={props.fName || location.state.fullName}
+          owner={owner}
+        />
+      ) : (
+        <Navbar />
+      )}
     </div>
   );
 }

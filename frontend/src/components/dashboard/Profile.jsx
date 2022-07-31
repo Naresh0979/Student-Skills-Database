@@ -1,14 +1,19 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/profile.css";
 import "./profilePhoto.scss";
 import { useState, useEffect } from "react";
 import axios from "axios";
 const Profile = (props) => {
+  axios.defaults.withCredentials = true;
   let navigate = useNavigate();
-  let location = useLocation();
+  const owner = props.owner;
   const [navBtnClicked, setNavBtnClicked] = useState(false);
-  const emailId = props.email || location.state.email;
+  const [invalidSize, setInvalidSize] = useState(false);
+  const [profileId, setProfileId] = useState(
+    "cb39525a549b2cfc9229f27e688de644.jpg"
+  );
+  const emailId = props.email;
   const [name, setName] = useState();
   const [bio, setBio] = useState();
   const [skills, setSkills] = useState();
@@ -18,28 +23,59 @@ const Profile = (props) => {
   const [totalProjects, settotalProjects] = useState(0);
   const [totalExpereince, settotalExpereince] = useState(0);
   const [doubtsSolved, setDoubtsSolved] = useState(0);
-  axios.defaults.withCredentials = true;
+
   useEffect(() => {
     axios
       .post("http://localhost:2000/student/getStudentData", {
         email: emailId,
       })
       .then((response) => {
-        setName(response.data.name);
-        setBio(response.data.bio);
-        setSkills(response.data.skills);
-        setWorklink(response.data.linkList);
-        settotalProjects(response.data.projectList.length);
-        settotalExpereince(response.data.experienceList.length);
-        setRollno(response.data.rollNumber);
-        setMobno(response.data.mobileNumber);
-        setDoubtsSolved(response.data.doubtSolved);
+        // console.log(response.data.profilePhotoId);
+        setName(response.data.name || "");
+        setBio(response.data.bio || "");
+        setSkills(response.data.skills || []);
+        setWorklink(response.data.linkList || []);
+        settotalProjects(response.data.projectList.length || 0);
+        settotalExpereince(response.data.experienceList.length || 0);
+        setRollno(response.data.rollNumber || "");
+        setMobno(response.data.mobileNumber || "");
+        setDoubtsSolved(response.data.doubtSolved || 0);
+        setProfileId(response.data.profilePhotoId);
       });
   }, [emailId]);
-  var loadFile = function (event) {
-    console.log(event.target.files[0]);
-    var image = document.getElementById("output");
-    image.src = URL.createObjectURL(event.target.files[0]);
+
+  const setProfileImage = async () => {
+    let data = await axios.get(
+      `http://localhost:2000/users/image/${profileId}` , { responseType: 'blob' }
+    );
+    const imgFile = new File([data.data], {
+      type: data.headers["content-type"],
+    });
+    const fileURL = URL.createObjectURL(imgFile);
+    let image = document.getElementById("output");
+    image.src = fileURL;
+  };
+
+  useEffect(() => {
+    setProfileImage();
+  }, [profileId]);
+
+  var loadFile = async function (event) {
+    let photo = event.target.files[0];
+    if (photo.size > 161400) {
+      setInvalidSize(true);
+    } else {
+      let image = document.getElementById("output");
+      let formData = new FormData();
+      formData.append("file", photo);
+      formData.append("email", emailId);
+      // await axios.delete("http://localhost:2000/users/files/" + profileId);
+      let { data } = await axios.post(
+        "http://localhost:2000/users/uploadProfilePhoto",
+        formData
+      );
+      if (data === "Uploaded") image.src = URL.createObjectURL(photo);
+    }
   };
   return (
     <div id="profileContainer">
@@ -49,22 +85,30 @@ const Profile = (props) => {
             <div className="row">
               <div className="col-md-3">
                 {/* <div className="profile-img"> */}
-                  {/* <img
+                {/* <img
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
                     alt=""
                   /> */}
-                  <div className="profile-pic">
-                    <label className="-label" for="file">
-                      <i className="fa fa-camera" />
-                      <span>Change Profile</span>
-                    </label>
-                    <input id="file" type="file" onChange={loadFile} />
-                    <img
-                      src="https://cdn.pixabay.com/photo/2017/08/06/21/01/louvre-2596278_960_720.jpg"
-                      id="output"
-                      height="200"
+                <div className="profile-pic">
+                  <label className="-label" htmlFor="file">
+                    {owner && (
+                      <>
+                        <i className="fa fa-camera" />
+                        <span>Change Profile</span>
+                      </>
+                    )}
+                  </label>
+                  {owner && (
+                    <input
+                      id="file"
+                      accept="image/png, image/jpeg"
+                      type="file"
+                      onChange={loadFile}
                     />
-                  </div>
+                  )}
+                  <img src="" id="output" alt="no-image" height="200" />
+                  {invalidSize && <p>Invalid Size</p>}
+                </div>
                 {/* </div> */}
               </div>
               <div className="col-md-7">
@@ -74,15 +118,10 @@ const Profile = (props) => {
                   <p className="proile-rating">
                     RANKINGS : <span>8/10</span>
                   </p>
-                  <ul
-                    key="003"
-                    className="nav nav-pills"
-                    id="myTab"
-                    role="tablist"
-                  >
-                    <li key="001" className="nav-item">
+                  <ul className="nav nav-pills" id="myTab" role="tablist">
+                    <li key={"xyz"} id={"xyz"} className="nav-item">
                       <a
-                        key="004"
+                        key={"004"}
                         className={
                           navBtnClicked
                             ? "nav-link default-active-nav"
@@ -99,9 +138,9 @@ const Profile = (props) => {
                         About
                       </a>
                     </li>
-                    <li key="002" className="nav-item">
+                    <li key={"xyyxxx"} id={"xyzz"} className="nav-item">
                       <a
-                        key="005"
+                        key={"cgvgh"}
                         onClick={() => setNavBtnClicked(true)}
                         className="nav-link "
                         id="profile-tab"
@@ -118,7 +157,7 @@ const Profile = (props) => {
                 </div>
               </div>
               <div className="col-md-2">
-                <form action="/EditProfile">
+                {owner && (
                   <input
                     onClick={() => {
                       navigate("/editProfile", { state: emailId });
@@ -128,8 +167,7 @@ const Profile = (props) => {
                     name="btnAddMore"
                     value="EditProfile"
                   />
-                </form>
-
+                )}
               </div>
             </div>
             <div className="row">

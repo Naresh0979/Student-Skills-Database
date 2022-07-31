@@ -31,7 +31,6 @@ app.use("/users", userRouter);
 app.use("/student",studentRouter);
 app.use('/contest',contestRouter);
 
- 
 //Server Status
 app.listen(PORT, () => {
   console.log(`Server started at http://localhost:${PORT}`);

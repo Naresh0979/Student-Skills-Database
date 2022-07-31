@@ -53,42 +53,44 @@ const AcceptVerificaton = (props) => {
                   <th>Actions</th>
                 </tr>
               </thead>
-              {pendingVerfication !== null &&
-                pendingVerfication.map((val, idx) => {
-                  return (
-                    <tr className="align-middle" key={idx}>
-                      <td key={idx}>{idx + 1}</td>
-                      <td key={idx}>{val.name}</td>
-                      <td key={idx}>{val.email}</td>
-                      <td key={idx}>{val.mobileNumber}</td>
-                      <td key={idx}>
-                        <button
-                          key={idx}
-                          className="btn-success"
-                          onClick={() => updateRequest(val.email)}
-                        >
-                          Accept
-                        </button>
-                        <button
-                          key={idx}
-                          className="btn-danger"
-                          onClick={() => deleteRequest(val.email)}
-                        >
-                          Delete
-                        </button>
-                        <button
-                          key={idx}
-                          className="btn-primary"
-                          onClick={() => changeViewDetailsStatus(val.email)}
-                        >
-                          {viewDetailStatus && val.email === emailId
-                            ? "Hide Details"
-                            : "View Details"}
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
+              <tbody>
+                {pendingVerfication !== null &&
+                  pendingVerfication.map((val, idx) => {
+                    return (
+                      <tr className="align-middle" key={idx + "1"}>
+                        <td key={idx + "2"}>{idx + 1}</td>
+                        <td key={idx + "3"}>{val.name}</td>
+                        <td key={idx + "4"}>{val.email}</td>
+                        <td key={idx + "5"}>{val.mobileNumber}</td>
+                        <td key={idx + "6"}>
+                          <button
+                            key={idx + "7"}
+                            className="btn-success"
+                            onClick={() => updateRequest(val.email)}
+                          >
+                            Accept
+                          </button>
+                          <button
+                            key={idx + "8"}
+                            className="btn-danger"
+                            onClick={() => deleteRequest(val.email)}
+                          >
+                            Delete
+                          </button>
+                          <button
+                            key={idx + "9"}
+                            className="btn-primary"
+                            onClick={() => changeViewDetailsStatus(val.email)}
+                          >
+                            {viewDetailStatus && val.email === emailId
+                              ? "Hide Details"
+                              : "View Details"}
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
             </table>
             {pendingVerfication === null ? (
               <p className="no-account">Loading</p>
@@ -98,7 +100,9 @@ const AcceptVerificaton = (props) => {
               )
             )}
           </div>
-          {viewDetailStatus && <EditProfile status={true} email={emailId} />}
+          {viewDetailStatus && (
+            <EditProfile status={true} email={emailId} pending={true} />
+          )}
         </div>
       </div>
     </div>

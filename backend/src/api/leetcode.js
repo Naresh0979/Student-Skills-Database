@@ -1,24 +1,25 @@
 const axios = require("axios");
-
+const CodingProfile = require("../models/codingProfile");
 exports.getUserDataLeetcode = async function (req, res) {
-  // console.log(req.body.userHandle);
-
   try {
     const url = `https://competitive-coding-api.herokuapp.com/api/leetcode/${req.body.userHandle}`;
     const responce = await axios.get(url);
-    //   console.log(responce.data);
     const { total_problems_solved, acceptance_rate, ranking } = responce.data;
-    //   const { username } = responce.data.user_details;
-
-    //   const url2 = ` https://codeforces.com/api/user.status?handle=${req.body.userHandle}`;
-    //   const { data } = await axios.get(url2);
-    //   const questions = data.result.filter(
-    //     (contest) => contest.verdict === "OK"
-    //   ).length;
     const detail = [total_problems_solved, acceptance_rate, ranking];
-
+    await CodingProfile.updateOne(
+      { email: req.body.email },
+      {
+        $set: {
+          leetcodeQuestion: total_problems_solved,
+          leetcodeRanking: ranking,
+          leetcodePercentage: acceptance_rate,
+        },
+      }
+    );
+    // console.log(detail);
     res.send(detail);
   } catch (error) {
+    console.log(error);
     return res.send({ data: "Failed" });
   }
 };

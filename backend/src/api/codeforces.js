@@ -1,5 +1,5 @@
 const axios = require("axios");
-
+const CodingProfile = require("../models/codingProfile");
 exports.getUserDataCodeforces = async function (req, res) {
   try {
     const url = `https://codeforces.com/api/user.info?handles=${req.body.userHandle}`;
@@ -11,9 +11,19 @@ exports.getUserDataCodeforces = async function (req, res) {
       (contest) => contest.verdict === "OK"
     ).length;
     const detail = [questions, maxRating, rating, handle];
+    await CodingProfile.updateOne(
+      { email: req.body.email },
+      {
+        $set: {
+          codeforcesRating: rating,
+          codeforcesMaxRating: maxRating,
+          codeforcesQuestion: questions,
+        },
+      }
+    );
     res.send(detail);
   } catch (error) {
-    return res.send({data : "Failed"});
+    return res.send({ data: "Failed" });
   }
 };
 exports.getUpcomingContest = async function (req, res) {

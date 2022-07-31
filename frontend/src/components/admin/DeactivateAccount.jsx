@@ -21,7 +21,7 @@ const DeactivateAccount = (props) => {
     axios
       .get("http://localhost:2000/users/getActivatedNonStudent", {})
       .then(({ data }) => {
-        let val  = data.filter((val) => val.email != props.email);
+        let val = data.filter((val) => val.email != props.email);
         setPendingAccounts(val);
       });
   }, []);
@@ -43,33 +43,35 @@ const DeactivateAccount = (props) => {
                   <th>Actions</th>
                 </tr>
               </thead>
-              {pendingAccounts !== null &&
-                pendingAccounts.map((val, idx) => {
-                  return (
-                    <tr className="align-middle" key={idx}>
-                      <td key={idx}>{idx + 1}</td>
-                      <td key={idx}>{val.fullName}</td>
-                      <td key={idx}>{val.email}</td>
-                      <td key={idx}>{val.accountType}</td>
-                      <td key={idx}>
-                        <button
-                          key={idx}
-                          className="btn-warning"
-                          onClick={() => deactivateAccount(val.email)}
-                        >
-                          Deactivate
-                        </button>
-                        <button
-                          key={idx}
-                          className="btn-danger"
-                          onClick={() => deleteAccount(val.email)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
+              <tbody>
+                {pendingAccounts !== null &&
+                  pendingAccounts.map((val, idx) => {
+                    return (
+                      <tr className="align-middle" key={idx + "1"}>
+                        <td key={idx + "2"}>{idx + 1}</td>
+                        <td key={idx + "3"}>{val.fullName}</td>
+                        <td key={idx + "4"}>{val.email}</td>
+                        <td key={idx + "5"}>{val.accountType}</td>
+                        <td key={idx + "6"}>
+                          <button
+                            key={idx + "7"}
+                            className="btn-warning"
+                            onClick={() => deactivateAccount(val.email)}
+                          >
+                            Deactivate
+                          </button>
+                          <button
+                            key={idx + "8"}
+                            className="btn-danger"
+                            onClick={() => deleteAccount(val.email)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
             </table>
             {pendingAccounts === null ? (
               <p className="no-account">Loading</p>

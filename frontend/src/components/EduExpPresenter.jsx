@@ -16,8 +16,8 @@ const EduExpPresenter = ({ email }) => {
         email: email,
       })
       .then((response) => {
-        setExperienceList(response.data.experienceList);
-        setEducationList(response.data.educationList);
+        setExperienceList(response.data.experienceList || []);
+        setEducationList(response.data.educationList || []);
       });
   }, [email]);
   return (
@@ -28,7 +28,7 @@ const EduExpPresenter = ({ email }) => {
         </div>
         <div className="ed-container">
           <div className="table">
-            {educationList.length > 0 ? (
+            { educationList && educationList.length > 0 ? (
               <EducationBox educationList={educationList} />
             ) : (
               <p className="nothing-found">No Education History</p>
@@ -42,7 +42,7 @@ const EduExpPresenter = ({ email }) => {
         </div>
         <div className="ed-container">
           <div className="table">
-            {experienceList.length > 0 ? (
+            { experienceList && experienceList.length > 0 ? (
               <ExperienceBox experienceList={experienceList} />
             ) : (
               <p className="nothing-found">No Experience Found</p>

@@ -1,5 +1,6 @@
 //Imports
 const User = require("../models/user");
+const CodingProfile = require("../models/codingProfile");
 const {
   getPendingAccounts,
   getActivatedNonStudent,
@@ -12,9 +13,14 @@ const mongoose = require("mongoose");
 const express = require("express");
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
-const cors = require("cors");
+const crypto = require("crypto");
+const multer = require("multer");
+const path = require("path");
+const { GridFsStorage } = require("multer-gridfs-storage");
+const Grid = require("gridfs-stream");
 const userRouter = express.Router();
 const Review = require("../models/reviews");
+const PersonalDetail = require("../models/personalDetail");
 const oAuth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
   process.env.CLIENT_SECRET,
@@ -105,7 +111,7 @@ userRouter.post("/sendEnquiry", async (req, res) => {
     subject,
     html_code
   )
-    .then((result) => console.log("Email sent..."))
+    .then((result) => console.log("Email sent...  ", result))
     .catch((error) => console.log(error.message));
 });
 
@@ -131,7 +137,7 @@ const sendOtp = async (email, name) => {
           <p>Team LevelUP</p>
           </div>`;
   sendMail(from_email, "TEAM LevelUP", email, subject, html_code)
-    .then((result) => console.log("Email sent..."))
+    .then((result) => console.log("Email sent... ", result))
     .catch((error) => console.log(error.message));
   return otp;
 };
@@ -161,6 +167,7 @@ userRouter.post("/signUp", async (req, res) => {
     userData.password = await bcrypt.hash(userData.password, salt);
     await userData.save();
     const otpNumber = await sendOtp(userData.email, userData.fullName);
+    // console.log(otpNumber);
     const otpData = new Otp({
       email: req.body.email,
       otp: otpNumber,
@@ -236,6 +243,7 @@ userRouter.get("/getActivatedNonStudent", getActivatedNonStudent);
 userRouter.post("/verifyOTP", async (req, res) => {
   try {
     const otpData = await Otp.findOne({ email: req.body.email });
+    // console.log(otpData);
     if (!otpData) {
       return res.status(200).json({ Status: "F", message: "Invalid details" });
     }
@@ -255,6 +263,37 @@ userRouter.post("/verifyOTP", async (req, res) => {
         },
       }
     );
+    console.log(req.body);
+    if (req.body.accountType === "Student") {
+      const personalData = new PersonalDetail({
+        email: req.body.email,
+        profilePhotoId: "cb39525a549b2cfc9229f27e688de644.jpg",
+        name: req.body.fullName,
+        rollNumber: "",
+        mobileNumber: "",
+        country: "", 
+        state: "",
+        city: "",
+        pincode: "",
+        district: "",
+        address: "",
+        codeforces: "",
+        codechef: "",
+        leetcode: "",
+        bio: "",
+        doubtSolved: 0,
+        educationList: [],
+        experienceList: [],
+        projectList: [],
+        linkList: [],
+        skills: [],
+      });
+      const codingData = new CodingProfile({
+        email: req.body.email,
+      });
+      await personalData.save();
+      await codingData.save();
+    }
     return res.status(200).json({ Status: "S" });
   } catch (error) {
     console.log(error);
@@ -329,4 +368,116 @@ userRouter.post("/setPassword", async (req, res) => {
   }
 });
 
+// Mongo URI
+const mongoURI = `mongodb://LevelUP:${process.env.MONGO_PWD}@cluster0-shard-00-00.qb4uy.mongodb.net:27017,cluster0-shard-00-01.qb4uy.mongodb.net:27017,cluster0-shard-00-02.qb4uy.mongodb.net:27017/studentSkillDatabase?ssl=true&replicaSet=atlas-f4na1v-shard-0&authSource=admin&retryWrites=true&w=majority`;
+
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI);
+
+// Init gfs
+let gfs;
+let gridfsBucket;
+
+conn.once("open", () => {
+  // Init stream
+  gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+    bucketName: "uploads",
+  });
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("uploads");
+});
+
+// Create storage engine
+const storage = new GridFsStorage({
+  url: mongoURI,
+  options: { useUnifiedTopology: true },
+  file: (req, file) => {
+    // console.log(file);
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString("hex") + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: "uploads",
+        };
+        resolve(fileInfo);
+      });
+    });
+  },
+});
+const upload = multer({ storage });
+
+userRouter.post(
+  "/uploadProfilePhoto",
+  upload.single("file"),
+  async (req, res) => {
+    try {
+      // console.log(req.file);
+      await PersonalDetail.updateOne(
+        { email: req.body.email },
+        {
+          $set: {
+            profilePhotoId: req.file.filename,
+          },
+        }
+      );
+      return res.send("Uploaded");
+    } catch (error) {
+      return res.send("Error");
+    }
+  }
+);
+
+userRouter.get("/image/:id", async (req, res) => {
+  try {
+    let file = await gfs.files.findOne({ filename: req.params.id });
+    if (!file) return res.send("ERROR");
+    if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
+      const readStream = gridfsBucket.openDownloadStream(file._id);
+      res.set("Content-Type", file.contentType);
+      readStream.pipe(res);
+    } else {
+      res.status(404).json({
+        err: "Not an image",
+      });
+    }
+  } catch (error) {
+    console.log("EROOR ", error);
+    return res.send("ERROR");
+  }
+});
+
+userRouter.delete("/files/:id", (req, res) => {
+  gfs.files.removeMany(
+    { _id: req.params.id, root: "uploads" },
+    (err, gridStore) => {
+      if (err) {
+        return res.status(404).json({ err: err });
+      }
+      return res.send("DELETED");
+    }
+  );
+});
+
+userRouter.get("/loginUsingCookie", async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    if (token === undefined) return res.send("NA");
+    const verifyToken = await jwt.verify(token, process.env.SECRET_KEY);
+    // console.log(verifyToken);
+    let data = await User.findOne({ _id: verifyToken._id });
+
+    return res.send({
+      accountType: data.accountType,
+      fullName: data.fullName,
+      email: data.email,
+      isActivated: data.isActivated,
+    });
+  } catch (error) {
+    return res.send("NA");
+  }
+});
 module.exports = userRouter;

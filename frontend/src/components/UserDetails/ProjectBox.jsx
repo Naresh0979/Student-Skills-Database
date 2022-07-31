@@ -8,9 +8,7 @@ const ProjectBox = (props) => {
   const [clickedProjectIdx, setClickedProjectIdx] = useState(-1);
   const [reviewContent, setreviewContent] = useState("");
 
-  const owner = true;
-  const creatorEmail = "xyz@gmail.com";
-  const reviewerEmail = "xyz@gmail.com";
+  const owner = props.owner;
   async function deleteRequest(reviewId) {
     try {
       await axios.post("http://localhost:2000/student/deleteProjectReview", {
@@ -27,8 +25,8 @@ const ProjectBox = (props) => {
       await axios.post("http://localhost:2000/users/addReview", {
         projectId: projectId,
         content: reviewContent,
-        creatorEmail: creatorEmail,
-        reviewerEmail: reviewerEmail,
+        creatorEmail: props.creator,
+        reviewerEmail: props.reviewer,
       });
       setreviewContent("");
       setGetReviewBtnStatus(false);

@@ -5,18 +5,6 @@ const codingProfile = new mongoose.Schema({
     unique: true,
     required: true,
   },
-  codechefUsername: {
-    type: String,
-    default: "NotAvailable",
-  },
-  codeforcesUsername: {
-    type: String,
-    default: "NotAvailable",
-  },
-  leetcodeUsername: {
-    type: String,
-    default: "NotAvailable",
-  },
   codechefRating: {
     type: Number,
     default: 0,
@@ -25,7 +13,11 @@ const codingProfile = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  leetcodeRating: {
+  codechefMaxRating: {
+    type: Number,
+    default: 0,
+  },
+  codeforcesMaxRating: {
     type: Number,
     default: 0,
   },
@@ -41,9 +33,13 @@ const codingProfile = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  leetcodePercentage: {
+  leetcodeRanking: {
     type: Number,
     default: 0,
+  },
+  leetcodePercentage: {
+    type: String,
+    default: "00.00%",
   },
 });
 const CodingProfile = new mongoose.model("CodingProfile", codingProfile);
