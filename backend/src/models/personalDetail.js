@@ -8,7 +8,7 @@ const personalDetail = new mongoose.Schema({
   },
   profilePhotoId: {
     type: String,
-    default: "62e54137977a665078fe8ff4",
+    default: "cb39525a549b2cfc9229f27e688de644.jpg",
   },
   name: {
     type: String,

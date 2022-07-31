@@ -16,6 +16,7 @@ const EditProfile = ({ status, email , pending}) => {
   const [info, setInfo] = useState({
     name: "",
     rollNumber: "",
+    profilePhotoId: "cb39525a549b2cfc9229f27e688de644.jpg",
     email: emailId,
     mobileNumber: "",
     country: "",
@@ -202,6 +203,7 @@ const EditProfile = ({ status, email , pending}) => {
         if (data) {
           let temporaryInfo = {
             name: data.name,
+            profilePhotoId : data.profilePhotoId,
             rollNumber: data.rollNumber,
             email: emails,
             mobileNumber: data.mobileNumber,

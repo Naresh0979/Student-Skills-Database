@@ -126,6 +126,7 @@ studentRouter.post("/editProfile", async (req, res) => {
     await PendingDetail.deleteMany({ email: req.body.email });
     const personalData = new PendingDetail({
       email: req.body.email,
+      profilePhotoId: req.body.profilePhotoId,
       name: req.body.name,
       rollNumber: req.body.rollNumber,
       mobileNumber: req.body.mobileNumber,
@@ -175,7 +176,7 @@ studentRouter.post("/confirmedEditProfile", async (req, res) => {
       codeforces: userData.codeforces,
       codechef: userData.codechef,
       leetcode: userData.leetcode,
-     
+      profilePhotoId: userData.profilePhotoId,
       country: userData.country,
       state: userData.state,
       district: userData.district,
@@ -250,7 +251,6 @@ studentRouter.post("/deleteProjectReview", async (req, res) => {
     return res.send(error);
   }
 });
-
 studentRouter.post("/solvedDoubt", async (req, res) => {
   try {
     await PersonalDetail.updateOne(

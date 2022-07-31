@@ -1,5 +1,6 @@
 //Imports
 const User = require("../models/user");
+const CodingProfile = require("../models/codingProfile");
 const {
   getPendingAccounts,
   getActivatedNonStudent,
@@ -110,7 +111,7 @@ userRouter.post("/sendEnquiry", async (req, res) => {
     subject,
     html_code
   )
-    .then((result) => console.log("Email sent..."))
+    .then((result) => console.log("Email sent...  ", result))
     .catch((error) => console.log(error.message));
 });
 
@@ -136,7 +137,7 @@ const sendOtp = async (email, name) => {
           <p>Team LevelUP</p>
           </div>`;
   sendMail(from_email, "TEAM LevelUP", email, subject, html_code)
-    .then((result) => console.log("Email sent..."))
+    .then((result) => console.log("Email sent... ", result))
     .catch((error) => console.log(error.message));
   return otp;
 };
@@ -166,7 +167,7 @@ userRouter.post("/signUp", async (req, res) => {
     userData.password = await bcrypt.hash(userData.password, salt);
     await userData.save();
     const otpNumber = await sendOtp(userData.email, userData.fullName);
-    console.log(otpNumber);
+    // console.log(otpNumber);
     const otpData = new Otp({
       email: req.body.email,
       otp: otpNumber,
@@ -242,7 +243,7 @@ userRouter.get("/getActivatedNonStudent", getActivatedNonStudent);
 userRouter.post("/verifyOTP", async (req, res) => {
   try {
     const otpData = await Otp.findOne({ email: req.body.email });
-    console.log(otpData);
+    // console.log(otpData);
     if (!otpData) {
       return res.status(200).json({ Status: "F", message: "Invalid details" });
     }
@@ -262,6 +263,37 @@ userRouter.post("/verifyOTP", async (req, res) => {
         },
       }
     );
+    console.log(req.body);
+    if (req.body.accountType === "Student") {
+      const personalData = new PersonalDetail({
+        email: req.body.email,
+        profilePhotoId: "cb39525a549b2cfc9229f27e688de644.jpg",
+        name: req.body.fullName,
+        rollNumber: "",
+        mobileNumber: "",
+        country: "", 
+        state: "",
+        city: "",
+        pincode: "",
+        district: "",
+        address: "",
+        codeforces: "",
+        codechef: "",
+        leetcode: "",
+        bio: "",
+        doubtSolved: 0,
+        educationList: [],
+        experienceList: [],
+        projectList: [],
+        linkList: [],
+        skills: [],
+      });
+      const codingData = new CodingProfile({
+        email: req.body.email,
+      });
+      await personalData.save();
+      await codingData.save();
+    }
     return res.status(200).json({ Status: "S" });
   } catch (error) {
     console.log(error);
@@ -402,6 +434,7 @@ userRouter.post(
 userRouter.get("/image/:id", async (req, res) => {
   try {
     let file = await gfs.files.findOne({ filename: req.params.id });
+    if (!file) return res.send("ERROR");
     if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
       const readStream = gridfsBucket.openDownloadStream(file._id);
       res.set("Content-Type", file.contentType);
@@ -412,7 +445,7 @@ userRouter.get("/image/:id", async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.log("EROOR ", error);
     return res.send("ERROR");
   }
 });

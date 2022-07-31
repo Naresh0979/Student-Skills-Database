@@ -53,6 +53,7 @@ const CodingPlatformProfile = (props) => {
       axios
         .post("http://localhost:2000/contest/CodeForces/getUserData", {
           userHandle: codeforcesHandle,
+          email : props.email
         })
         .then((details) => {
           setCodeforces(details.data);
@@ -62,6 +63,7 @@ const CodingPlatformProfile = (props) => {
       axios
         .post("http://localhost:2000/contest/Codechef/getUserData", {
           userHandle: codechefHandle,
+          email : props.email
         })
         .then((details) => {
           setCodechef(details.data);
@@ -71,6 +73,7 @@ const CodingPlatformProfile = (props) => {
       axios
         .post("http://localhost:2000/contest/Leetcode/getUserData", {
           userHandle: leetcodeHandle,
+          email : props.email
         })
         .then((details) => {
           setLeetcode(details.data);

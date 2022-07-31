@@ -11,7 +11,7 @@ const Profile = (props) => {
   const [navBtnClicked, setNavBtnClicked] = useState(false);
   const [invalidSize, setInvalidSize] = useState(false);
   const [profileId, setProfileId] = useState(
-    "100c787f6fa7fa92635fb4531e37a757.jpg"
+    "cb39525a549b2cfc9229f27e688de644.jpg"
   );
   const emailId = props.email;
   const [name, setName] = useState();
