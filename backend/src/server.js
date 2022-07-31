@@ -21,7 +21,7 @@ const corsOptions = {
   origin: true,
 };
  
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); 
 
 //datebase connection
 require("./db/connection");

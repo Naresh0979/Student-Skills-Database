@@ -12,6 +12,7 @@ import Home from "./components/home";
 import CodingPlatformProfile from "./components/dashboard/CodingPlatformProfile";
 import DoubtBlogs from "./components/dashboard/DoubtBlogs";
 import AdminHomePage from "./components/admin/AdminHomePage.jsx";
+import RecruiterHomePage from "./components/recruiter/RecruiterHomePage.jsx";
 export default function AppRouter() {
   console.log("HERE");
   return (
@@ -25,6 +26,7 @@ export default function AppRouter() {
         <Route path="/DailyProblems" element={<DailyProblems />}></Route>
         <Route path="/ContestCalender" element={<ContestCalender />}></Route>
         <Route path="/admin" element={<AdminHomePage />} />
+        <Route path="/recruiter" element={<RecruiterHomePage />} />
         <Route path="/CodingPlatformProfile" element={<CodingPlatformProfile />} />
         <Route path="/DoubtBlogs" element={<DoubtBlogs />} />
 

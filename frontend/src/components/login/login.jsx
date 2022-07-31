@@ -121,7 +121,9 @@ function Login(props) {
 
           if (userData.accountType === "Student")
             navigate("/dashboard", { state: userData });
-          else navigate("/admin", { state: userData });
+          else if (userData.accountType === "Team")
+          navigate("/admin", { state: userData });
+          else navigate("/recruiter", { state: userData });
         } else if (response.data.Status === "F") {
           setLoginStatus("False");
         }

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-export const AdminNavbar = (props) => {
+export const RecruiterNavbar = (props) => {
   let navigate = useNavigate();
   axios.defaults.withCredentials = true;
   const handleLogOut = (e) => {
