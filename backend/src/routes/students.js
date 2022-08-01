@@ -224,6 +224,39 @@ studentRouter.post("/getStudentData", async (req, res) => {
     res.json({ message: e.message });
   }
 });
+studentRouter.post("/filterProfiles", async (req, res) => {
+  // console.log(req.body.skills);
+  try {
+    let data;
+    let skill=req.body.skills;
+    // let
+    if(req.body.country &&req.body.state&&req.body.city)
+       data = await PersonalDetail.find({ city: req.body.city,state:req.body.state,country: req.body.country });
+ 
+    else if(req.body.country &&req.body.state&&!req.body.city)
+       data = await PersonalDetail.find({ state:req.body.state,country: req.body.country });
+    else
+    data = await PersonalDetail.find({ country: req.body.country });
+    // console.log(skill[0],data[0].skills[0]);
+    if(data.length>0){
+
+      if( skill.length>0)
+      data= data.filter(student=> !skill.includes(student.skills)); 
+    } 
+    else
+    {
+      data = await PersonalDetail.find({  });
+      data= data.filter(student=> !skill.includes(student.skills));
+    }
+     
+  
+    //  console.log("Sending DATA ",data);
+    res.send(data);
+  } catch (e) {
+    console.log(e);
+    res.json({ message: e.message });
+  }
+});
 
 studentRouter.post("/getProjectReviews", async (req, res) => {
   try {

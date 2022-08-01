@@ -6,13 +6,13 @@ import SearchByFilter from './SearchByFilter';
 export const scroll = new SmoothScroll('a[href*="#"]', {
     speed: 1000,
     speedAsDuration: true,
-  });
+  });  
 
 const RecruiterHomePage = () => {
   const location = useLocation(); 
   return (
     <div>
-        {/* <RecruiterNavbar fullName={location.state.fullName}/> */}
+        <RecruiterNavbar fullName={location.state.fullName}/>
 
         <SearchByFilter  email={location.state.email}/> 
         

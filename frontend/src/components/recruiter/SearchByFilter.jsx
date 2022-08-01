@@ -1,88 +1,143 @@
 import React, { useEffect } from "react";
 // import "./styles.css";
-import { useFormik } from "formik";
-import Select from "react-select";
-import csc from "country-state-city";
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 
+import { useState } from "react";
+
+import axios from "axios";
 const SearchByFilter=(props)=> {
-  // const addressFromik = useFormik({
-  //   initialValues: {
-  //     country: "India",
-  //     state: null,
-  //     city: null
-  //   },
-  //   onSubmit: (values) => console.log(JSON.stringify(values))
-  // });
-
-  // const countries =  ;
-  // const [countries,Countries]=useState
-
-  // const updatedCountries =async()=>{ let countries= await csc.getAllCountries();
-  //   console.log("hello");
-  //   console.log(countries);
-  //   countries.map((country) => ({
-  //   label: country.name,
-  //   value: country.id,
-  //   ...country
-  // }));
   
-// }
-  // const updatedStates =async (countryId) =>
-  //  await csc
-  //     .getStatesOfCountry(countryId)
-  //     .map((state) => ({ label: state.name, value: state.id, ...state }));
-  // const updatedCities = async(stateId) =>
-  //  await csc
-  //     .getCitiesOfState(stateId)
-  //     .map((city) => ({ label: city.name, value: city.id, ...city }));
 
-  // const { values, handleSubmit, setFieldValue, setValues } = addressFromik;
+  const [country,setCountry]= useState("India");
+  const [state,setState]= useState();
+  const [city, setCity]= useState();
+  const [profiles, setProfiles]= useState(null);
 
-  // useEffect(() => {}, [values]);
-  console.log("before");
-  const countries= csc.getAllCountries()?csc.getAllCountries():["India"];
-  console.log(countries);
+   
+  // console.log(country);
+  const [skills, setSkills] = useState([]);
+  function handleKeyDown(e) {
+    if (e.key === "Enter") e.preventDefault();
+    if (e.key !== "Enter") return false;
+    const value = e.target.value;
+    if (!value.trim()) return false;
+    setSkills([...skills, value]);
+    e.target.value = "";
+    return false;
+  }
+  function removeSkills(index) {
+    setSkills(skills.filter((skills, idx) => idx !== index));
+  }
+  // console.log(skills);
 
+  const SearchProfile=()=>{
+    axios
+    .post("http://localhost:2000/student/filterProfiles",{state:state,country:country,city:city,skills:skills})
+    .then(({ data }) => {
+      
+      let val  = data.filter((val) => val.email != props.email);
+      setProfiles(val);
+      // console.log(data);
+    });
+  }
 
   return (
-    <div className="App">
-      {/* <form onSubmit={handleSubmit}>
-        <p>dhgefhjubfj</p>
-        <Select
-          id="country"
-          name="country"
-          label="country"
-          options={updatedCountries}
-          value={values.country}
-          // onChange={value => {
-          //   setFieldValue("country", value);
-          //   setFieldValue("state", null);
-          //   setFieldValue("city", null);
-          // }}
-          onChange={(value) => {
-            setValues({ country: value, state: null, city: null }, false);
-          }}
-        /> */}
-        {/* <Select
-          id="state"
-          name="state"
-          options={updatedStates(values.country ? values.country.value : null)}
-          value={values.state}
-          onChange={(value) => {
-            setValues({ state: value, city: null }, false);
-          }}
-        />
-        <Select
-          id="city"
-          name="city"
-          options={updatedCities(values.state ? values.state.value : null)}
-          value={values.city}
-          onChange={(value) => setFieldValue("city", value)}
-        /> */}
-        {/* <button type="submit">Submit</button> */}
-        {/* <p>{JSON.stringify(csc.get)}</p> */}
-      {/* </form> */}
-    </div>
+    <div className="image-container-admin">
+    <div className="container">
+      <div className="admincc">
+        <div className="section-title">
+        <div className="section-title">
+            <h2 className="admin-head-black">Filter Profiles </h2>
+          </div>
+          <h3>Location</h3>
+              <div className="tags-input-container">
+            
+    <CountryDropdown
+      value={country}
+      onChange={(val) => setCountry(val) } />
+      
+    <RegionDropdown
+      country={country}
+      value={state}
+      onChange={(val) => setState(val)} />
+      </div>
+       <div className="skills-adder">
+              <h3>Skills</h3>
+              <div className="tags-input-container">
+                {skills.map((skills, index) => (
+                  <div className="tag-item" key={index} id={index}>
+                    <span className="tags-text">{skills}</span>
+                    { (
+                      <span
+                        className="tags-close"
+                        onClick={() => removeSkills(index)}
+                      >
+                        &times;
+                      </span>
+                    )}
+                  </div>
+                ))}
+
+                { skills.length < 4 && (
+                  <input
+                    type="text"
+                    onKeyDown={handleKeyDown}
+                    
+                    id="skills-add"
+                    className="tags-input"
+                    placeholder="Enter Skill"
+                  />
+                )}
+              </div>
+            </div>
+            <button
+                    type="button"
+                    
+                    onClick={SearchProfile}
+                    className=" btn-success "
+                  >
+                    filter
+              </button>
+              <div className="pending-account-table">
+            <table className="table table-striped admin-side-table">
+              <thead className="table-header">
+                <tr className="">
+                  <th>S No.</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>View Profile</th>
+                
+                </tr>
+              </thead>
+              <tbody>
+              {profiles  &&
+                profiles.map((val, idx) => {
+                  return (
+                    <tr className="align-middle" key={idx + "1"}>
+                      <td key={idx + "2"}>{idx + 1}</td>
+                      <td key={idx + "3"}>{val.name}</td>
+                      <td key={idx + "4"}>{val.email}</td>
+                      <td key={idx + "5"}> {val.accountType}</td>
+                      <td key={idx + "6"}>
+                        
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            {profiles === null ? (
+              <p className="no-account">Loading</p>
+            ) : (
+              profiles.length === 0 && (
+                <p className="no-account">No Account Found</p>
+              )
+            )}
+          </div>
+  </div>
+  </div>
+  </div>
+  </div>
   );
 }
 
