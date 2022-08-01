@@ -60,6 +60,11 @@ const SearchByFilter=(props)=> {
       country={country}
       value={state}
       onChange={(val) => setState(val)} />
+         {/* <CountryRegionData
+      // region={state}
+      value={city}
+      onChange={(val) => setCity(val)} /> */}
+ 
       </div>
        <div className="skills-adder">
               <h3>Skills</h3>

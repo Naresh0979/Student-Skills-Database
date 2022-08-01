@@ -7,7 +7,13 @@ import Project from "../UserDetails/Project";
 import Links from "../UserDetails/Links";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-const EditProfile = ({ status, email , pending}) => {
+import {
+  CountryDropdown,
+  RegionDropdown,
+  CountryRegionData,
+} from "react-country-region-selector";
+
+const EditProfile = ({ status, email, pending }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [saveBtnStatus, setSaveBtnStatus] = useState(true);
@@ -196,14 +202,14 @@ const EditProfile = ({ status, email , pending}) => {
     axios
       .post("http://localhost:2000/student/getStudentData", {
         email: emails,
-        pending : pending || false
+        pending: pending || false,
       })
       .then(({ data }) => {
         console.log("Inside DATA ", data);
         if (data) {
           let temporaryInfo = {
             name: data.name,
-            profilePhotoId : data.profilePhotoId,
+            profilePhotoId: data.profilePhotoId,
             rollNumber: data.rollNumber,
             email: emails,
             mobileNumber: data.mobileNumber,
@@ -237,8 +243,12 @@ const EditProfile = ({ status, email , pending}) => {
     if (e.key === "Enter") return;
     try {
       // console.log("INFO", info);
-      let education = educationList.filter((val) => val.instituteName.length > 0);
-      let experience = experienceList.filter((val) => val.organizationName.length > 0);
+      let education = educationList.filter(
+        (val) => val.instituteName.length > 0
+      );
+      let experience = experienceList.filter(
+        (val) => val.organizationName.length > 0
+      );
       let project = projectList.filter((val) => val.projectName.length > 0);
       let links = linkList.filter((val) => val.linkName.length > 0);
       console.log(project);
@@ -305,19 +315,36 @@ const EditProfile = ({ status, email , pending}) => {
                     value={info?.codeforces}
                   />
                   <div className="small-left-right">
-                    <input
+                    {/* <input
                       className="e-p-input"
                       placeholder="Country*"
                       name="country"
                       disabled={status}
                       value={info?.country}
                       onChange={handleChange}
+                    /> */}
+                    <CountryDropdown
+                      className="e-p-input"
+                      disabled={status}
+                      value={info?.country}
+                      onChange={handleChange}
                     />
-                    <input
+
+                    {/* <input
                       className="e-p-input"
                       name="state"
                       disabled={status}
                       placeholder="State*"
+                      value={info?.state}
+                      onChange={handleChange}
+                    /> */}
+
+                    <RegionDropdown
+                      className="e-p-input"
+                      name="state"
+                      placeholder="State*"
+                      disabled={status}
+                      country={info?.country}
                       value={info?.state}
                       onChange={handleChange}
                     />

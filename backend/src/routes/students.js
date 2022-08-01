@@ -239,7 +239,7 @@ studentRouter.post("/filterProfiles", async (req, res) => {
     else if(req.body.country &&!req.body.state&&!req.body.city)
     data = await PersonalDetail.find({ country: req.body.country });
     else
-    data = await PersonalDetail.find({  });
+    data = [];
     
      
     if(data.length>0){
@@ -250,12 +250,15 @@ studentRouter.post("/filterProfiles", async (req, res) => {
       data= data.filter((student) => student.skills.some((item)=> filterskill.has(item))); 
       console.log(data);
       }
+      
 
     } 
     else
     {
       data = await PersonalDetail.find({  });
-      data= data.filter(student=> !skill.includes(student.skills));
+      const filterskill = new Set(skill);
+      data= data.filter((student) => student.skills.some((item)=> filterskill.has(item))); 
+     
     }
      
   
