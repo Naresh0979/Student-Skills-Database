@@ -46,17 +46,18 @@ const Leaderboard = (props) => {
     }
   }, [searchCriteria]);
   return (
-    <div id="profileContainer" className="deactivate-container">
+    <div  className="admin-accept-details">
       <div className="container">
         <div className="">
           <div className="section-title">
-            <h2 className="admin-head-white">Search Profile through Email</h2>
+            <h2 className="admin-head-black leaderboard">LeaderBoard</h2>
           </div>
           <div className="find-using-email">
-            <p>Select Criteria : </p>
+            <label>Select Criteria : </label>
             <select
               value={searchCriteria}
               onChange={(e) => setSearchCriteria(e.target.value)}
+              className="form-control"
               id="cars"
             >
               <option value="Overall">Overall</option>
@@ -76,6 +77,9 @@ const Leaderboard = (props) => {
                   <th>S No.</th>
                   {/* <th>Name</th> */}
                   <th>Email</th>
+                  <th>CodeChef Rating</th>
+                  <th>LeetCode Questions</th>
+                  <th>CodeForces Rating</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -87,6 +91,9 @@ const Leaderboard = (props) => {
                         <td key={idx + "2"}>{idx + 1}</td>
                         {/* <td key={idx + "3"}>{val.fullName}</td> */}
                         <td key={idx + "4"}>{val.email}</td>
+                        <td key={idx + "a"}>{val.codechefRating}</td>
+                        <td key={idx + "b"}>{val.leetcodeQuestion}</td>
+                        <td key={idx + "c"}>{val.codeforcesRating}</td>
                         <td key={idx + "6"}>
                           <button
                             key={idx + "7"}

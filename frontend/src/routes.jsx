@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/login/login";
 // import EditProfile from './components/dashboard/EditProfile';
+import ProfileLeader from "./components/dashboard/ProfilesLeader";
 import Dashboard from "./components/dashboard";
 import EditProfile from "./components/dashboard/EditProfile";
 import DSAPractice from "./components/dashboard/DSAPractice";
@@ -58,6 +59,7 @@ export default function AppRouter() {
           path="/viewProfile/:profileEmail"
           element={<Dashboard owner={false} />}
         ></Route>
+        <Route  path="/findLeaderBoard" element={<ProfileLeader/>}></Route>
         {/* need to send userdata name , email in state and profileEmail as params */}
         {/* <AuthenticatedRoute
             path="/dashboard"

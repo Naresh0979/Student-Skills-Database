@@ -21,6 +21,17 @@
   width: 60%;
   padding: 10px;
 }
+.find-using-email label {
+  margin-left: 20px;
+  color: black;
+  font-weight: 500;
+  margin-bottom: 20px;
+  width: auto;
+  font-size: larger;
+}
+.leaderboard{
+  margin-top: 20px !important;
+}
 .find-using-email p {
   margin-top: 10px;
   padding-top: 5px;
@@ -30,6 +41,12 @@
   margin-bottom: 20px;
   width: auto;
   font-size: larger;
+}
+.find-using-email select {
+  margin-left: 10px;
+  font-weight: 500;
+  font-size: larger;
+  width: 55%;
 }
 .find-using-email button {
   border-radius: 20px;

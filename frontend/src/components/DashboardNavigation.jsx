@@ -124,10 +124,10 @@ export const DashboardNavigation = (props) => {
                         <button
                           className="dropdown-item dropbtn"
                           onClick={() => {
-                            navigate("/viewProfile/19ucs011@lnmiit.ac.in", { state: location.state });
+                            navigate("/findLeaderBoard", { state: location.state });
                           }}
                         >
-                          View Pr
+                          LeaderBoard
                         </button>
                       </li>
                       <li>
