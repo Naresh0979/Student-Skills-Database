@@ -6,20 +6,20 @@ exports.getUserDataLeetcode = async function (req, res) {
     const responce = await axios.get(url);
     const { total_problems_solved, acceptance_rate, ranking } = responce.data;
     const detail = [total_problems_solved, acceptance_rate, ranking];
-    await CodingProfile.updateOne(
-      { email: req.body.email },
-      {
-        $set: {
-          leetcodeQuestion: total_problems_solved,
-          leetcodeRanking: ranking,
-          leetcodePercentage: acceptance_rate,
-        },
-      }
-    );
-    // console.log(detail);
+    if (detail.length === 4)
+      await CodingProfile.updateOne(
+        { email: req.body.email },
+        {
+          $set: {
+            leetcodeQuestion: total_problems_solved,
+            leetcodeRanking: ranking,
+            leetcodePercentage: acceptance_rate,
+          },
+        }
+      );
     res.send(detail);
   } catch (error) {
     console.log(error);
-    return res.send({ data: "Failed" });
+    return res.send("Failed");
   }
 };

@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/login/login";
 // import EditProfile from './components/dashboard/EditProfile';
+import ProfileLeader from "./components/dashboard/ProfilesLeader";
 import Dashboard from "./components/dashboard";
 import EditProfile from "./components/dashboard/EditProfile";
 import DSAPractice from "./components/dashboard/DSAPractice";
@@ -13,8 +14,7 @@ import CodingPlatformProfile from "./components/dashboard/CodingPlatformProfile"
 import DoubtBlogs from "./components/dashboard/DoubtBlogs";
 import AdminHomePage from "./components/admin/AdminHomePage.jsx";
 import RecruiterHomePage from "./components/recruiter/RecruiterHomePage.jsx";
-import { useEffect, useState } from "react";
-import axios from "axios";
+
 export default function AppRouter() {
   // const [userData, setUserData] = useState({ accountType: "None" });
   // const [accountType, setAccountType] = useState("NA");
@@ -59,6 +59,7 @@ export default function AppRouter() {
           path="/viewProfile/:profileEmail"
           element={<Dashboard owner={false} />}
         ></Route>
+        <Route  path="/findLeaderBoard" element={<ProfileLeader/>}></Route>
         {/* need to send userdata name , email in state and profileEmail as params */}
         {/* <AuthenticatedRoute
             path="/dashboard"

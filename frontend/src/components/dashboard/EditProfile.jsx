@@ -205,7 +205,7 @@ const EditProfile = ({ status, email, pending }) => {
         pending: pending || false,
       })
       .then(({ data }) => {
-        console.log("Inside DATA ", data);
+        // console.log("Inside DATA ", data);
         if (data) {
           let temporaryInfo = {
             name: data.name,

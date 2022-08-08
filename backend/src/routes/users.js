@@ -111,7 +111,7 @@ userRouter.post("/sendEnquiry", async (req, res) => {
     subject,
     html_code
   )
-    .then((result) => console.log("Email sent...  ", result))
+    .then((result) => console.log("Email sent...  "))
     .catch((error) => console.log(error.message));
 });
 
@@ -137,7 +137,7 @@ const sendOtp = async (email, name) => {
           <p>Team LevelUP</p>
           </div>`;
   sendMail(from_email, "TEAM LevelUP", email, subject, html_code)
-    .then((result) => console.log("Email sent... ", result))
+    .then((result) => console.log("Email sent... "))
     .catch((error) => console.log(error.message));
   return otp;
 };
@@ -263,7 +263,7 @@ userRouter.post("/verifyOTP", async (req, res) => {
         },
       }
     );
-    console.log(req.body);
+    // console.log(req.body);
     if (req.body.accountType === "Student") {
       const personalData = new PersonalDetail({
         email: req.body.email,
@@ -480,4 +480,13 @@ userRouter.get("/loginUsingCookie", async (req, res) => {
     return res.send("NA");
   }
 });
+
+userRouter.get('/getCodingProfile' , async(req,res) => {
+  try {
+    const data = await CodingProfile.find();
+    return res.send(data);
+  } catch (error) {
+    return res.send([]);
+  }
+})
 module.exports = userRouter;

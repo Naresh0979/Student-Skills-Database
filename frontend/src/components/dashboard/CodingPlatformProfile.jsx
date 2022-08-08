@@ -53,30 +53,34 @@ const CodingPlatformProfile = (props) => {
       axios
         .post("http://localhost:2000/contest/CodeForces/getUserData", {
           userHandle: codeforcesHandle,
-          email : props.email
+          email: props.email,
         })
         .then((details) => {
-          setCodeforces(details.data);
+          if (details.data === "Failed") setCodeforces([]);
+          else setCodeforces(details.data);
         });
     }
     if (codechefHandle !== "loading" && codechefHandle !== "") {
       axios
         .post("http://localhost:2000/contest/Codechef/getUserData", {
           userHandle: codechefHandle,
-          email : props.email
+          email: props.email,
         })
         .then((details) => {
-          setCodechef(details.data);
+          if (details.data === "Failed") setCodechef([]);
+          else setCodechef(details.data);
         });
     }
     if (leetcodeHandle !== "loading" && leetcodeHandle !== "") {
       axios
         .post("http://localhost:2000/contest/Leetcode/getUserData", {
           userHandle: leetcodeHandle,
-          email : props.email
+          email: props.email,
         })
         .then((details) => {
-          setLeetcode(details.data);
+          console.log(details.data)
+          if (details.data === "Failed") setLeetcode([]);
+          else setLeetcode(details.data);
         });
     }
   }, [codeforcesHandle, codechefHandle, leetcodeHandle]);
@@ -238,7 +242,7 @@ const CodingPlatformProfile = (props) => {
                   <div className="content">
                     {leetcodeHandle === "loading" ? (
                       <p>Loading</p>
-                    ) : codechef.length !== 0 ? (
+                    ) : leetcode.length !== 0 ? (
                       <div className="codeforces-container">
                         <div className="content2">
                           <div className="coding-profile-data">

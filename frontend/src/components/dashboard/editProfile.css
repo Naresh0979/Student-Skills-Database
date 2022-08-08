@@ -340,6 +340,7 @@ input{
 	font-weight: 500;
 }
 .card-description{
+	height: 100px !important;
 	margin: 10px;
 	width: 99%;
 }
