@@ -7,10 +7,12 @@ exports.getUserDataCodeforces = async function (req, res) {
     const { maxRating, rating, handle } = responce.data.result[0];
     const url2 = ` https://codeforces.com/api/user.status?handle=${req.body.userHandle}`;
     const { data } = await axios.get(url2);
+    console.log(data);
     const questions = data.result.filter(
       (contest) => contest.verdict === "OK"
     ).length;
     const detail = [questions, maxRating, rating, handle];
+    
     await CodingProfile.updateOne(
       { email: req.body.email },
       {
@@ -23,6 +25,7 @@ exports.getUserDataCodeforces = async function (req, res) {
     );
     res.send(detail);
   } catch (error) {
+    console.log("Failed");
     return res.send("Failed");
   }
 };

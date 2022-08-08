@@ -19,6 +19,7 @@ const AcceptVerificaton = (props) => {
     setpendingVerfication(newData);
   }
   async function updateRequest(email) {
+    setviewDetailStatus(false);
     await axios.post("http://localhost:2000/student/confirmedEditProfile", {
       email: email,
     });

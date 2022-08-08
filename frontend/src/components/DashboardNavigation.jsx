@@ -47,7 +47,7 @@ export const DashboardNavigation = (props) => {
               </a>
             </li>*/}
 
-              <li>
+              {/* <li>
                 <a href="#about" className="page-scroll">
                   About
                 </a>
@@ -56,7 +56,7 @@ export const DashboardNavigation = (props) => {
                 <a href="#services" className="page-scroll">
                   Project
                 </a>
-              </li>
+              </li> */}
               {/* <li>
               <a href='#portfolio' className='page-scroll'>
                 Gallery
@@ -67,11 +67,11 @@ export const DashboardNavigation = (props) => {
                 Testimonials
               </a>
             </li> */}
-              <li>
+              {/* <li>
                 <a href="#team" className="page-scroll">
                   Coding Profiles
                 </a>
-              </li>
+              </li> */}
               {/* <li>
                 <a href="#contact" className="page-scroll">
                   Contact

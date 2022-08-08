@@ -480,4 +480,13 @@ userRouter.get("/loginUsingCookie", async (req, res) => {
     return res.send("NA");
   }
 });
+
+userRouter.get('/getCodingProfile' , async(req,res) => {
+  try {
+    const data = await CodingProfile.find();
+    return res.send(data);
+  } catch (error) {
+    return res.send([]);
+  }
+})
 module.exports = userRouter;
