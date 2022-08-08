@@ -177,7 +177,7 @@ const Profile = (props) => {
                   {worklink ? (
                     worklink.map((worklink, index) => (
                       <>
-                        <a href={worklink.link} key={index + "1"}>
+                        <a target="_blank" href={worklink.link} key={index + "1"}>
                           {worklink.linkName}
                         </a>
                         <br key={index + "2"} />

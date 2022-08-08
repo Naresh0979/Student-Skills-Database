@@ -215,7 +215,7 @@ studentRouter.post("/deletePendingDetails", async (req, res) => {
 studentRouter.post("/getStudentData", async (req, res) => {
   try {
     let data = await PersonalDetail.findOne({ email: req.body.email });
-    if(req.body.pending === true)
+    if (req.body.pending === true)
       data = await PendingDetail.findOne({ email: req.body.email });
     // console.log("Sending DATA ",data);
     res.send(data);
@@ -225,40 +225,50 @@ studentRouter.post("/getStudentData", async (req, res) => {
   }
 });
 studentRouter.post("/filterProfiles", async (req, res) => {
-    // console.log(req.body);
+  // console.log(req.body);
   try {
     let data;
-    let skill=req.body.skills;
+    let skill = req.body.skills || [];
     // console.log(skill);
     // let
-    if(req.body.country &&req.body.state&&req.body.city)
-       data = await PersonalDetail.find({ city: req.body.city,state:req.body.state,country: req.body.country });
- 
-    else if(req.body.country &&req.body.state&&!req.body.city)
-       data = await PersonalDetail.find({ state:req.body.state,country: req.body.country });
-    else if(req.body.country &&!req.body.state&&!req.body.city)
-    data = await PersonalDetail.find({ country: req.body.country });
-    else
-    data = await PersonalDetail.find({  });
-    
-     
-    if(data.length>0){
+    // console.log(Boolean(req.body.country));
+    if(req.body.email){
+      data = await User.find({email : req.body.email , accountType : "Student"});
+      return res.send(data);
+    }
+    if (req.body.country && req.body.state && req.body.city)
+      data = await PersonalDetail.find({
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country,
+      });
+    else if (req.body.country && req.body.state && !req.body.city)
+      data = await PersonalDetail.find({
+        state: req.body.state,
+        country: req.body.country,
+      });
+    else if (req.body.country && !req.body.state && !req.body.city)
+      data = await PersonalDetail.find({ country: req.body.country });
+    else data = [];
 
-      if( skill.length>0){
+    // console.log(data);
+    if (data.length > 0) {
+      if (skill.length > 0) {
         // console.log("before");
         const filterskill = new Set(skill);
-      data= data.filter((student) => student.skills.some((item)=> filterskill.has(item))); 
-      console.log(data);
+        data = data.filter((student) =>
+          student.skills.some((item) => filterskill.has(item))
+        );
+        // console.log(data);
       }
-
-    } 
-    else
-    {
-      data = await PersonalDetail.find({  });
-      data= data.filter(student=> !skill.includes(student.skills));
+    } else if (!req.body.country && !req.body.state && !req.body.city && skill.length > 0) {
+      data = await PersonalDetail.find({});
+      const filterskill = new Set(skill);
+      data = data.filter((student) =>
+        student.skills.some((item) => filterskill.has(item))
+      );
     }
-     
-  
+
     //  console.log("Sending DATA ",data);
     res.send(data);
   } catch (e) {

@@ -63,7 +63,7 @@ const ProjectBox = (props) => {
             value={val.projectName}
             name="projectName"
           />
-          <a key={projectName + "4"} href={val.link}>
+          <a key={projectName + "4"} target="_blank" href={val.link}>
             <button key={projectName + "5"} className="link-btn btn btn-success">Go to Project</button>{" "}
           </a>
           <input
@@ -102,7 +102,7 @@ const ProjectBox = (props) => {
         </div>
 
         <textarea
-          className="card-description form-control"
+          className=" form-control card-description"
           value={val.description}
           key={projectName + "9"}
           placeholder="Description"

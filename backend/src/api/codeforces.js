@@ -23,7 +23,7 @@ exports.getUserDataCodeforces = async function (req, res) {
     );
     res.send(detail);
   } catch (error) {
-    return res.send({ data: "Failed" });
+    return res.send("Failed");
   }
 };
 exports.getUpcomingContest = async function (req, res) {

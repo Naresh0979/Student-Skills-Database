@@ -13,8 +13,7 @@ import CodingPlatformProfile from "./components/dashboard/CodingPlatformProfile"
 import DoubtBlogs from "./components/dashboard/DoubtBlogs";
 import AdminHomePage from "./components/admin/AdminHomePage.jsx";
 import RecruiterHomePage from "./components/recruiter/RecruiterHomePage.jsx";
-import { useEffect, useState } from "react";
-import axios from "axios";
+
 export default function AppRouter() {
   // const [userData, setUserData] = useState({ accountType: "None" });
   // const [accountType, setAccountType] = useState("NA");

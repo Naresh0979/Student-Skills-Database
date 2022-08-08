@@ -18,13 +18,13 @@ exports.getUserDataCodechef = async function (req, res) {
         },
       }
     );
-
+ 
     const detail = [highest_rating, rating, username, count];
     // console.log(detail);
 
     res.send(detail);
   } catch (error) {
-    console.log(error);
-    return res.send({ data: "Failed" });
+    console.log("ERROR");
+    return res.send("Failed");
   }
 };

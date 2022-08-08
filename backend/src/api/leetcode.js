@@ -16,10 +16,9 @@ exports.getUserDataLeetcode = async function (req, res) {
         },
       }
     );
-    // console.log(detail);
     res.send(detail);
   } catch (error) {
     console.log(error);
-    return res.send({ data: "Failed" });
+    return res.send("Failed");
   }
 };
