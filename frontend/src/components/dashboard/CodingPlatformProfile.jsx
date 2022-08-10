@@ -112,7 +112,7 @@ const CodingPlatformProfile = (props) => {
                               Username :{" "}
                             </p>
                             <p className="coding-profile-data-head">
-                              {codeforces[3]}
+                              {codeforces[3].slice(0,11)}
                             </p>
                           </div>
                           <div className="coding-profile-data">
@@ -177,7 +177,7 @@ const CodingPlatformProfile = (props) => {
                               Username :{" "}
                             </p>
                             <p className="coding-profile-data-head">
-                              {codechef[2]}
+                              {codechef[2].slice(0,11)}
                             </p>
                           </div>
                           <div className="coding-profile-data">
@@ -250,7 +250,7 @@ const CodingPlatformProfile = (props) => {
                               Username :{" "}
                             </p>
                             <p className="coding-profile-data-head">
-                              {leetcodeHandle}
+                              {leetcodeHandle.slice(0,11)}
                             </p>
                           </div>
                           <div className="coding-profile-data">

@@ -8,7 +8,7 @@ exports.getUserDataCodechef = async function (req, res) {
     const { highest_rating, rating, global_rank } = responce.data;
     const { username } = responce.data.user_details;
     const { count } = responce.data.fully_solved;
-
+    
     const detail = [highest_rating, rating, username, count];
     if (detail.length === 4)
       await CodingProfile.updateOne(

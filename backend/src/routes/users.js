@@ -72,7 +72,24 @@ userRouter.post("/login", async (req, res) => {
       userData.password
     );
     if (!validPassword) return res.status(200).json({ Status: "F" });
-
+    if (userData.accountType === "Student") {
+      const cData = await CodingProfile.find({ email: req.body.email });
+      if (cData === undefined || cData.length === 0) {
+        const codingData = new CodingProfile({
+          email: req.body.email,
+          codechefRating: 0,
+          codeforcesRating: 0,
+          codechefMaxRating: 0,
+          codeforcesMaxRating: 0,
+          codechefQuestion: 0,
+          codeforcesQuestion: 0,
+          leetcodeQuestion: 0,
+          leetcodeRanking: 0,
+          leetcodePercentage: "00.00%",
+        });
+        await codingData.save();
+      }
+    }
     const token = await userData.generateAuthToken();
     return res
       .cookie("jwt", token, {
@@ -118,7 +135,7 @@ userRouter.post("/sendEnquiry", async (req, res) => {
 //send OTP
 const sendOtp = async (email, name) => {
   const otp = `${Math.floor(Math.random() * 999990)}`;
-   console.log(otp);
+  console.log(otp);
   let from_email = process.env.GEMAIL;
   let subject = "OTP for Account Verfication";
   let html_code = `
@@ -271,7 +288,7 @@ userRouter.post("/verifyOTP", async (req, res) => {
         name: req.body.fullName,
         rollNumber: "",
         mobileNumber: "",
-        country: "", 
+        country: "",
         state: "",
         city: "",
         pincode: "",
@@ -290,9 +307,18 @@ userRouter.post("/verifyOTP", async (req, res) => {
       });
       const codingData = new CodingProfile({
         email: req.body.email,
+        codechefRating: 0,
+        codeforcesRating: 0,
+        codechefMaxRating: 0,
+        codeforcesMaxRating: 0,
+        codechefQuestion: 0,
+        codeforcesQuestion: 0,
+        leetcodeQuestion: 0,
+        leetcodeRanking: 0,
+        leetcodePercentage: "00.00%",
       });
-      await personalData.save();
       await codingData.save();
+      await personalData.save();
     }
     return res.status(200).json({ Status: "S" });
   } catch (error) {
@@ -481,12 +507,12 @@ userRouter.get("/loginUsingCookie", async (req, res) => {
   }
 });
 
-userRouter.get('/getCodingProfile' , async(req,res) => {
+userRouter.get("/getCodingProfile", async (req, res) => {
   try {
     const data = await CodingProfile.find();
     return res.send(data);
   } catch (error) {
     return res.send([]);
   }
-})
+});
 module.exports = userRouter;

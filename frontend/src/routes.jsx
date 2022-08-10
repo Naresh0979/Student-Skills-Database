@@ -34,16 +34,7 @@ export default function AppRouter() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/signup" element={<Login />}></Route>
-        <Route
-          path="/dashboard"
-          element={
-            <Dashboard
-              owner={true}
-              // emailName={userData.email}
-              // fName={userData.fullName}
-            />
-          }
-        ></Route>
+        <Route path="/dashboard" element={<Dashboard owner={true} />}></Route>
         <Route path="/editProfile" element={<EditProfile status={false} />} />
         <Route path="/DSAPractice" element={<DSAPractice />}></Route>
         <Route path="/DailyProblems" element={<DailyProblems />}></Route>
@@ -59,7 +50,7 @@ export default function AppRouter() {
           path="/viewProfile/:profileEmail"
           element={<Dashboard owner={false} />}
         ></Route>
-        <Route  path="/findLeaderBoard" element={<ProfileLeader/>}></Route>
+        <Route path="/findLeaderBoard" element={<ProfileLeader />}></Route>
         {/* need to send userdata name , email in state and profileEmail as params */}
         {/* <AuthenticatedRoute
             path="/dashboard"

@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import Education from "../UserDetails/Education";
 import Experience from "../UserDetails/Experience";
 import { Navbar } from "../../Navbar";
+import { DashboardNavigation } from "../DashboardNavigation";
 import "./editProfile.css";
 import Project from "../UserDetails/Project";
 import Links from "../UserDetails/Links";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-const EditProfile = ({ status, email , pending}) => {
+const EditProfile = ({ status, email , pending ,username}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [saveBtnStatus, setSaveBtnStatus] = useState(true);
@@ -269,7 +270,7 @@ const EditProfile = ({ status, email , pending}) => {
   };
   return (
     <div className="background-body-for-editProfile">
-      <Navbar />
+      <DashboardNavigation username={username || "My Account"} />
       <div
         className="edu-personal-info"
         style={status ? { "margin-top": "20px", "margin-bottom": "20px" } : {}}

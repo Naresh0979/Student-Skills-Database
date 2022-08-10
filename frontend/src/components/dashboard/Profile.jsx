@@ -115,9 +115,9 @@ const Profile = (props) => {
                 <div className="profile-head">
                   <h5>{name}</h5>
                   <h6>{bio}</h6>
-                  <p className="proile-rating">
+                  {/* <p className="proile-rating">
                     RANKINGS : <span>8/10</span>
-                  </p>
+                  </p> */}
                   <ul className="nav nav-pills" id="myTab" role="tablist">
                     <li key={"xyz"} id={"xyz"} className="nav-item">
                       <a

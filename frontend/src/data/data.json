@@ -68,33 +68,33 @@
   "Services": [
     {
       "icon": "fa fa-user",
-      "name": "Lorem ipsum dolor",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+      "name": "Personal Portfolio",
+      "text": "Using all the details ( education , projects , skills , experience etc. ) which student submit website will create a neat webpage cum portfolio page."
     },
     {
-      "icon": "fa fa-cart-arrow-down",
-      "name": "Consectetur adipiscing",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+      "icon": "fa fa-pencil",
+      "name": "Doubt Blogs",
+      "text": "Users can post doubt blogs and can comment out solutions on the post and will be rewarded point on correct solution."
     },
     {
-      "icon": "fa fa-cloud-download",
-      "name": "Lorem ipsum dolor",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+      "icon": "fa fa-book",
+      "name": "Coding Calender and Questions",
+      "text": "Website contains upcoming contest calender and question bank cum roadmap for dsa preparation."
     },
     {
-      "icon": "fa fa-language",
-      "name": "Consectetur adipiscing",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+      "icon": "fa fa-file",
+      "name": "Project Reviews",
+      "text": "Profile viewers can provide feedback/ reviews to the projects and student can view all and can resolve them."
     },
     {
       "icon": "fa fa-plane",
-      "name": "Lorem ipsum dolor",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+      "name": "Leaderboard",
+      "text": "Using the Competetive Coding platform username website will create leaderboard using rating , number of questions solved."
     },
     {
       "icon": "fa fa-pie-chart",
-      "name": "Consectetur adipiscing",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at."
+      "name": "Profile Search using Filters",
+      "text": "Recruiter can search student using skills , address , email id and view student profiles. "
     }
   ],
   "Testimonials": [

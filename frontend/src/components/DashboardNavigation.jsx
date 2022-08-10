@@ -108,28 +108,35 @@ export const DashboardNavigation = (props) => {
                         </Link>
                       </li>
 
+                      {location.state && (
+                        <li>
+                          {" "}
+                          <button
+                            className="dropdown-item dropbtn"
+                            onClick={() => {
+                              navigate("/DoubtBlogs", {
+                                state: location.state,
+                              });
+                            }}
+                          >
+                            Doubt Blogs
+                          </button>
+                        </li>
+                      )}
                       <li>
                         {" "}
                         <button
                           className="dropdown-item dropbtn"
                           onClick={() => {
-                            navigate("/DoubtBlogs", { state: location.state });
-                          }}
-                        >
-                          Doubt Blogs
-                        </button>
-                      </li>
-                      <li>
-                        {" "}
-                        <button
-                          className="dropdown-item dropbtn"
-                          onClick={() => {
-                            navigate("/findLeaderBoard", { state: location.state });
+                            navigate("/findLeaderBoard", {
+                              state: location.state,
+                            });
                           }}
                         >
                           LeaderBoard
                         </button>
                       </li>
+
                       <li>
                         <Link
                           to="/signup"

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import Collapsible from "react-collapsible";
 import QuestionBank from "../../data/questionBank.json";
 import { Navbar } from "../../Navbar";
+import { DashboardNavigation } from "../DashboardNavigation";
 //import Question from './Question';
 // import {QuestionBank} from './questionBank.json'
 import "../styles/dsa.scss";
-const DSAPractice = () => {
+const DSAPractice = (props) => {
   const [questionBank, setQuestionBank] = useState();
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const DSAPractice = () => {
   // console.log(QuestionBank);
   return (
     <div id="profileContainer">
-      <Navbar />
+      <DashboardNavigation username={props.username || "My Account"}/>
       <div className="container">
         <div className="emp-profile">
           <h1 className="head">PRACTICE PROBLEMS</h1>

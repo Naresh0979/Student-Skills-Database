@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Collapsible from "react-collapsible";
 import { Navbar } from "../../Navbar";
+import { DashboardNavigation } from "../DashboardNavigation";
 import axios from "axios";
 import "../styles/dsa.scss";
+import { useLocation } from "react-router-dom";
 
-const ContestCalender = () => {
+const ContestCalender = ({ username }) => {
   const [codeforcesContest, setCodeforcesContest] = useState("Loading");
 
   useEffect(() => {
@@ -12,14 +14,13 @@ const ContestCalender = () => {
       //  console.log(contest.data);
       setCodeforcesContest(contest.data);
       // console.log(contest.data);
-      
+      // console.log("data ",location.state);
     });
-   
   }, []);
 
   return (
     <div id="profileContainer" className="coding-div">
-      <Navbar />
+      <DashboardNavigation username={username || "My Account"} />
       <div className="container">
         <div className="emp-profile">
           <h1 className="head">Upcoming Contest</h1>
@@ -36,7 +37,10 @@ const ContestCalender = () => {
                   <p key={index + "3"} className="questionsHead">
                     Date :
                   </p>
-                  <button key={index + "4"} className="form-control btn-success ">
+                  <button
+                    key={index + "4"}
+                    className="form-control btn-success "
+                  >
                     Proceed to Contest
                   </button>
                 </a>

@@ -5,48 +5,108 @@ import { useNavigate } from "react-router-dom";
 const Leaderboard = (props) => {
   let navigate = useNavigate();
   const [codingData, setCodingData] = useState([]);
+  const [searchCount, setsearchCount] = useState(1);
   const [searchCriteria, setSearchCriteria] = useState("Overall");
-//   const [fetchStatus, setFetchStatus] = useState("Enter Filter");
+  //   const [fetchStatus, setFetchStatus] = useState("Enter Filter");
   useEffect(() => {
     axios
       .get("http://localhost:2000/users/getCodingProfile")
       .then(({ data }) => {
-        setCodingData(data);
+        console.log(data);
+        let data1 = data;
+        data1.sort(function (x, y) {
+          return (
+            0.4 * y.codechefRating +
+            0.3 * y.codeforcesRating +
+            0.2 * y.leetcodeQuestion -
+            (0.4 * x.codechefRating +
+              0.3 * x.codeforcesRating +
+              0.2 * x.leetcodeQuestion)
+          );
+        });
+        setCodingData(data1);
       });
   }, []);
+  // const changeArray = () => {
+  //   if (searchCriteria === "Overall") {
+  //     let data = codingData;
+  //     data.sort(function (x, y) {
+  //       return (
+  //         0.4 * y.codechefRating +
+  //         0.3 * y.codeforcesRating +
+  //         0.2 * y.leetcodeQuestion -
+  //         (0.4 * x.codechefRating +
+  //           0.3 * x.codeforcesRating +
+  //           0.2 * x.leetcodeQuestion)
+  //       );
+  //     });
+
+  //     setCodingData(data);
+  //   } else if (searchCriteria === "LeetCode") {
+  //     let data = codingData;
+  //     data.sort(function (x, y) {
+  //       return y.leetcodeQuestion - x.leetcodeQuestion;
+  //     });
+  //     console.log(data);
+  //     setCodingData(data);
+  //   } else if (searchCriteria === "CodeChef") {
+  //     let data = codingData;
+  //     data.sort(function (x, y) {
+  //       return y.codechefRating - x.codechefRating;
+  //     });
+
+  //     setCodingData(data);
+  //   } else if (searchCriteria === "CodeForces") {
+  //     let data = codingData;
+  //     data.sort(function (x, y) {
+  //       return y.codeforcesRating - x.codeforcesRating;
+  //     });
+
+  //     setCodingData(data);
+  //   }
+  //   setsearchCount(searchCount + 1);
+  // };
   useEffect(() => {
     if (searchCriteria === "Overall") {
       let data = codingData;
-
-      data.sort(
-        (x, y) =>
-          0.4 * x.codechefRating +
-            0.3 * x.codeforcesRating +
-            0.2 * x.leetcodeQuestion >
+      data.sort(function (x, y) {
+        return (
           0.4 * y.codechefRating +
-            0.3 * y.codeforcesRating +
-            0.2 * y.leetcodeQuestion
-      );
+          0.3 * y.codeforcesRating +
+          0.2 * y.leetcodeQuestion -
+          (0.4 * x.codechefRating +
+            0.3 * x.codeforcesRating +
+            0.2 * x.leetcodeQuestion)
+        );
+      });
+
       setCodingData(data);
     } else if (searchCriteria === "LeetCode") {
       let data = codingData;
-
-      data.sort((x, y) => x.leetcodeQuestion > y.leetcodeQuestion);
+      data.sort(function (x, y) {
+        return y.leetcodeQuestion - x.leetcodeQuestion;
+      });
+      // console.log(data);
       setCodingData(data);
     } else if (searchCriteria === "CodeChef") {
       let data = codingData;
+      data.sort(function (x, y) {
+        return y.codechefRating - x.codechefRating;
+      });
 
-      data.sort((x, y) => x.codechefRating > y.codechefRating);
       setCodingData(data);
     } else if (searchCriteria === "CodeForces") {
       let data = codingData;
+      data.sort(function (x, y) {
+        return y.codeforcesRating - x.codeforcesRating;
+      });
 
-      data.sort((x, y) => x.codeforcesRating > y.codeforcesRating);
       setCodingData(data);
     }
+    setsearchCount(searchCount + 1);
   }, [searchCriteria]);
   return (
-    <div  className="admin-accept-details">
+    <div className="admin-accept-details">
       <div className="container">
         <div className="">
           <div className="section-title">
@@ -63,10 +123,14 @@ const Leaderboard = (props) => {
               <option value="Overall">Overall</option>
               <option value="CodeChef">CodeChef</option>
               <option value="LeetCode">LeetCode</option>
-              <option value="Codeforces">CodeForces</option>
+              <option value="CodeForces">CodeForces</option>
             </select>
-            {/* <button placeholder="Enter Email " onClick={getData} className="btn-warning">
-              Find Account
+            {/* <button
+              placeholder=""
+              onClick={changeArray}
+              className="btn-warning"
+            >
+              Find
             </button> */}
           </div>
 
@@ -77,23 +141,40 @@ const Leaderboard = (props) => {
                   <th>S No.</th>
                   {/* <th>Name</th> */}
                   <th>Email</th>
-                  <th>CodeChef Rating</th>
-                  <th>LeetCode Questions</th>
-                  <th>CodeForces Rating</th>
+                  {(searchCriteria === "Overall" ||
+                    searchCriteria === "CodeChef") && <th>CodeChef Rating</th>}
+                  {(searchCriteria === "Overall" ||
+                    searchCriteria === "LeetCode") && (
+                    <th>LeetCode Questions</th>
+                  )}
+                  {(searchCriteria === "Overall" ||
+                    searchCriteria === "CodeForces") && (
+                    <th>CodeForces Rating</th>
+                  )}
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {codingData !== null &&
+                {searchCount > 0 &&
+                  codingData !== null &&
                   codingData.map((val, idx) => {
                     return (
                       <tr className="align-middle" key={idx + "1"}>
                         <td key={idx + "2"}>{idx + 1}</td>
                         {/* <td key={idx + "3"}>{val.fullName}</td> */}
                         <td key={idx + "4"}>{val.email}</td>
-                        <td key={idx + "a"}>{val.codechefRating}</td>
-                        <td key={idx + "b"}>{val.leetcodeQuestion}</td>
-                        <td key={idx + "c"}>{val.codeforcesRating}</td>
+                        {(searchCriteria === "Overall" ||
+                          searchCriteria === "CodeChef") && (
+                          <td key={idx + "a"}>{val.codechefRating}</td>
+                        )}
+                        {(searchCriteria === "Overall" ||
+                          searchCriteria === "LeetCode") && (
+                          <td key={idx + "b"}>{val.leetcodeQuestion}</td>
+                        )}
+                        {(searchCriteria === "Overall" ||
+                          searchCriteria === "CodeForces") && (
+                          <td key={idx + "c"}>{val.codeforcesRating}</td>
+                        )}
                         <td key={idx + "6"}>
                           <button
                             key={idx + "7"}

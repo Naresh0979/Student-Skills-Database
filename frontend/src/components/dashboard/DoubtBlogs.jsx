@@ -4,7 +4,7 @@ import { Navbar } from "../../Navbar";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-
+import { DashboardNavigation } from "../DashboardNavigation";
 const formatDate = (dateString) => {
   const options = {
     year: "numeric",
@@ -189,7 +189,7 @@ const DoubtBlogs = (props) => {
   }, [location.state.email, props.email, myPosts, posts]);
   return (
     <div id="profileContainer" className="blogs-container">
-      <Navbar />
+      <DashboardNavigation username={props.username || "My Account"} />
       {/* <h1 className="head">Discussions</h1> */}
       <div className="container">
         <div className="section-title">
