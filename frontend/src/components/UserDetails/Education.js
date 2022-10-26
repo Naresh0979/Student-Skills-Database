@@ -3,22 +3,20 @@ import "../dashboard/editProfile.css";
 
 const Education = (props) => {
   return props.educationList.map((val, idx) => {
-    let instituteName = `inst-${idx}`,
-      start = `st-${idx}`,
-      end = `end-${idx}`,
-      index = val.index;
+    let instituteName = `inst-${idx}`;
+    // ,
+    //   start = `st-${idx}`,
+    //   end = `end-${idx}`,
+    let index = val.index;
     return (
-      <div>
-        <div id={instituteName} className="flex-div-left-right-med-container">
-          <div id={instituteName} className="flex-div-left-med-container">
-            <div
-              id={instituteName}
-              className="flex-div-right-med-container-line"
-            >
+      <div key={instituteName + "8"}>
+        <div key={instituteName + "9"} className="flex-div-left-right-med-container">
+          <div key={instituteName + "10"} className="flex-div-left-med-container">
+            <div key={instituteName + "11"} className="flex-div-right-med-container-line">
               <input
                 className="e-p-input"
                 placeholder="Institute Name"
-                id={instituteName}
+                key={instituteName + "1"}
                 value={val.instituteName}
                 disabled={!props.status}
                 name="instituteName"
@@ -27,7 +25,7 @@ const Education = (props) => {
               <input
                 className="e-p-input degree-input"
                 placeholder="Degree"
-                id={instituteName}
+                key={instituteName + "2"}
                 value={val.degreeName}
                 disabled={!props.status}
                 name="degreeName"
@@ -35,15 +33,12 @@ const Education = (props) => {
               />
             </div>
           </div>
-          <div id={instituteName} className="flex-div-right-med-container">
-            <div
-              id={instituteName}
-              className="flex-div-right-med-container-line"
-            >
+          <div className="flex-div-right-med-container">
+            <div className="flex-div-right-med-container-line">
               <input
                 className="e-p-input endDate-input"
                 value={val.startDate}
-                id={instituteName}
+                key={instituteName + "3"}
                 type="month"
                 disabled={!props.status}
                 name="startDate"
@@ -53,7 +48,7 @@ const Education = (props) => {
               <input
                 className="e-p-input endDate-input"
                 value={val.endDate}
-                id={instituteName}
+                key={instituteName + "4"}
                 type="month"
                 disabled={!props.status}
                 name="endDate"
@@ -62,23 +57,23 @@ const Education = (props) => {
               <input
                 className="e-p-input grade-input"
                 placeholder="Grade"
-                id={instituteName}
+                key={instituteName + "5"}
                 value={val.grade}
                 disabled={!props.status}
                 name="grade"
                 onChange={(event) => props.update(idx, event)}
               />
-              {props.status  && (
+              {props.status && (
                 <button
                   className="btn-danger btn-minus"
                   type="button"
-                  id={instituteName}
+                  key={instituteName + "6"}
                   onClick={() => {
                     props.delete(index);
                   }}
                 >
                   <i
-                    id={instituteName}
+                    key={instituteName + "7"}
                     className="fa fa-minus"
                     aria-hidden="true"
                   ></i>

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import emailjs from "emailjs-com";
 import axios from "axios";
 const initialState = {
   name: "",
@@ -21,8 +20,9 @@ export const Contact = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(name, email, message);
-    axios
+    // console.log(name, email, message);
+    try {
+      axios
       .post("http://localhost:2000/users/sendEnquiry", {
         name,
         email,
@@ -30,8 +30,16 @@ export const Contact = (props) => {
       })
       .then(() => {
         console.log("sent");
-        clearState();
+        
       });
+      clearState();
+      
+    } catch (error) {
+      console.log(error);
+    }
+   
+
+    // console.log( "E.Taregt ", e.target);
     // emailjs
     //   .sendForm(
     //     'service_t8ys2pt', 'template_rgiy2ie', e.target, '6XEZjgCF8fLyuVKXl'
@@ -43,8 +51,10 @@ export const Contact = (props) => {
     //     },
     //     (error) => {
     //       console.log(error.text)
+    //       clearState();
     //     }
     //   )
+
   };
   return (
     <div>
@@ -59,7 +69,7 @@ export const Contact = (props) => {
                   get back to you as soon as possible.
                 </p>
               </div>
-              <form name="sentMessage" validate onSubmit={handleSubmit}>
+              <form name="sentMessage" onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group">

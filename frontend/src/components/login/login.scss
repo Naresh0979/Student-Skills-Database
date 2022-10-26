@@ -24,7 +24,7 @@ $breakpoint-mobile: 768px;
   background-size: 23px;
   color: black;
   font-weight: bold;
-  font-family: "Quicksand-Regular";
+  font-family: "Raleway", sans-serif;
 }
 /*
 * Classes (ampersand + BEM)
@@ -122,7 +122,69 @@ $breakpoint-mobile: 768px;
       }
     }
   }
+  .recovery-email-pwd{
+  
+  }
+  .forget-pwd-button-div{
+    padding-left: 22%;
+    
+  }
+  .back-to-login{
+    margin-top: 8px;
+    text-align: center;
+  }
+  .input-email-recovery{
+    background-color: rgb(235, 230, 230);
+    margin-top: 5px;
+    width: 250px;
+    padding: 5px;
+    padding-left: 40px;
+  }
+  .recovery-email-pwd p{
+    text-align: center;
+  }
+  .forget-email{
+    width: max-content;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .forgot-pwd-div{
+    margin-top: -20px;
+    text-align: center;
+  }
+  .forgot-password{
+    font-size: medium;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+    color: #5ca9fb;
 
+  }
+  .forgot-password:hover{
+    text-decoration: none;
+    color: grey;
+  }
+  .invalid-div{
+    margin-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+    border-radius: 2px;
+    width: 100%;
+    padding-bottom: 5px;
+    background-color: red;
+    color: white;
+  }
+  .success-div{
+    margin-bottom: 20px;
+    padding-top: 10px;
+    text-align: center;
+    border-radius: 2px;
+    padding-bottom: 5px;
+    width: 100%;
+    background-color: green;
+    color: white;
+  }
+ 
   &__create-container {
     position: fixed;
     display: flex;
